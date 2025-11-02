@@ -1,0 +1,90 @@
+---
+---
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 300px;
+  background: #f5f5f5;
+  padding: 2rem;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar-content h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.sidebar-nav {
+  margin: 2rem 0;
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 0.5rem 0;
+  color: #666;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar-nav a:hover {
+  color: #000;
+}
+
+.recent-posts {
+  margin-top: 2rem;
+}
+
+.recent-posts h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.recent-posts ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-posts li {
+  margin-bottom: 0.5rem;
+}
+
+.recent-posts a {
+  color: #666;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.recent-posts a:hover {
+  color: #000;
+}
+
+.main-content {
+  margin-left: 300px;
+  padding: 2rem;
+  flex: 1;
+  max-width: calc(100% - 300px);
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
+    max-width: 100%;
+  }
+}
