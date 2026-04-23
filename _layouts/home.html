@@ -1,0 +1,38 @@
+---
+layout: default
+---
+<section class="welcome">
+  <div class="welcome-hero">
+    <p class="welcome-eyebrow">Welcome</p>
+    <h1 class="welcome-title">{{ site.welcome_title | default: site.title }}</h1>
+    {% if site.welcome_subtitle or site.description %}
+      <p class="welcome-subtitle">
+        {{ site.welcome_subtitle | default: site.description | strip_html | normalize_whitespace }}
+      </p>
+    {% endif %}
+    <p class="welcome-hint">
+      Pick an article from the menu on the left to start reading.
+    </p>
+  </div>
+
+  {{ content }}
+
+  {%- if site.posts.size > 0 -%}
+    <div class="welcome-recent">
+      <h2>Latest articles</h2>
+      <ul class="recent-list">
+        {%- for post in site.posts limit: 5 -%}
+          <li>
+            <a href="{{ post.url | relative_url }}">
+              <span class="recent-date">{{ post.date | date: "%Y · %b %d" }}</span>
+              <span class="recent-title">{{ post.title | escape }}</span>
+              {%- if post.excerpt -%}
+                <span class="recent-excerpt">{{ post.excerpt | strip_html | normalize_whitespace | truncate: 140 }}</span>
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+</section>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {% feed_meta %}
+</head>
+<body>
+  <button class="sidebar-toggle" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <header class="site-header">
+        <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        {% if site.description %}
+          <p class="site-tagline">{{ site.description | strip_html | normalize_whitespace }}</p>
+        {% endif %}
+      </header>
+
+      <nav class="site-nav" aria-label="Pages">
+        <ul class="nav-pages">
+          <li>
+            <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}is-active{% endif %}">Home</a>
+          </li>
+          {%- assign pages = site.pages | where_exp: "p", "p.title" | sort: "title" -%}
+          {%- for p in pages -%}
+            {%- if p.url == '/' or p.url contains '404' -%}{%- continue -%}{%- endif -%}
+            <li>
+              <a href="{{ p.url | relative_url }}" class="{% if page.url == p.url %}is-active{% endif %}">{{ p.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      <nav class="site-nav" aria-label="Articles">
+        <h2 class="nav-heading">Articles</h2>
+        {%- assign posts_by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" -%}
+        {%- for year_group in posts_by_year -%}
+          <div class="nav-year">
+            <h3 class="nav-year-label">{{ year_group.name }}</h3>
+            <ul class="nav-posts">
+              {%- for post in year_group.items -%}
+                <li>
+                  <a href="{{ post.url | relative_url }}" class="{% if page.url == post.url %}is-active{% endif %}">
+                    <span class="post-date">{{ post.date | date: "%b %d" }}</span>
+                    <span class="post-title">{{ post.title | escape }}</span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endfor -%}
+        {%- if site.posts.size == 0 -%}
+          <p class="nav-empty">No articles yet.</p>
+        {%- endif -%}
+      </nav>
+
+      <footer class="sidebar-footer">
+        {%- if site.github_username and site.github_username != 'jekyll' -%}
+          <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub</a>
+        {%- endif -%}
+        {%- if site.twitter_username and site.twitter_username != 'jekyllrb' -%}
+          <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank" rel="noopener">Twitter</a>
+        {%- endif -%}
+        {%- if site.email and site.email != 'your-email@example.com' -%}
+          <a href="mailto:{{ site.email }}">Email</a>
+        {%- endif -%}
+      </footer>
+    </div>
+  </aside>
+
+  <main class="content" id="content">
+    <div class="content-inner">
+      {{ content }}
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var btn = document.querySelector('.sidebar-toggle');
+      var sidebar = document.getElementById('sidebar');
+      if (!btn || !sidebar) return;
+      btn.addEventListener('click', function () {
+        var open = sidebar.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.classList.toggle('sidebar-open', open);
+      });
+      document.querySelectorAll('.sidebar a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          if (window.matchMedia('(max-width: 768px)').matches) {
+            sidebar.classList.remove('is-open');
+            document.body.classList.remove('sidebar-open');
+            btn.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

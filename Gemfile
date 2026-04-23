@@ -7,7 +7,7 @@ source "https://rubygems.org"
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", "~> 4.4.1"
+gem "jekyll", "~> 4.3.0"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.5"
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
@@ -17,6 +17,13 @@ gem "minima", "~> 2.5"
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
 end
+
+# Pin transitive deps that require newer Ruby than the system default,
+# so `bundle install` works on Ruby 2.6.x as well as on GitHub Pages CI.
+gem "public_suffix", "< 6"
+gem "csv"
+gem "ffi", "< 1.17"
+gem "jekyll-sass-converter", "~> 2.0"
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
