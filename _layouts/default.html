@@ -10,8 +10,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page_title %}{{ page_title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+  <title>{% if page_title %}{{ page_title }} · {{ us.site.title }}{% else %}{{ us.site.title }}{% endif %}</title>
+  <meta name="description" content="{{ page.excerpt | default: us.site.tagline | strip_html | normalize_whitespace | truncate: 160 | escape }}">
   <link rel="icon" type="image/png" href="{{ '/assets/img/site-icon.png' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/img/site-icon.png' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
@@ -39,11 +39,9 @@
       <header class="site-header">
         <a class="site-title" href="{{ '/' | relative_url }}">
           <img class="site-icon" src="{{ '/assets/img/site-icon.png' | relative_url }}" alt="" width="96" height="96">
-          <span>{{ site.title }}</span>
+          <span data-i18n="site.title">{{ us.site.title }}</span>
         </a>
-        {% if site.description %}
-          <p class="site-tagline">{{ site.description | strip_html | normalize_whitespace }}</p>
-        {% endif %}
+        <p class="site-tagline" data-i18n="site.tagline">{{ us.site.tagline }}</p>
       </header>
 
       <nav class="site-nav" aria-label="{{ us.nav.pages }}" data-i18n-aria-label="nav.pages">
@@ -113,7 +111,6 @@
   <script>
     (function () {
       var translations = {{ i18n | jsonify }};
-      var siteTitle = {{ site.title | jsonify }};
       var storageKey = 'showwwwww.github.io.language';
       var supported = { us: true, cn: true };
 
@@ -180,9 +177,10 @@
           var titleNode = document.querySelector(titleSelector);
           pageTitle = titleNode ? titleNode.textContent : '';
         }
+        var siteName = textFor(lang, 'site.title');
         document.title = pageTitle
-          ? pageTitle + ' · ' + siteTitle
-          : siteTitle;
+          ? pageTitle + ' · ' + siteName
+          : siteName;
 
         try {
           window.localStorage && window.localStorage.setItem(storageKey, lang);

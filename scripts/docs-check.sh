@@ -47,7 +47,9 @@ code_to_docs() {
       echo "docs/DESIGN.md" ;;
     _posts/*)
       echo "docs/CONTENT.md" ;;
-    index.markdown|about.markdown|*.markdown)
+    _data/i18n.yml)
+      echo "docs/product-specs/internationalization.md" ;;
+    index.markdown|*.markdown)
       echo "docs/CONTENT.md" ;;
     _config.yml|Gemfile|Gemfile.lock)
       echo "docs/RELIABILITY.md ARCHITECTURE.md" ;;
@@ -76,7 +78,7 @@ all_markdown_paths() {
 
 is_allowed_routable_markdown() {
   case "$1" in
-    index.markdown|about.markdown|_posts/*.md|_posts/*.markdown) return 0 ;;
+    index.markdown|_posts/*.md|_posts/*.markdown) return 0 ;;
     *) return 1 ;;
   esac
 }
@@ -462,8 +464,8 @@ build_route_guard_reminder() {
   [ -z "$issues" ] && return 1
 
   msg="Jekyll route guard reminder: internal Markdown can become public routes \
-on GitHub Pages unless it is explicitly excluded. Only \`index.markdown\`, \
-\`about.markdown\`, and Markdown under \`_posts/\` should be routable.
+on GitHub Pages unless it is explicitly excluded. Only \`index.markdown\` \
+and Markdown under \`_posts/\` should be routable.
 
 Issues to fix:
 "

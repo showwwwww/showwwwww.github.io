@@ -20,7 +20,8 @@ Markdown.
 
 - Functional UI text lives in `_data/i18n.yml`, split into `us` and `cn`
   branches. Examples: navigation labels, button labels, section labels,
-  footer labels, empty states, post-navigation labels, and 404 system copy.
+  footer labels, empty states, post-navigation labels, 404 system copy, and
+  the sidebar site name and tagline (`us.site` / `cn.site`).
 - The site renders US English by default. On first load, a Chinese browser
   environment switches the chrome to CN; other environments stay on US.
 - A language toggle appears at the top-right of every page. Selecting it
@@ -55,9 +56,12 @@ Markdown.
   `<body>`. The toggle JS uses it to navigate to the paired URL after
   persisting the language choice. Without a pairing, only the chrome flips
   and the URL stays.
-- Other content text (site title, tagline, page bodies under `*.markdown`,
-  `welcome_title`, `welcome_subtitle`) remains in its content source and
-  is currently English-only. Each is a separate, optional follow-up.
+- The sidebar site name and tagline are localized: `us.site` / `cn.site` in
+  `_data/i18n.yml` drive the header block; `_config.yml` `title` and
+  `description` remain for Jekyll and feeds.
+- Other content text (page bodies under `*.markdown`, `welcome_title`,
+  `welcome_subtitle`) remains in its content source; those parts are
+  currently English aside from the paired CN post files under `_posts/cn/`.
 
 ### Fallback when a translation is missing
 
@@ -82,14 +86,18 @@ Markdown.
 ## Out of scope
 
 - Machine translation.
-- Translating pages (`about.markdown`, `index.markdown`) or `_config.yml`
-  content text.
+- Translating `index.markdown` or other page bodies, or hand-translating
+  `_config.yml` `welcome_title` / `welcome_subtitle`, beyond the sidebar
+  name and tagline keys.
 - RSS/feed localization.
 - Per-language sitemaps or `hreflang` tags.
 - A "missing translation" stub UI when only the US version exists.
 
 ## Changelog
 
+- 2026-04-26: Localized sidebar site name and tagline via `us.site` /
+  `cn.site`; Jekyll `site.title` / `site.description` in `_config.yml`
+  remain for build metadata and the feed.
 - 2026-04-25: Added US/CN language detection and a persistent top-right
   toggle for translated site chrome.
 - 2026-04-25: Clarified that `_data/i18n.yml` owns functional UI text only;

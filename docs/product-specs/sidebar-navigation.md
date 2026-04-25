@@ -14,7 +14,8 @@ surface.
 ## Behavior
 
 - The sidebar always shows the circular site icon, site title, and tagline at
-  the top.
+  the top. The title and tagline strings come from `us.site` / `cn.site` in
+  `_data/i18n.yml` and follow the US/CN language toggle.
 - It lists "Pages" (any `*.markdown` with a `title:` frontmatter, excluding
   `index` and the `404`), sorted alphabetically by title.
 - It lists "Articles" once per language. The sidebar renders two parallel
@@ -37,9 +38,9 @@ surface.
 - Sidebar labels participate in the site language toggle. US English is the
   default, and CN labels replace the chrome when the language layer selects
   CN.
-- Functional nav labels are read from `_data/i18n.yml`. Site title, tagline,
-  page titles, and post titles are content text and come from their content
-  sources.
+- Functional nav labels and the sidebar site name and tagline are read from
+  `_data/i18n.yml`. Page titles and post titles are content text and come
+  from their content sources.
 
 The home layout (`home.html`) reuses the sidebar (it inherits from
 `default.html`) and renders a welcome hero plus the five most recent posts
@@ -81,3 +82,6 @@ active language.
   `html[data-lang]`.
 - 2026-04-26: Sidebar header now includes the transparent circular site icon
   above the site title.
+- 2026-04-26: Site title and tagline in the sidebar read from
+  `us.site` / `cn.site` in `_data/i18n.yml` (removed the standalone About
+  page; no `about` route).

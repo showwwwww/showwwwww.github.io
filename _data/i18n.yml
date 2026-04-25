@@ -1,4 +1,7 @@
 us:
+  site:
+    title: "show's tech blog"
+    tagline: "Notes, experiments, and write-ups on software, systems, and the web."
   nav:
     toggle: "Toggle navigation"
     pages: "Pages"
@@ -25,6 +28,9 @@ us:
     hint: 'Try picking an article from the menu on the left, or head back to the <a href="/">home page</a>.'
 
 cn:
+  site:
+    title: "show 的技术博客"
+    tagline: "关于软件、系统与网络的笔记、实验与长文。"
   nav:
     toggle: "打开导航"
     pages: "页面"

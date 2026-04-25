@@ -35,7 +35,7 @@ This is enforceable mechanically:
 - The hook compares the set of changed code files against the set of changed
   doc files for the current turn / working tree.
 - The same shared hook checks that internal Markdown remains excluded from
-  Jekyll routes; only `index.markdown`, `about.markdown`, and `_posts/**`
+  Jekyll routes; only `index.markdown` and `_posts/**`
   Markdown should publish as site content.
 - If code changed but no relevant doc was touched, you get a reminder
   pointing at the specific docs that own the changed paths.

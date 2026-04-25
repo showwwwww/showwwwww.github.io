@@ -1,7 +1,6 @@
 # CONTENT.md — voice, tone, and post conventions
 
-Owns: `_posts/**`, `index.markdown`, `about.markdown`, plus future
-standalone pages.
+Owns: `_posts/**`, `index.markdown`, plus future standalone pages.
 
 Last reviewed: 2026-04-25.
 
@@ -122,7 +121,9 @@ are noise in the post list.
 - Series / cross-post chaining. If we add a "series" feature later, it gets
   its own spec under `docs/product-specs/`.
 - Machine translation. Paired US/CN posts are authored by hand.
-- Translating standalone pages (`about.markdown`, `index.markdown`) — those
-  are out of scope for the current i18n contract.
-- Managing content text in `_data/i18n.yml`; that file is for functional UI
-  text only.
+- Translating standalone pages (`index.markdown` and any future
+  `*.markdown` pages) — those are out of scope for the current i18n
+  contract.
+- Managing long-form or page body text in `_data/i18n.yml`; that file holds
+  functional UI strings plus the localized site name and tagline used in the
+  sidebar.

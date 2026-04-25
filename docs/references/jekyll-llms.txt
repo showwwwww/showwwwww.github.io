@@ -39,7 +39,7 @@ Common keys:
 - `date`              ISO-ish date with timezone offset.
 - `categories`        Space- or array-separated. Surface in `page.categories`.
 - `tags`              Same shape as categories. Not rendered by default.
-- `permalink`         Override the URL. e.g. `/about/` for `about.markdown`.
+- `permalink`         Override the URL. e.g. `/my-page/` for a top-level page.
 - `excerpt`           Manual excerpt; otherwise the first paragraph is used.
 
 LIQUID BASICS

@@ -75,8 +75,8 @@ Last reviewed: 2026-04-25.
 - Lint checks (current):
   - Required files exist (`AGENTS.md`, `ARCHITECTURE.md`, `CLAUDE.md`,
     every file referenced from the table in `docs/README.md`).
-  - Internal Markdown is excluded from Jekyll routes. Only `index.markdown`,
-    `about.markdown`, and Markdown under `_posts/` should publish as content.
+  - Internal Markdown is excluded from Jekyll routes. Only `index.markdown`
+    and Markdown under `_posts/` should publish as content.
   - `AGENTS.md` is at most 150 lines.
   - All relative Markdown links inside `AGENTS.md`, `ARCHITECTURE.md`, and
     `docs/**/*.md` resolve to existing files.

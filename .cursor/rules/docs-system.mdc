@@ -32,7 +32,8 @@ reminder.
 | `_layouts/post.html`, `_layouts/page.html`, `404.html` | `docs/product-specs/post-layout.md`, `docs/DESIGN.md` |
 | Other `_layouts/`, `_includes/` | `docs/product-specs/index.md`, `docs/DESIGN.md` |
 | `assets/css/style.scss` (or any `assets/` CSS/SCSS) | `docs/DESIGN.md` |
-| `_posts/**`, `index.markdown`, `about.markdown`, other `*.markdown` | `docs/CONTENT.md` |
+| `_posts/**`, `index.markdown`, other `*.markdown` | `docs/CONTENT.md` |
+| `_data/i18n.yml` | `docs/product-specs/internationalization.md` |
 | `_config.yml`, `Gemfile`, `Gemfile.lock` | `docs/RELIABILITY.md`, `ARCHITECTURE.md` |
 | `.githooks/**`, `.prettierrc.json`, `.prettierignore` | `docs/RELIABILITY.md` |
 | `.cursor/**`, `.codex/**`, `.claude/**`, `AGENTS.md`, `CLAUDE.md`, `ARCHITECTURE.md`, `scripts/docs-check.sh` | `docs/design-docs/core-beliefs.md`, `docs/RELIABILITY.md` |

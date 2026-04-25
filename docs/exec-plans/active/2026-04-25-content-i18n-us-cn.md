@@ -50,7 +50,8 @@ where content already lives.
 - Permalink shape: the new `/:title/` and `/cn/:title/` shapes drop the
   legacy `/:categories/:year/:month/:day/:title:output_ext` URLs. Recorded
   as a deliberate simplification; revisit only if SEO data argues against.
-- Pages (`about.markdown`, `index.markdown`) and `_config.yml` content
+- Pages (`index.markdown` and any future `*.markdown` pages) and remaining
+  `_config.yml` content
   text (`title`, `description`, `welcome_*`) remain English-only. Each of
   those is a small, separate plan if/when needed.
 

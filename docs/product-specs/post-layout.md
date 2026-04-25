@@ -38,7 +38,8 @@ chrome above and below.
 
 - Same outer chrome as posts (sidebar via `default`), but inside the content
   area shows only the page title and content. No date, no prev/next.
-- This is what `about.markdown` and any future standalone page should use.
+- This is what any future standalone `page` (for example, extra top-level
+  `*.markdown` files) should use.
 - Page titles and bodies are content text and do not live in `_data/i18n.yml`.
 
 ### `404.html`
