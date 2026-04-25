@@ -112,13 +112,20 @@ a:hover {
 
 /* ---------- Sidebar header ---------- */
 .site-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 0.5rem;
+  text-align: center;
 }
 .site-title {
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 100%;
   color: var(--color-sidebar-heading);
   font-size: 1.25rem;
   font-weight: 700;
@@ -131,17 +138,27 @@ a:hover {
 }
 .site-icon {
   display: block;
+  flex-shrink: 0;
   width: 96px;
   height: 96px;
+  max-width: 96px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
+.site-name {
+  display: block;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
 .site-tagline {
-  margin: 0.4rem 0 0;
+  margin: 0.5rem 0 0;
   font-size: 0.825rem;
   line-height: 1.5;
   color: var(--color-sidebar-muted);
+  text-align: center;
+  max-width: 100%;
 }
 
 /* ---------- Sidebar nav ---------- */
@@ -203,15 +220,7 @@ a:hover {
   color: var(--color-sidebar-muted);
   letter-spacing: 0.04em;
 }
-.post-date {
-  font-size: 0.72rem;
-  color: var(--color-sidebar-muted);
-  letter-spacing: 0.02em;
-}
-.nav-posts a.is-active .post-date {
-  color: rgba(255, 255, 255, 0.7);
-}
-.post-title {
+.nav-posts .post-title {
   display: block;
 }
 .nav-empty {
@@ -225,9 +234,11 @@ a:hover {
   margin-top: auto;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.75rem;
   padding: 1rem 0.65rem 0;
   border-top: 1px solid var(--color-sidebar-border);
+  text-align: center;
 }
 .sidebar-footer a {
   color: var(--color-sidebar-muted);
@@ -265,6 +276,9 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .language-toggle:hover {
   border-color: var(--color-accent);
@@ -290,12 +304,15 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
   background: var(--color-surface);
   cursor: pointer;
   box-shadow: var(--shadow-sm);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
 }
 .sidebar-toggle span {
   display: block;
   width: 18px;
   height: 2px;
-  margin: 3px auto;
   background: var(--color-text);
   border-radius: 2px;
 }
@@ -407,13 +424,43 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-.post-title,
-.page-title {
+/* Scope article titles: sidebar also uses .post-title on list links. */
+.post .post-title,
+.page .page-title {
   margin: 0;
   font-size: clamp(1.6rem, 2.6vw, 2.1rem);
   line-height: 1.2;
   letter-spacing: -0.015em;
   font-weight: 700;
+}
+.content-brand-icon {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.1rem;
+  text-decoration: none;
+}
+.content-brand-icon:hover {
+  text-decoration: none;
+  opacity: 0.92;
+}
+.content-brand-icon:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+.content-brand-icon-img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  max-width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px var(--color-border);
+}
+@media (prefers-color-scheme: dark) {
+  .content-brand-icon-img {
+    box-shadow: 0 0 0 1px var(--color-border);
+  }
 }
 .post-meta {
   margin: 0.6rem 0 0;
@@ -572,7 +619,7 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
     right: 0.85rem;
   }
   .sidebar-toggle {
-    display: block;
+    display: flex;
   }
   body.sidebar-open {
     overflow: hidden;

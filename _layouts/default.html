@@ -38,8 +38,8 @@
     <div class="sidebar-inner">
       <header class="site-header">
         <a class="site-title" href="{{ '/' | relative_url }}">
-          <img class="site-icon" src="{{ '/assets/img/site-icon.png' | relative_url }}" alt="" width="96" height="96">
-          <span data-i18n="site.title">{{ us.site.title }}</span>
+          <img class="site-icon" src="{{ '/assets/img/site-icon.png' | relative_url }}" alt="" width="96" height="96" decoding="async">
+          <span class="site-name" data-i18n="site.title">{{ us.site.title }}</span>
         </a>
         <p class="site-tagline" data-i18n="site.tagline">{{ us.site.tagline }}</p>
       </header>
@@ -73,7 +73,6 @@
                   {%- for post in year_group.items -%}
                     <li>
                       <a href="{{ post.url | relative_url }}" class="{% if page.url == post.url %}is-active{% endif %}">
-                        <span class="post-date">{{ post.date | date: "%b %d" }}</span>
                         <span class="post-title">{{ post.title | escape }}</span>
                       </a>
                     </li>

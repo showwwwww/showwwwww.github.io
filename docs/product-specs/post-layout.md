@@ -17,9 +17,16 @@ chrome above and below.
 
 - Renders categories (one per `<span>`) above the title, only when the post
   has at least one category.
-- Renders the post title as `<h1>` and the date below it (formatted "Month
-  D, YYYY"), plus an optional author when the frontmatter sets one. The title
-  is content text and comes from post frontmatter.
+- Renders a centered link to the home page with the circular site icon
+  (same image as the sidebar) above the post title, so the article column has
+  a brand mark on every post (including under `/cn/…`) and not only in the
+  sidebar. The link uses `data-i18n-aria-label="nav.home"`.
+- Renders the post title as `<h1 class="post-title">` in `article.post` and the
+  date below it (formatted "Month D, YYYY"), plus an optional author when the
+  frontmatter sets one. The title is content text and comes from post
+  frontmatter. Main-column titles are scoped in CSS (`.post .post-title`) so
+  they do not pick up the same rules as the sidebar’s article list, which
+  reuses a `post-title` class on the link text.
 - Renders the post body via `{{ content }}`.
 - At the foot, renders prev/next navigation. Neighbors are computed from
   `site.posts` filtered by `page.lang`, so a CN post links only to other
@@ -37,7 +44,8 @@ chrome above and below.
 ### `page.html`
 
 - Same outer chrome as posts (sidebar via `default`), but inside the content
-  area shows only the page title and content. No date, no prev/next.
+  area shows the same centered home icon link, then the page title and
+  content. No date, no prev/next.
 - This is what any future standalone `page` (for example, extra top-level
   `*.markdown` files) should use.
 - Page titles and bodies are content text and do not live in `_data/i18n.yml`.
@@ -78,6 +86,9 @@ chrome above and below.
   toggle.
 - 2026-04-25: Clarified that post/page titles are content text; only
   functional layout labels use `_data/i18n.yml`.
+- 2026-04-26: Post and page layouts include a centered site icon link above the
+  `<h1>`. Main-column `h1.post-title` / `h1.page-title` use scoped CSS so the
+  sidebar’s list labels are not affected.
 - 2026-04-25: Post prev/next navigation is now lang-filtered (no
   cross-language jumps), and the language toggle navigates to the paired
   translation when one exists.

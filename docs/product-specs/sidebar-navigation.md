@@ -14,8 +14,11 @@ surface.
 ## Behavior
 
 - The sidebar always shows the circular site icon, site title, and tagline at
-  the top. The title and tagline strings come from `us.site` / `cn.site` in
-  `_data/i18n.yml` and follow the US/CN language toggle.
+  the top, centered in the column (icon above title, CJK line-breaking allowed).
+  The title and tagline strings come from `us.site` / `cn.site` in
+  `_data/i18n.yml` and follow the US/CN language toggle. The home link wraps
+  the icon and the site name; the name span has class `site-name` for
+  `data-i18n="site.title"`.
 - It lists "Pages" (any `*.markdown` with a `title:` frontmatter, excluding
   `index` and the `404`), sorted alphabetically by title.
 - It lists "Articles" once per language. The sidebar renders two parallel
@@ -23,7 +26,8 @@ surface.
   `data-lang-section="us"`, one wrapped in `data-lang-section="cn"` — each
   filtered to posts whose `lang` matches. Within a block, posts are
   grouped by year (descending), then by date within each year (also
-  descending). CSS hides the block whose attribute does not match the
+  descending). Each list item shows the post title only (no month/day
+  beside the title). CSS hides the block whose attribute does not match the
   active `html[data-lang]`, so the user only ever sees one list.
 - A language with zero posts shows the localized "No articles yet."
   message inside its own section.
@@ -32,7 +36,7 @@ surface.
 - A footer at the bottom of the sidebar shows GitHub / Twitter / email links
   if (and only if) the corresponding values in `_config.yml` differ from the
   Jekyll boilerplate defaults. The link labels are functional text from
-  `_data/i18n.yml`.
+  `_data/i18n.yml`. The row is center-aligned in the sidebar.
 - On viewports ≤ 768 px, the sidebar collapses behind a hamburger toggle.
   Tapping a link auto-closes the sidebar.
 - Sidebar labels participate in the site language toggle. US English is the
@@ -85,3 +89,8 @@ active language.
 - 2026-04-26: Site title and tagline in the sidebar read from
   `us.site` / `cn.site` in `_data/i18n.yml` (removed the standalone About
   page; no `about` route).
+- 2026-04-26: Sidebar article links no longer show a per-item month/day; year
+  group headings remain.
+- 2026-04-26: Site identity in the sidebar (icon, name, tagline) is
+  center-aligned; site title string uses a `span.site-name` inside the
+  `a.site-title` home link. Footer links are center-aligned in the bar.

@@ -86,3 +86,7 @@ Non-negotiable:
 - 2026-04-25: Added the top-right language toggle to the layout and
   accessibility rules.
 - 2026-04-26: Added circular site icon styling for the sidebar identity.
+- 2026-04-26: Sidebar site identity is column-centered; post/page content
+  headers include a smaller circular brand image; top bar controls use flex
+  centering for their inner labels/icons; article `h1` title rules are scoped
+  under `.post` / `.page` to avoid clashing with sidebar list labels.

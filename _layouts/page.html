@@ -2,7 +2,21 @@
 layout: default
 ---
 <article class="page">
+  {%- assign us = site.data.i18n.us -%}
   <header class="page-header">
+    <a
+      class="content-brand-icon"
+      href="{{ '/' | relative_url }}"
+      data-i18n-aria-label="nav.home"
+      aria-label="{{ us.nav.home }}">
+      <img
+        class="content-brand-icon-img"
+        src="{{ '/assets/img/site-icon.png' | relative_url }}"
+        alt=""
+        width="64"
+        height="64"
+        decoding="async">
+    </a>
     <h1 class="page-title" data-document-title>{{ page.title | escape }}</h1>
   </header>
   <div class="page-content">
