@@ -2,7 +2,7 @@
 
 Owns: `_posts/**`, `index.markdown`, plus future standalone pages.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-26.
 
 ## Voice
 
@@ -61,11 +61,13 @@ Every post is authored as one Markdown file per language:
 - US (default): `_posts/YYYY-MM-DD-slug.markdown` → `/:title/`.
 - CN translation: `_posts/cn/YYYY-MM-DD-slug.markdown` → `/cn/:title/`.
 
-The two files are paired by a shared `ref:` slug in frontmatter, not by
-filename, so a translation may adopt a different slug if the original is
-ever renamed. The date and `ref` should match across the pair; titles,
-bodies, categories, and excerpts may diverge to whatever reads best in
-each language.
+Two files are translation pairs only when they share the same `ref:` in
+frontmatter, not by filename. The date and `ref` should match **across
+that pair**; titles, bodies, categories, and excerpts may diverge to
+whatever reads best in each language. A US post and a CN post with the
+same date but **different** `ref` values (for example, the template welcome
+post in `_posts/` and a standalone article in `_posts/cn/`) are
+independent: the language toggle resolves by `ref`, not by date or path.
 
 A post does not need to have a translation. If only a US version exists,
 the language toggle still flips the chrome to CN but stays on the US URL
@@ -109,10 +111,11 @@ are noise in the post list.
   (`printWidth: 80`, `proseWrap: preserve`). Write Prettier-clean Markdown
   so the hook stays a no-op.
 - Run `bundle exec jekyll build` once to make sure nothing crashes.
-- The doc-check hook (`scripts/docs-check.sh --mode hook ...`) will not
-  remind you about CONTENT.md when you add a _new_ post — that's expected.
-  It will remind you only if you change a post's structure in a way that
-  contradicts these conventions.
+- The doc-check hook (`scripts/docs-check.sh --mode hook ...`) may remind
+  you to review CONTENT.md when you touch any file under `_posts/`. Add a
+  small note here if the change updates pairing behavior, `ref` usage, or
+  other conventions; otherwise a routine content-only edit can skip a doc
+  update when nothing below is contradicted.
 
 ## Out of scope
 
