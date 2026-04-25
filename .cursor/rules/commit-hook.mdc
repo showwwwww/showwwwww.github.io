@@ -1,0 +1,49 @@
+---
+description: How the local git pre-commit hook (Prettier check + format) is wired and what to keep stable
+globs: .githooks/**,.prettierrc*,.prettierignore
+alwaysApply: false
+---
+
+# Pre-commit hook mechanics
+
+This rule covers the hook plumbing. Style/format decisions for content files
+live in `.cursor/rules/prettier-formatting.mdc` — that rule's globs do NOT
+overlap with this one, so the two never conflict.
+
+## Setup
+
+- Hook script: `.githooks/pre-commit`
+- Activated per-clone with `git config core.hooksPath .githooks`
+  (not committed; each clone runs this once).
+
+## What the hook does, in order
+
+1. Lists staged files (`git diff --cached --name-only --diff-filter=ACM`).
+2. Filters to Prettier-supported extensions; `.prettierignore` is also honored.
+3. Runs `npx --yes prettier@^3 --ignore-unknown --write` on those files.
+4. Re-stages anything Prettier rewrote (`git add`).
+5. Runs `prettier --check` as a final lint pass — exit 1 blocks the commit.
+
+If `npx` is missing, the hook fails open (warns, exits 0) so contributors
+without Node.js can still commit.
+
+## When editing the hook script
+
+- Keep it idempotent: a clean tree must produce zero rewrites.
+- Stay portable to Bash 3.2 (macOS default): no `mapfile`, no `[[ -v var ]]`.
+- Use NUL-delimited output (`-z` + `read -d ''`) to handle paths with spaces.
+- Don't introduce a `package.json` install step unless this script is updated
+  in lockstep to use the local install.
+
+## When editing `.prettierignore`
+
+- Keep `_layouts/`, `_includes/`, `404.html`, and `_config.yml` ignored —
+  Prettier can mangle Liquid templates and YAML comments.
+- Keep generated/vendored paths ignored: `_site/`, `.jekyll-cache/`,
+  `.sass-cache/`, `vendor/`, `node_modules/`, `Gemfile.lock`.
+
+## When editing `.prettierrc*`
+
+- Don't change `proseWrap` away from `preserve` — it would reflow every
+  Markdown post on the next commit.
+- Keep `endOfLine: "lf"` to avoid CRLF churn on mixed-OS clones.

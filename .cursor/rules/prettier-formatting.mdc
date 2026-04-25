@@ -1,0 +1,40 @@
+---
+description: Prettier formatting conventions for Markdown, SCSS/CSS, JS, JSON, and data YAML
+globs: _posts/**/*.{md,markdown},*.{md,markdown},assets/**/*.{scss,css,less,js,mjs,cjs,ts,tsx,jsx},_data/**/*.{yml,yaml},package.json,tsconfig*.json
+alwaysApply: false
+---
+
+# Prettier formatting
+
+Authored content in this repo is formatted by Prettier 3 (config in
+`.prettierrc.json`). The pre-commit hook will auto-format staged files of
+these types and then run `prettier --check` — write code that's already
+Prettier-clean so the hook stays a no-op.
+
+## Scope of this rule
+
+This rule covers files Prettier owns: Markdown, SCSS/CSS, JS/TS, JSON, and
+data YAML under `_data/`. It does NOT cover Liquid HTML in `_layouts/` or
+`_includes/`, or `_config.yml` — those are intentionally excluded in
+`.prettierignore`. See `.cursor/rules/commit-hook.mdc` for hook mechanics.
+
+## Defaults (do not contradict)
+
+- 2-space indent, no tabs
+- LF line endings, single trailing newline at EOF
+- `printWidth`: 100, except Markdown which is 80
+- Double quotes; trailing commas where ES5 allows
+- Markdown `proseWrap: preserve` — never auto-rewrap prose paragraphs
+
+## Do
+
+- Let the formatter own whitespace; don't hand-tune indentation.
+- Wrap long Markdown links/code at natural boundaries only.
+- For SCSS, prefer one selector per line and `// line comments`.
+
+## Don't
+
+- Don't sprinkle `// prettier-ignore` or `<!-- prettier-ignore -->` without a
+  concrete reason (e.g. an aligned table that Prettier mangles).
+- Don't reformat files outside this rule's globs — Liquid HTML and `_config.yml`
+  must keep their hand-authored layout.

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# Pre-commit hook: format staged files with Prettier, re-stage, then verify.
+# Activated per-clone via:  git config core.hooksPath .githooks
+
+set -euo pipefail
+
+if ! command -v npx >/dev/null 2>&1; then
+  echo "[pre-commit] npx not found on PATH; skipping prettier (install Node.js to enable)." >&2
+  exit 0
+fi
+
+# Collect staged files (Added/Copied/Modified) NUL-delimited so spaces are safe.
+STAGED=()
+while IFS= read -r -d '' f; do
+  STAGED+=("$f")
+done < <(git diff --cached --name-only --diff-filter=ACM -z)
+
+if [ "${#STAGED[@]}" -eq 0 ]; then
+  exit 0
+fi
+
+# Only consider extensions Prettier might touch. .prettierignore handles the rest.
+EXT_RE='\.(html|md|markdown|scss|css|less|js|mjs|cjs|ts|tsx|jsx|json|jsonc|yml|yaml)$'
+TARGETS=()
+for f in "${STAGED[@]}"; do
+  if [[ "$f" =~ $EXT_RE ]] && [ -f "$f" ]; then
+    TARGETS+=("$f")
+  fi
+done
+
+if [ "${#TARGETS[@]}" -eq 0 ]; then
+  exit 0
+fi
+
+PRETTIER="prettier@^3"
+
+echo "[pre-commit] formatting ${#TARGETS[@]} staged file(s) with prettier..."
+npx --yes "$PRETTIER" --ignore-unknown --log-level=warn --write -- "${TARGETS[@]}"
+
+# Re-stage anything Prettier rewrote so the commit reflects the formatted version.
+git add -- "${TARGETS[@]}"
+
+echo "[pre-commit] verifying formatting..."
+if ! npx --yes "$PRETTIER" --ignore-unknown --log-level=warn --check -- "${TARGETS[@]}"; then
+  echo "[pre-commit] prettier --check failed. Fix the listed files and try again." >&2
+  exit 1
+fi
+
+exit 0

@@ -1,0 +1,21 @@
+# Build outputs and caches
+_site/
+.jekyll-cache/
+.sass-cache/
+.jekyll-metadata
+
+# Dependencies / vendor
+vendor/
+node_modules/
+
+# Lockfiles
+Gemfile.lock
+package-lock.json
+
+# Liquid-heavy templates — Prettier can mangle Liquid syntax
+_layouts/
+_includes/
+404.html
+
+# Site config — preserve comments and YAML structure
+_config.yml
