@@ -33,10 +33,16 @@ surface.
   message inside its own section.
 - The currently-viewed page or post is marked active (`is-active` class
   applied via Liquid; styling lives in `assets/css/style.scss`).
-- A footer at the bottom of the sidebar shows GitHub / Twitter / email links
+- The **GitHub** profile link (when `github_username` in `_config.yml` is
+  set and not the Jekyll default) is a circular mark button in the fixed
+  top-right `header-toolbar`, immediately **left of** the language toggle.
+  It uses the same localized accessible name as the old footer label
+  (`data-i18n-aria-label="footer.github"`, Octicons-style path SVG).
+- A footer at the bottom of the sidebar shows **Twitter** and **email** links
   if (and only if) the corresponding values in `_config.yml` differ from the
-  Jekyll boilerplate defaults. The link labels are functional text from
-  `_data/i18n.yml`. The row is center-aligned in the sidebar.
+  Jekyll boilerplate defaults. If neither is set, the footer block is omitted
+  entirely. The link labels are functional text from `_data/i18n.yml`. The
+  row is center-aligned in the sidebar.
 - On viewports ≤ 768 px, the sidebar collapses behind a hamburger toggle.
   Tapping a link auto-closes the sidebar.
 - Sidebar labels participate in the site language toggle. US English is the
@@ -94,3 +100,5 @@ active language.
 - 2026-04-26: Site identity in the sidebar (icon, name, tagline) is
   center-aligned; site title string uses a `span.site-name` inside the
   `a.site-title` home link. Footer links are center-aligned in the bar.
+- 2026-04-26: GitHub link moved to `header-toolbar` (circular mark, left of
+  language toggle); footer keeps Twitter and email only.

@@ -22,6 +22,10 @@ Markdown.
   branches. Examples: navigation labels, button labels, section labels,
   footer labels, empty states, post-navigation labels, 404 system copy, and
   the sidebar site name and tagline (`us.site` / `cn.site`).
+- The GitHub header link (circular mark, left of the language toggle) uses
+  `data-i18n-aria-label="footer.github"` so the accessible name stays
+  on the `footer.github` key even though the control left the sidebar
+  footer.
 - The site renders US English by default. On first load, a Chinese browser
   environment switches the chrome to CN; other environments stay on US.
 - A language toggle appears at the top-right of every page. Selecting it

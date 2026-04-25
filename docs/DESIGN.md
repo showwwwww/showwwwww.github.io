@@ -30,8 +30,10 @@ selectors.
 - Sidebar on the left at `--sidebar-width` (280 px).
 - Sidebar identity uses a circular transparent PNG above the site title; the
   source artwork is clipped to avoid square black corners.
-- Language toggle fixed at the top-right of the viewport. It is intentionally
-  small chrome, separate from the sidebar.
+- Top-right of the viewport: a fixed `header-toolbar` with the i18n language
+  button; when `site.github_username` is set (non-boilerplate), a circular
+  GitHub mark link sits immediately to the **left** of the language control.
+  This chrome is intentionally small, separate from the sidebar.
 - Below 768 px, the sidebar collapses behind a hamburger; the content fills
   the viewport.
 - Vertical rhythm comes from `line-height: 1.65` on body text and matching
@@ -90,3 +92,6 @@ Non-negotiable:
   headers include a smaller circular brand image; top bar controls use flex
   centering for their inner labels/icons; article `h1` title rules are scoped
   under `.post` / `.page` to avoid clashing with sidebar list labels.
+- 2026-04-26: GitHub profile link moved from the sidebar footer to a circular
+  mark button in `header-toolbar`, left of the language toggle; Twitter and
+  email stay in the sidebar footer.
