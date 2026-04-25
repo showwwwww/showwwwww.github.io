@@ -62,6 +62,112 @@ code_to_docs() {
   esac
 }
 
+JEKYLL_ROUTE_EXCLUDES=(
+  "docs/"
+  "AGENTS.md"
+  "ARCHITECTURE.md"
+  "CLAUDE.md"
+)
+
+all_markdown_paths() {
+  git ls-files -co --exclude-standard -- '*.md' '*.markdown' 2>/dev/null \
+    | sort -u
+}
+
+is_allowed_routable_markdown() {
+  case "$1" in
+    index.markdown|about.markdown|_posts/*.md|_posts/*.markdown) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+config_has_exclude_entry() {
+  local entry="$1"
+  [ -f _config.yml ] || return 1
+  awk -v entry="$entry" '
+    /^[^[:space:]#][^:]*:/ {
+      if ($1 != "exclude:") in_exclude = 0
+    }
+    /^[[:space:]]*exclude:[[:space:]]*$/ {
+      in_exclude = 1
+      next
+    }
+    in_exclude && /^[[:space:]]*-/ {
+      value = $0
+      sub(/^[[:space:]]*-[[:space:]]*/, "", value)
+      sub(/[[:space:]]+#.*$/, "", value)
+      sub(/[[:space:]]+$/, "", value)
+      if (value == entry) found = 1
+    }
+    END { exit found ? 0 : 1 }
+  ' _config.yml
+}
+
+config_exclude_entries() {
+  [ -f _config.yml ] || return 0
+  awk '
+    /^[^[:space:]#][^:]*:/ {
+      if ($1 != "exclude:") in_exclude = 0
+    }
+    /^[[:space:]]*exclude:[[:space:]]*$/ {
+      in_exclude = 1
+      next
+    }
+    in_exclude && /^[[:space:]]*-/ {
+      value = $0
+      sub(/^[[:space:]]*-[[:space:]]*/, "", value)
+      sub(/[[:space:]]+#.*$/, "", value)
+      sub(/[[:space:]]+$/, "", value)
+      if (value != "") print value
+    }
+  ' _config.yml
+}
+
+is_path_covered_by_config_exclude() {
+  local path="$1" exclude excludes
+  excludes=$(config_exclude_entries)
+  while IFS= read -r exclude; do
+    [ -z "$exclude" ] && continue
+    case "$exclude" in
+      */)
+        case "$path" in
+          "$exclude"*) return 0 ;;
+        esac
+        ;;
+      *)
+        [ "$path" = "$exclude" ] && return 0
+        ;;
+    esac
+  done <<EOF_CONFIG_EXCLUDES
+$excludes
+EOF_CONFIG_EXCLUDES
+  return 1
+}
+
+collect_route_guard_issues() {
+  local exclude path paths
+
+  for exclude in "${JEKYLL_ROUTE_EXCLUDES[@]}"; do
+    if ! config_has_exclude_entry "$exclude"; then
+      printf '_config.yml must exclude `%s` so GitHub Pages cannot publish internal Markdown as a route.\n' "$exclude"
+    fi
+  done
+
+  paths=$(all_markdown_paths)
+  while IFS= read -r path; do
+    [ -z "$path" ] && continue
+    if is_allowed_routable_markdown "$path"; then
+      continue
+    fi
+    if is_path_covered_by_config_exclude "$path"; then
+      continue
+    fi
+    printf 'unexpected routable Markdown path `%s`; move it under an excluded docs path or add an explicit `_config.yml` exclude.\n' "$path"
+  done <<EOF_MARKDOWN_PATHS
+$paths
+EOF_MARKDOWN_PATHS
+}
+
 # Returns 0 if the path is itself a documentation file (in `docs/`, or one
 # of the top-level harness docs).
 is_doc_path() {
@@ -152,7 +258,20 @@ run_lint() {
     fi
   done
 
-  # 2. AGENTS.md is at most AGENTS_MD_LINE_CAP lines.
+  # 2. Internal Markdown must not become public Jekyll routes. GitHub Pages
+  #    enables optional front matter, so Markdown without `---` can still be
+  #    rendered unless `_config.yml` excludes it.
+  local route_issues
+  route_issues=$(collect_route_guard_issues)
+  while IFS= read -r missing; do
+    [ -z "$missing" ] && continue
+    warn "$missing"
+    errors=$((errors + 1))
+  done <<EOF_ROUTE_ISSUES
+$route_issues
+EOF_ROUTE_ISSUES
+
+  # 3. AGENTS.md is at most AGENTS_MD_LINE_CAP lines.
   if [ -f AGENTS.md ]; then
     local n
     n=$(wc -l < AGENTS.md | tr -d ' ')
@@ -162,7 +281,7 @@ run_lint() {
     fi
   fi
 
-  # 3. Relative Markdown links inside top-level + docs resolve.
+  # 4. Relative Markdown links inside top-level + docs resolve.
   #    We deliberately skip URLs and anchors-only refs (#frag).
   local doc_files=()
   while IFS= read -r f; do
@@ -209,7 +328,7 @@ run_lint() {
         | sed -E 's/^\]\(([^)]*)\)$/\1/')
   done
 
-  # 4. The code_to_docs mapping points only at files that exist. We probe
+  # 5. The code_to_docs mapping points only at files that exist. We probe
   #    each unique RHS by feeding a representative LHS through the function.
   local probe_inputs=(
     "_layouts/default.html"
@@ -337,6 +456,32 @@ See AGENTS.md for the full map."
   return 0
 }
 
+build_route_guard_reminder() {
+  local issues msg
+  issues=$(collect_route_guard_issues)
+  [ -z "$issues" ] && return 1
+
+  msg="Jekyll route guard reminder: internal Markdown can become public routes \
+on GitHub Pages unless it is explicitly excluded. Only \`index.markdown\`, \
+\`about.markdown\`, and Markdown under \`_posts/\` should be routable.
+
+Issues to fix:
+"
+  while IFS= read -r issue; do
+    [ -z "$issue" ] && continue
+    msg="$msg  - $issue
+"
+  done <<EOF_ROUTE_REMINDER
+$issues
+EOF_ROUTE_REMINDER
+
+  msg="${msg}
+Update \`_config.yml\` or move the Markdown file before finishing."
+
+  printf '%s' "$msg"
+  return 0
+}
+
 # Per-runtime emitters. Each one writes the JSON Object the runtime expects
 # on stdout. They assume `jq` is available; the caller checks first.
 
@@ -402,7 +547,7 @@ stop_hook_already_active() {
 run_hook() {
   local runtime=$1
   local event=$2
-  local root payload reminder
+  local root payload reminder route_reminder docs_reminder
 
   root=$(repo_root) || { warn "not in a git repo; staying quiet"; exit 0; }
   cd "$root" || { warn "could not cd to repo root; staying quiet"; exit 0; }
@@ -419,7 +564,23 @@ run_hook() {
     exit 0
   fi
 
-  if ! reminder=$(build_reminder); then
+  reminder=""
+  if route_reminder=$(build_route_guard_reminder); then
+    reminder="$route_reminder"
+  fi
+  if docs_reminder=$(build_reminder); then
+    if [ -n "$reminder" ]; then
+      reminder="$reminder
+
+---
+
+$docs_reminder"
+    else
+      reminder="$docs_reminder"
+    fi
+  fi
+
+  if [ -z "$reminder" ]; then
     # Nothing to say; stay silent.
     exit 0
   fi

@@ -26,6 +26,10 @@ Last reviewed: 2026-04-25.
   Functional UI copy is managed centrally in `_data/i18n.yml`; content copy
   remains in content/frontmatter/config until a future content source replaces
   it.
+- `_config.yml` explicitly excludes `docs/`, `AGENTS.md`, `ARCHITECTURE.md`,
+  and `CLAUDE.md` from Jekyll processing. GitHub Pages may render Markdown
+  without front matter, so internal agent/docs Markdown must stay out of the
+  public route graph.
 
 ## Deploy
 
@@ -71,6 +75,8 @@ Last reviewed: 2026-04-25.
 - Lint checks (current):
   - Required files exist (`AGENTS.md`, `ARCHITECTURE.md`, `CLAUDE.md`,
     every file referenced from the table in `docs/README.md`).
+  - Internal Markdown is excluded from Jekyll routes. Only `index.markdown`,
+    `about.markdown`, and Markdown under `_posts/` should publish as content.
   - `AGENTS.md` is at most 150 lines.
   - All relative Markdown links inside `AGENTS.md`, `ARCHITECTURE.md`, and
     `docs/**/*.md` resolve to existing files.
@@ -81,6 +87,8 @@ Last reviewed: 2026-04-25.
   - Computes the changed-file set via `git status --porcelain` plus, when
     available, `git diff --name-only HEAD@{1} HEAD` to cover the most
     recent commit.
+  - Checks the Markdown route boundary on every post-edit / stop event and
+    reminds the agent if internal Markdown could become a public Jekyll page.
   - Maps each changed source file to the doc(s) that own it.
   - Emits a reminder only if the agent edited code without touching any of
     the relevant docs.
