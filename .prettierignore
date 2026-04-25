@@ -19,3 +19,10 @@ _includes/
 
 # Site config — preserve comments and YAML structure
 _config.yml
+
+# Cached external docs for agent context — keep upstream layout intact,
+# do not let Prettier reflow them.
+docs/references/
+
+# Codex CLI config (TOML, hand-authored with comments)
+.codex/config.toml

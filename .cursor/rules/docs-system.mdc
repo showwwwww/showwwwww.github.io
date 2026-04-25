@@ -1,0 +1,54 @@
+---
+description: Docs harness — how to keep AGENTS.md, ARCHITECTURE.md, and docs/ in sync with code edits in this repo.
+globs: AGENTS.md,ARCHITECTURE.md,CLAUDE.md,docs/**,scripts/docs-check.sh,.cursor/hooks.json,.cursor/hooks/**,.codex/hooks.json,.codex/config.toml,.codex/hooks/**,.claude/settings.json,.claude/hooks/**,_layouts/**,_includes/**,_posts/**,assets/**,_config.yml,Gemfile
+alwaysApply: false
+---
+
+# Docs harness
+
+This repo follows the Harness Engineering principle for docs: the repo is the
+system of record, and any change to code should update the doc(s) that own
+those code paths in the same change. The 100-line `AGENTS.md` is the table of
+contents; the chapters live in `docs/`.
+
+When this rule is in scope, the `postToolUse` and `stop` hooks in
+`.cursor/hooks.json` will run `scripts/docs-check.sh` to remind you. Trust the
+reminder.
+
+## Where to look
+
+- Map: `AGENTS.md`
+- Floor plan / file ownership: `ARCHITECTURE.md`
+- Why-it's-like-this: `docs/design-docs/core-beliefs.md`
+- Build, formatter, hooks: `docs/RELIABILITY.md`
+- Per-feature behavior: `docs/product-specs/`
+- In-flight plans: `docs/exec-plans/active/`
+
+## Ownership map (must stay in sync with `ARCHITECTURE.md` and `code_to_docs` in `scripts/docs-check.sh`)
+
+| You're touching… | Update… |
+| --- | --- |
+| `_layouts/default.html`, `_layouts/home.html` | `docs/product-specs/sidebar-navigation.md`, `docs/DESIGN.md` |
+| `_layouts/post.html`, `_layouts/page.html`, `404.html` | `docs/product-specs/post-layout.md`, `docs/DESIGN.md` |
+| Other `_layouts/`, `_includes/` | `docs/product-specs/index.md`, `docs/DESIGN.md` |
+| `assets/css/style.scss` (or any `assets/` CSS/SCSS) | `docs/DESIGN.md` |
+| `_posts/**`, `index.markdown`, `about.markdown`, other `*.markdown` | `docs/CONTENT.md` |
+| `_config.yml`, `Gemfile`, `Gemfile.lock` | `docs/RELIABILITY.md`, `ARCHITECTURE.md` |
+| `.githooks/**`, `.prettierrc.json`, `.prettierignore` | `docs/RELIABILITY.md` |
+| `.cursor/**`, `.codex/**`, `.claude/**`, `AGENTS.md`, `CLAUDE.md`, `ARCHITECTURE.md`, `scripts/docs-check.sh` | `docs/design-docs/core-beliefs.md`, `docs/RELIABILITY.md` |
+
+## Do
+
+- Update the relevant doc(s) in the **same** edit that changes the code.
+- For non-trivial work, open a plan under `docs/exec-plans/active/` first.
+- Run `bash scripts/docs-check.sh --mode lint` before you stop.
+- If you change the harness itself (this rule, the script, a hook config),
+  update `docs/design-docs/core-beliefs.md` and `docs/RELIABILITY.md` together.
+
+## Don't
+
+- Don't grow `AGENTS.md` past 150 lines. The lint will fail.
+- Don't disable the `postToolUse` or `stop` hook to silence the reminder. If
+  the reminder is wrong, fix `code_to_docs` inside `scripts/docs-check.sh`.
+- Don't add a doc that isn't reachable from `docs/README.md` or `AGENTS.md`.
+- Don't bypass the pre-commit hook — see `.cursor/rules/commit-hook.mdc`.

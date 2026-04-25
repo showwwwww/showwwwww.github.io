@@ -1,0 +1,93 @@
+PRETTIER 3 QUICK REFERENCE (this repo's slice)
+==============================================
+
+Cached locally so coding agents have stable context. Source of truth:
+https://prettier.io/docs/. When this file drifts noticeably from upstream,
+refresh it in a single commit and bump the "Reviewed" date below.
+
+Reviewed: 2026-04-25
+Targeting: Prettier 3.x (the pre-commit hook pulls `prettier@^3` via npx).
+
+WHAT THIS REPO USES PRETTIER FOR
+- Markdown posts (`_posts/**/*.{md,markdown}`)
+- Top-level Markdown (`*.md`, `*.markdown`)
+- SCSS / CSS (`assets/**/*.{scss,css,less}`)
+- JS / TS  (`assets/**/*.{js,mjs,cjs,ts,tsx,jsx}` — none today)
+- JSON / JSONC (`*.json`, `*.jsonc`)
+- Data YAML in `_data/` (none today)
+
+WHAT IT EXPLICITLY DOES NOT TOUCH
+- `_layouts/` and `_includes/`  — Liquid HTML, would get mangled.
+- `404.html`                    — Liquid HTML.
+- `_config.yml`                 — preserve hand-authored YAML comments.
+- `_site/`, `.jekyll-cache/`, `vendor/`, `node_modules/`, `Gemfile.lock`.
+
+These are listed in `.prettierignore` and reinforced by
+`.cursor/rules/prettier-formatting.mdc`.
+
+CONFIG (`.prettierrc.json`)
+---------------------------
+{
+  "printWidth": 100,           // 100 cols for code; Markdown overrides to 80
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": false,        // double quotes
+  "trailingComma": "es5",      // trailing commas where ES5 allows
+  "endOfLine": "lf",           // never CRLF
+  "proseWrap": "preserve",     // never auto-rewrap Markdown paragraphs
+  "overrides": [
+    { "files": ["*.md", "*.markdown"],
+      "options": { "printWidth": 80, "proseWrap": "preserve" } }
+  ]
+}
+
+The `proseWrap: "preserve"` is load-bearing. If you change it, every
+Markdown post will re-wrap on the next commit and the diff will be
+unreadable. Don't.
+
+PRE-COMMIT HOOK (`.githooks/pre-commit`)
+----------------------------------------
+What it does, in order:
+  1. Lists staged files (Added / Copied / Modified).
+  2. Filters to Prettier-supported extensions; `.prettierignore` is honored.
+  3. Runs `npx --yes prettier@^3 --ignore-unknown --write` on those files.
+  4. Re-stages anything Prettier rewrote (`git add`).
+  5. Runs `prettier --check` as a final lint pass; exit 1 blocks the commit.
+
+If `npx` is missing, the hook fails open (warns, exits 0) so contributors
+without Node.js can still commit. The doc-check hook follows the same
+fail-open philosophy.
+
+ACTIVATING THE HOOK PER CLONE
+    git config core.hooksPath .githooks
+
+(This is intentionally not committed; each clone runs it once.)
+
+RUNNING PRETTIER MANUALLY
+- Format every supported file the staged set would touch:
+    npx --yes prettier@^3 --ignore-unknown --write \
+      $(git diff --cached --name-only --diff-filter=ACM)
+- Format everything in the working tree (use sparingly):
+    npx --yes prettier@^3 --ignore-unknown --write .
+- Check without writing (CI-style):
+    npx --yes prettier@^3 --ignore-unknown --check .
+
+DISABLING PRETTIER LOCALLY
+- Markdown:  `<!-- prettier-ignore -->` on the line ABOVE the block.
+- SCSS / JS: `// prettier-ignore` (or `/* prettier-ignore */`) above.
+- Whole-file: `<!-- prettier-ignore-start -->` ... `-end -->`.
+- Don't sprinkle these without a concrete reason (e.g. an aligned table
+  Prettier would mangle).
+
+COMMON PITFALLS
+- Re-wrapping prose: don't fight `proseWrap: "preserve"`. If a paragraph
+  looks bad, hand-wrap it; Prettier will leave it alone.
+- Tables in Markdown are realigned by Prettier. That's desired.
+- A `.prettierignore` glob applies relative to the file's location, not the
+  project root, when running with `--ignore-unknown`. Patterns like
+  `_layouts/` work because we run Prettier from the repo root.
+
+REFERENCES
+- Prettier options:        https://prettier.io/docs/options
+- Ignoring code:           https://prettier.io/docs/ignore
+- pre-commit integration:  https://prettier.io/docs/precommit

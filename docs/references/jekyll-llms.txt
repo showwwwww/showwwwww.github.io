@@ -1,0 +1,139 @@
+JEKYLL + LIQUID QUICK REFERENCE
+================================
+
+Cached locally so coding agents have stable context without making a network
+call. Source of truth: https://jekyllrb.com/docs/ and
+https://shopify.github.io/liquid/. When this file drifts noticeably from
+upstream, refresh it in a single commit and bump the "Reviewed" date below.
+
+Reviewed: 2026-04-25
+Targeting: Jekyll 4.3.x (see Gemfile)
+
+DIRECTORY LAYOUT (this repo's relevant pieces)
+----------------------------------------------
+- `_config.yml`        Site-wide config. Not reloaded on `jekyll serve`.
+- `_layouts/`          HTML templates with Liquid. One layout per file.
+- `_includes/`         Reusable Liquid partials. (Not used here yet.)
+- `_posts/`            Posts. Filename MUST be `YYYY-MM-DD-title.MARKUP`.
+- `_drafts/`           Optional. Draft posts; require `--drafts` to render.
+- `_data/`             YAML/JSON/CSV files exposed as `site.data.*`.
+- `_site/`             Generated output. Never edit, never commit.
+- `assets/`            Static assets. SCSS files need a triple-dash front
+                       matter fence to be processed.
+
+FRONT MATTER
+------------
+Every post / page / layout that should be rendered through Liquid starts
+with two `---` fences:
+
+    ---
+    layout: post
+    title: "Hello"
+    date: 2026-04-25 12:00:00 +0800
+    categories: meta announcements
+    ---
+
+Common keys:
+- `layout`            Name of a file in `_layouts/` (without extension).
+- `title`             Page or post title.
+- `date`              ISO-ish date with timezone offset.
+- `categories`        Space- or array-separated. Surface in `page.categories`.
+- `tags`              Same shape as categories. Not rendered by default.
+- `permalink`         Override the URL. e.g. `/about/` for `about.markdown`.
+- `excerpt`           Manual excerpt; otherwise the first paragraph is used.
+
+LIQUID BASICS
+-------------
+- Output:    {{ variable }}
+- Tag:       {% if x %} ... {% endif %}
+- Comment:   {% comment %} ... {% endcomment %}
+- Filters:   {{ "hello" | upcase | append: "!" }}
+
+WHITESPACE CONTROL
+- `{%- ... -%}` / `{{- ... -}}` strip whitespace on the corresponding side.
+- Use this aggressively in `_layouts/` to avoid `<ul>` items being wrapped
+  in stray whitespace, which can break `:first-child` CSS selectors.
+
+CONTROL FLOW
+- `{% if %} / {% elsif %} / {% else %} / {% endif %}`
+- `{% unless %} ... {% endunless %}`
+- `{% case x %}{% when 1 %}...{% else %}...{% endcase %}`
+- `{% for item in collection %} ... {% endfor %}`
+  - `forloop.index`, `forloop.first`, `forloop.last` are available inside.
+  - `{% continue %}` and `{% break %}` are supported in Jekyll's Liquid.
+
+VARIABLES
+- `{% assign x = 5 %}` — assign a scalar.
+- `{% capture x %}...{% endcapture %}` — capture a block of rendered output.
+
+GLOBAL OBJECTS
+- `site`    — anything in `_config.yml` plus computed collections.
+  - `site.title`, `site.description`, `site.url`, `site.baseurl`
+  - `site.posts`           — all posts, newest first
+  - `site.pages`           — all top-level pages
+  - `site.data.<file>`     — anything under `_data/`
+- `page`    — current page or post.
+  - `page.title`, `page.url`, `page.date`, `page.content`
+  - `page.previous`, `page.next` (posts only)
+- `layout`  — variables from the layout's own front matter.
+- `content` — body of the page being rendered into the layout.
+
+USEFUL FILTERS (used in this repo)
+- `escape`                  HTML-escape a string.
+- `strip_html`              Remove HTML tags.
+- `normalize_whitespace`    Collapse runs of whitespace to a single space.
+- `truncate: N`             Cut to N chars; appends `...` by default.
+- `date: "%B %-d, %Y"`      Format a date.
+- `date_to_xmlschema`       ISO-8601 with timezone — for `<time datetime=>`.
+- `relative_url`            Prepend `site.baseurl` for portability.
+- `where_exp: "p", "p.title"`  Filter a collection by an expression.
+- `group_by_exp`            Group a collection by a derived key.
+- `sort: "title"`           Sort by a field (or by a Liquid expression).
+
+EXAMPLE: GROUP POSTS BY YEAR (already used in `_layouts/default.html`)
+    {%- assign by_year = site.posts
+        | group_by_exp: "p", "p.date | date: '%Y'" -%}
+    {%- for g in by_year -%}
+      <h3>{{ g.name }}</h3>
+      <ul>
+      {%- for post in g.items -%}
+        <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+      {%- endfor -%}
+      </ul>
+    {%- endfor -%}
+
+PERMALINKS
+- Default style: `/:categories/:year/:month/:day/:title:output_ext`
+- Override per post via `permalink:` front matter.
+- Override globally in `_config.yml` with `permalink: /:year/:month/:title/`.
+
+ASSETS / SCSS
+- A `.scss` file at `assets/css/style.scss` MUST start with an empty front
+  matter block (two `---` lines) so Jekyll runs the SCSS converter on it.
+- Inside that SCSS file you can use Liquid (rare). We don't here.
+
+PLUGINS USED IN THIS REPO
+- `jekyll-feed` — generates `/feed.xml` automatically. Configured in
+  `_config.yml` under `plugins:`.
+
+LOCAL DEVELOPMENT
+- `bundle install`              install gems pinned in `Gemfile.lock`
+- `bundle exec jekyll serve`    serve at http://127.0.0.1:4000 with reload
+- `bundle exec jekyll build`    build into `_site/` once
+- `bundle exec jekyll clean`    delete `_site/` and `.jekyll-cache/`
+
+GOTCHAS
+- `_config.yml` changes require a server restart; the watcher does not pick
+  them up.
+- Liquid in `_layouts/` is fragile. Prettier will mangle it. This repo's
+  `.prettierignore` excludes the directory; keep it that way.
+- `site.posts` is empty during the very first build of a fresh clone (no
+  posts). All loops over it must guard with a fallback message.
+- `page.previous` / `page.next` are only meaningful inside `post.html`.
+
+REFERENCES
+- Jekyll docs:        https://jekyllrb.com/docs/
+- Liquid reference:   https://shopify.github.io/liquid/
+- Front matter:       https://jekyllrb.com/docs/front-matter/
+- Filters:            https://jekyllrb.com/docs/liquid/filters/
+- jekyll-feed:        https://github.com/jekyll/jekyll-feed

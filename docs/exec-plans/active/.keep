@@ -1,0 +1,2 @@
+# Keep this directory under version control even when empty.
+# Active exec-plans live here as `<YYYY-MM-DD>-<slug>.md` files.

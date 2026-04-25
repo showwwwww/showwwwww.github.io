@@ -1,0 +1,12 @@
+# Project-level Codex CLI config.
+#
+# Hooks are an experimental Codex feature behind a feature flag. Enabling it
+# here lets the project's `.codex/hooks.json` actually fire when this repo's
+# `.codex/` layer is trusted. If you also keep a user-level `~/.codex/config.toml`,
+# Codex merges layers — you do not need to duplicate this flag there.
+#
+# See: https://developers.openai.com/codex/hooks
+# See also: docs/RELIABILITY.md ("Agent runtime hooks")
+
+[features]
+codex_hooks = true
