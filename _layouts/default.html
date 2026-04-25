@@ -5,15 +5,33 @@
 {%- if page.url contains '404' -%}
   {%- assign page_title = us.error404.title -%}
 {%- endif -%}
-<html lang="en-US" data-lang="us">
+<html lang="en-US" data-lang="us" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
   <title>{% if page_title %}{{ page_title }} · {{ us.site.title }}{% else %}{{ us.site.title }}{% endif %}</title>
   <meta name="description" content="{{ page.excerpt | default: us.site.tagline | strip_html | normalize_whitespace | truncate: 160 | escape }}">
   <link rel="icon" type="image/png" href="{{ '/assets/img/site-icon.png' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/img/site-icon.png' | relative_url }}">
+  <script>
+    (function () {
+      var key = 'showwwwww.github.io.theme';
+      var theme = 'dark';
+      try {
+        var saved = window.localStorage && window.localStorage.getItem(key);
+        if (saved === 'light' || saved === 'dark') {
+          theme = saved;
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          theme = 'light';
+        }
+      } catch (error) {
+        // Keep the HTML default when storage or matchMedia is unavailable.
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
 </head>
@@ -40,6 +58,24 @@
     {%- endif -%}
     <button class="language-toggle" type="button" aria-label="{{ us.language.switch }}" data-language-toggle data-i18n-aria-label="language.switch">
       {{ us.language.current }}
+    </button>
+    <button class="theme-toggle" type="button" aria-label="{{ us.theme.switch }}" data-theme-toggle data-i18n-aria-label="theme.switch">
+      <span class="theme-toggle-icon" aria-hidden="true">
+        <svg class="theme-toggle-symbol theme-toggle-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <svg class="theme-toggle-symbol theme-toggle-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </span>
     </button>
   </div>
 
@@ -122,8 +158,10 @@
   <script>
     (function () {
       var translations = {{ i18n | jsonify }};
-      var storageKey = 'showwwwww.github.io.language';
-      var supported = { us: true, cn: true };
+      var languageStorageKey = 'showwwwww.github.io.language';
+      var themeStorageKey = 'showwwwww.github.io.theme';
+      var supportedLanguages = { us: true, cn: true };
+      var supportedThemes = { light: true, dark: true };
 
       function textFor(lang, key) {
         var parts = key.split('.');
@@ -151,12 +189,51 @@
 
       function initialLanguage() {
         try {
-          var saved = window.localStorage && window.localStorage.getItem(storageKey);
-          if (supported[saved]) return saved;
+          var saved = window.localStorage && window.localStorage.getItem(languageStorageKey);
+          if (supportedLanguages[saved]) return saved;
         } catch (error) {
           // Ignore storage failures; browser language still gives a sane default.
         }
         return browserLanguage();
+      }
+
+      function storedTheme() {
+        try {
+          var saved = window.localStorage && window.localStorage.getItem(themeStorageKey);
+          return supportedThemes[saved] ? saved : '';
+        } catch (error) {
+          return '';
+        }
+      }
+
+      function systemTheme() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          return 'light';
+        }
+        return 'dark';
+      }
+
+      function initialTheme() {
+        return storedTheme() || systemTheme();
+      }
+
+      function updateThemeToggle(theme, lang) {
+        var toggle = document.querySelector('[data-theme-toggle]');
+        if (!toggle) return;
+        toggle.title = textFor(lang, 'theme.' + theme);
+        toggle.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+      }
+
+      function applyTheme(theme, lang, persist) {
+        if (!supportedThemes[theme]) theme = 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        updateThemeToggle(theme, lang);
+        if (!persist) return;
+        try {
+          window.localStorage && window.localStorage.setItem(themeStorageKey, theme);
+        } catch (error) {
+          // Persisting the choice is best-effort only.
+        }
       }
 
       function applyLanguage(lang) {
@@ -178,6 +255,7 @@
           toggle.textContent = textFor(lang, 'language.current');
           toggle.setAttribute('aria-pressed', lang === 'cn' ? 'true' : 'false');
         }
+        updateThemeToggle(theme, lang);
 
         var pageTitle = '';
         var titleKey = document.body.getAttribute('data-document-title-key');
@@ -194,14 +272,38 @@
           : siteName;
 
         try {
-          window.localStorage && window.localStorage.setItem(storageKey, lang);
+          window.localStorage && window.localStorage.setItem(languageStorageKey, lang);
         } catch (error) {
           // Persisting the choice is best-effort only.
         }
       }
 
       var language = initialLanguage();
+      var theme = initialTheme();
+      applyTheme(theme, language, false);
       applyLanguage(language);
+
+      var themeToggle = document.querySelector('[data-theme-toggle]');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+          theme = theme === 'dark' ? 'light' : 'dark';
+          applyTheme(theme, language, true);
+        });
+      }
+
+      if (window.matchMedia) {
+        var themeMedia = window.matchMedia('(prefers-color-scheme: light)');
+        var syncSystemTheme = function () {
+          if (storedTheme()) return;
+          theme = systemTheme();
+          applyTheme(theme, language, false);
+        };
+        if (themeMedia.addEventListener) {
+          themeMedia.addEventListener('change', syncSystemTheme);
+        } else if (themeMedia.addListener) {
+          themeMedia.addListener(syncSystemTheme);
+        }
+      }
 
       var languageToggle = document.querySelector('[data-language-toggle]');
       if (languageToggle) {

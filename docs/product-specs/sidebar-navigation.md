@@ -35,9 +35,13 @@ surface.
   applied via Liquid; styling lives in `assets/css/style.scss`).
 - The **GitHub** profile link (when `github_username` in `_config.yml` is
   set and not the Jekyll default) is a circular mark button in the fixed
-  top-right `header-toolbar`, immediately **left of** the language toggle.
+  top-right `header-toolbar`, immediately **left of** the language control.
   It uses the same localized accessible name as the old footer label
   (`data-i18n-aria-label="footer.github"`, Octicons-style path SVG).
+- The fixed `header-toolbar` includes a circular theme button to the
+  **right of** the language toggle. It shows a sun SVG in light mode and a
+  moon SVG in dark mode, toggles `html[data-theme]`, and persists explicit
+  choices in `localStorage`.
 - A footer at the bottom of the sidebar shows **Twitter** and **email** links
   if (and only if) the corresponding values in `_config.yml` differ from the
   Jekyll boilerplate defaults. If neither is set, the footer block is omitted
@@ -61,7 +65,8 @@ active language.
 ## Constraints
 
 - No JavaScript framework. The only inline JS allowed on this layout is the
-  sidebar toggle and the language selector; both live at the bottom of
+  early theme bootstrap plus the sidebar toggle, theme selector, and language
+  selector; the runtime controls live at the bottom of
   `_layouts/default.html`.
 - Keyboard-accessible: the toggle is a `<button>` with `aria-controls` and
   `aria-expanded`.
@@ -102,3 +107,7 @@ active language.
   `a.site-title` home link. Footer links are center-aligned in the bar.
 - 2026-04-26: GitHub link moved to `header-toolbar` (circular mark, left of
   language toggle); footer keeps Twitter and email only.
+- 2026-04-26: Added a localized light/dark theme toggle to
+  `header-toolbar`, to the right of the language toggle.
+- 2026-04-26: Theme toggle is now a circular icon button that animates
+  between sun (light) and moon (dark) states.

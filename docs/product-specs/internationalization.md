@@ -19,17 +19,20 @@ Markdown.
 ### Functional UI text
 
 - Functional UI text lives in `_data/i18n.yml`, split into `us` and `cn`
-  branches. Examples: navigation labels, button labels, section labels,
-  footer labels, empty states, post-navigation labels, 404 system copy, and
-  the sidebar site name and tagline (`us.site` / `cn.site`).
-- The GitHub header link (circular mark, left of the language toggle) uses
-  `data-i18n-aria-label="footer.github"` so the accessible name stays
-  on the `footer.github` key even though the control left the sidebar
-  footer.
+  branches. Examples: navigation labels, theme and language button labels,
+  section labels, footer labels, empty states, post-navigation labels, 404
+  system copy, and the sidebar site name and tagline (`us.site` / `cn.site`).
+- The GitHub header link (circular mark, left of the language and theme
+  controls) uses `data-i18n-aria-label="footer.github"` so the accessible
+  name stays on the `footer.github` key even though the control left the
+  sidebar footer.
 - The site renders US English by default. On first load, a Chinese browser
   environment switches the chrome to CN; other environments stay on US.
 - A language toggle appears at the top-right of every page. Selecting it
   switches between `EN` and `CN` and stores the choice in `localStorage`.
+- The theme toggle accessible label is also localized. Its visible state is
+  icon-only, while its title uses the active theme label (`theme.dark` or
+  `theme.light`) for the selected language.
 - The selected language updates `html[lang]`, `html[data-lang]`, visible
   layout labels, accessible labels, and functional system text such as the
   404 page.
@@ -102,6 +105,8 @@ Markdown.
 - 2026-04-26: Localized sidebar site name and tagline via `us.site` /
   `cn.site`; Jekyll `site.title` / `site.description` in `_config.yml`
   remain for build metadata and the feed.
+- 2026-04-26: Added localized theme control labels under `theme.switch`,
+  `theme.dark`, and `theme.light`.
 - 2026-04-25: Added US/CN language detection and a persistent top-right
   toggle for translated site chrome.
 - 2026-04-25: Clarified that `_data/i18n.yml` owns functional UI text only;

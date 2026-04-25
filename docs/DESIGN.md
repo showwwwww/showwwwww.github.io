@@ -16,7 +16,7 @@ captures the _intent_.
 | Layout            | `--sidebar-width: 280px`, `--content-max: 760px`, `--content-pad: 3rem`                                                   | The sidebar is fixed-width; the content column has a hard max-width and generous padding. Don't let either drift far from these values without revisiting the spec. |
 | Color (light)     | `--color-bg`, `--color-surface`, `--color-text`, `--color-text-soft`, `--color-muted`, `--color-border`, `--color-accent` | Soft off-white background, near-black text, a single accent (`#4f7cff`).                                                                                            |
 | Color (sidebar)   | `--color-sidebar-bg` (`#0f1115`), `--color-sidebar-fg`, `--color-sidebar-active-*`                                        | The sidebar is intentionally dark in both themes. It frames the content; it does not need to match the page background.                                             |
-| Color (dark mode) | Same tokens overridden inside `@media (prefers-color-scheme: dark)`                                                       | Dark mode is automatic; no toggle, no `localStorage`.                                                                                                               |
+| Color (dark mode) | Same tokens declared in `:root`; light mode overrides them under `html[data-theme="light"]`                               | Dark is the HTML/default theme. The theme script may switch to light based on saved choice or system preference.                                                    |
 | Typography        | `--font-sans`, `--font-mono`                                                                                              | System font stacks, including PingFang / Hiragino / YaHei for CJK. No webfonts, no FOUT.                                                                            |
 | Surface           | `--radius: 8px`, `--shadow-sm`, `--shadow-md`                                                                             | One radius value, two shadow levels.                                                                                                                                |
 
@@ -31,22 +31,30 @@ selectors.
 - Sidebar identity uses a circular transparent PNG above the site title; the
   source artwork is clipped to avoid square black corners.
 - Top-right of the viewport: a fixed `header-toolbar` with the i18n language
-  button; when `site.github_username` is set (non-boilerplate), a circular
-  GitHub mark link sits immediately to the **left** of the language control.
-  This chrome is intentionally small, separate from the sidebar.
+  button and a circular theme button to its right; when
+  `site.github_username` is set (non-boilerplate), a circular GitHub mark
+  link sits immediately to the **left** of the language control. This chrome
+  is intentionally small, separate from the sidebar.
 - Below 768 px, the sidebar collapses behind a hamburger; the content fills
   the viewport.
 - Vertical rhythm comes from `line-height: 1.65` on body text and matching
   margin defaults on headings; do not override per-component.
 
-## Dark mode
+## Theme system
 
-- Triggered by `prefers-color-scheme: dark`. There is intentionally no UI
-  toggle.
+- Supported themes are `dark` and `light`, represented by
+  `html[data-theme="dark"]` and `html[data-theme="light"]`.
+- Dark is the static HTML default. Before the stylesheet loads,
+  `_layouts/default.html` checks `localStorage`; when no saved choice exists,
+  it follows `prefers-color-scheme` and falls back to dark.
+- The top-right theme toggle switches only between light and dark and stores
+  the explicit choice in `localStorage`. While no explicit choice exists, a
+  system theme change updates the page. The control is circular and shows a
+  sun icon for light mode and a moon icon for dark mode.
 - The sidebar palette does not change between modes (it's already dark in
   light mode). Only the content area tokens flip.
 - New components must work in both modes. If a value needs to differ, route
-  it through a token, not a `@media` block inside the component.
+  it through a token, not a component-local `@media` block.
 
 ## Accessibility
 
@@ -54,16 +62,17 @@ Non-negotiable:
 
 - Body text contrast is AA at minimum on both themes. Spot-check with a
   contrast tool before merging a token change.
-- Keyboard navigation works without JS for links. The sidebar and language
-  controls are real `<button>` elements.
+- Keyboard navigation works without JS for links. The sidebar, theme, and
+  language controls are real `<button>` elements.
 - `aria-label`, `aria-controls`, and `aria-expanded` on the sidebar toggle
-  stay in sync with the visual state. The language toggle keeps its
-  accessible label and pressed state in sync with the selected language.
+  stay in sync with the visual state. The theme and language toggles keep
+  their accessible labels and pressed states in sync with the selected
+  theme/language.
 - Skip-to-content is provided implicitly by the `<main id="content">`
   landmark. If we add visible "Skip to content" UI it goes under a separate
   spec.
-- `prefers-reduced-motion: reduce` should be honored by any future
-  animation. We don't have any today.
+- `prefers-reduced-motion: reduce` is honored by the theme icon transition
+  and should be honored by any future animation.
 
 ## What lives in `assets/css/style.scss` (and what doesn't)
 
@@ -95,3 +104,9 @@ Non-negotiable:
 - 2026-04-26: GitHub profile link moved from the sidebar footer to a circular
   mark button in `header-toolbar`, left of the language toggle; Twitter and
   email stay in the sidebar footer.
+- 2026-04-26: Replaced automatic-only dark mode with a light/dark theme
+  system. Dark is the HTML default; first load follows saved preference or
+  system color scheme, and the toolbar theme toggle persists explicit
+  choices.
+- 2026-04-26: Theme toggle moved to the right of the language button and now
+  renders animated sun/moon SVG icons with reduced-motion support.

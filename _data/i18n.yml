@@ -11,6 +11,10 @@ us:
   language:
     switch: "Switch language"
     current: "EN"
+  theme:
+    switch: "Switch theme"
+    dark: "Dark"
+    light: "Light"
   home:
     hint: "Pick an article from the menu on the left to start reading."
     latest: "Latest articles"
@@ -40,6 +44,10 @@ cn:
   language:
     switch: "切换语言"
     current: "CN"
+  theme:
+    switch: "切换主题"
+    dark: "暗色"
+    light: "亮色"
   home:
     hint: "从左侧菜单选择一篇文章开始阅读。"
     latest: "最新文章"
