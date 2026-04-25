@@ -81,6 +81,9 @@ for the full content-i18n contract.
   is the only `<h1>`.
 - Wrap inline code with backticks. For multi-line code, use fenced blocks
   with a language identifier (`ruby`, `bash`, `js`, etc.).
+- Keep post-owned images under `assets/img/posts/<post-ref>/` and link to
+  them with root-relative paths, for example
+  `/assets/img/posts/<post-ref>/diagram.png`.
 - Prefer reference-style links at the bottom for URLs that appear more than
   once or that are long enough to break wrapping:
 

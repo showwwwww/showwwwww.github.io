@@ -10,7 +10,7 @@ us:
     empty: "No articles yet."
   language:
     switch: "Switch language"
-    current: "US"
+    current: "EN"
   home:
     hint: "Pick an article from the menu on the left to start reading."
     latest: "Latest articles"

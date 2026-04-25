@@ -29,7 +29,7 @@ Markdown.
 - The site renders US English by default. On first load, a Chinese browser
   environment switches the chrome to CN; other environments stay on US.
 - A language toggle appears at the top-right of every page. Selecting it
-  switches between `US` and `CN` and stores the choice in `localStorage`.
+  switches between `EN` and `CN` and stores the choice in `localStorage`.
 - The selected language updates `html[lang]`, `html[data-lang]`, visible
   layout labels, accessible labels, and functional system text such as the
   404 page.
