@@ -11,7 +11,8 @@ Last reviewed: 2026-04-25.
 
 This is a personal blog. The product breaks into four small domains:
 
-1. **Site shell** — chrome around every page (sidebar, head, footer).
+1. **Site shell** — chrome around every page (sidebar, head, footer,
+   language toggle).
 2. **Content** — Markdown posts and standalone pages, plus their frontmatter.
 3. **Theme** — visual design tokens and SCSS, plus the 404 page.
 4. **Build** — Jekyll config, dependency pinning, formatter, git hooks, CI.
@@ -69,32 +70,35 @@ Disallowed:
 
 ## File map
 
-| Path                                                                         | Owner doc                                                                              | Notes                                                           |
-| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `index.markdown`                                                             | [`docs/CONTENT.md`](docs/CONTENT.md)                                                   | Renders via `home` layout.                                      |
-| `about.markdown`                                                             | [`docs/CONTENT.md`](docs/CONTENT.md)                                                   | Standalone `page` layout.                                       |
-| `404.html`                                                                   | [`docs/DESIGN.md`](docs/DESIGN.md)                                                     | Hand-authored, Liquid-aware, ignored by Prettier.               |
-| `_posts/*.markdown`                                                          | [`docs/CONTENT.md`](docs/CONTENT.md)                                                   | Filename must match `YYYY-MM-DD-title.md(arkdown)`.             |
-| `_layouts/default.html`                                                      | [`docs/product-specs/sidebar-navigation.md`](docs/product-specs/sidebar-navigation.md) | Owns the sidebar + content frame.                               |
-| `_layouts/home.html`                                                         | [`docs/product-specs/sidebar-navigation.md`](docs/product-specs/sidebar-navigation.md) | Welcome hero + recent posts.                                    |
-| `_layouts/post.html`                                                         | [`docs/product-specs/post-layout.md`](docs/product-specs/post-layout.md)               | Header, content, prev/next nav.                                 |
-| `_layouts/page.html`                                                         | [`docs/product-specs/post-layout.md`](docs/product-specs/post-layout.md)               | Minimal page chrome.                                            |
-| `assets/css/style.scss`                                                      | [`docs/DESIGN.md`](docs/DESIGN.md)                                                     | Single stylesheet; uses CSS variables.                          |
-| `_config.yml`                                                                | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                           | Site metadata; Prettier ignores it.                             |
-| `Gemfile` / `Gemfile.lock`                                                   | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                           | Pinned for GitHub Pages compatibility.                          |
-| `.githooks/pre-commit`                                                       | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                           | Activated via `git config core.hooksPath .githooks`.            |
-| `.prettierrc.json`, `.prettierignore`                                        | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                           | Prettier 3 config; see `.cursor/rules/prettier-formatting.mdc`. |
-| `.cursor/`, `.codex/`, `.claude/`, `AGENTS.md`, `CLAUDE.md`, `scripts/docs/` | [`docs/design-docs/core-beliefs.md`](docs/design-docs/core-beliefs.md)                 | The agent harness itself.                                       |
-| `_site/`, `.jekyll-cache/`, `vendor/`                                        | —                                                                                      | Generated. Never commit, never edit.                            |
+| Path                                                                         | Owner doc                                                                                                                                                                          | Notes                                                           |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `index.markdown`                                                             | [`docs/CONTENT.md`](docs/CONTENT.md)                                                                                                                                               | Renders via `home` layout.                                      |
+| `about.markdown`                                                             | [`docs/CONTENT.md`](docs/CONTENT.md)                                                                                                                                               | Standalone `page` layout.                                       |
+| `404.html`                                                                   | [`docs/DESIGN.md`](docs/DESIGN.md)                                                                                                                                                 | Hand-authored, Liquid-aware, ignored by Prettier.               |
+| `_posts/*.markdown`                                                          | [`docs/CONTENT.md`](docs/CONTENT.md)                                                                                                                                               | Filename must match `YYYY-MM-DD-title.md(arkdown)`.             |
+| `_data/i18n.yml`                                                             | [`docs/product-specs/internationalization.md`](docs/product-specs/internationalization.md)                                                                                         | Central US/CN source for functional UI text.                    |
+| `_layouts/default.html`                                                      | [`docs/product-specs/sidebar-navigation.md`](docs/product-specs/sidebar-navigation.md), [`docs/product-specs/internationalization.md`](docs/product-specs/internationalization.md) | Owns the sidebar, language toggle, and content frame.           |
+| `_layouts/home.html`                                                         | [`docs/product-specs/sidebar-navigation.md`](docs/product-specs/sidebar-navigation.md)                                                                                             | Welcome hero + recent posts.                                    |
+| `_layouts/post.html`                                                         | [`docs/product-specs/post-layout.md`](docs/product-specs/post-layout.md)                                                                                                           | Header, content, prev/next nav.                                 |
+| `_layouts/page.html`                                                         | [`docs/product-specs/post-layout.md`](docs/product-specs/post-layout.md)                                                                                                           | Minimal page chrome.                                            |
+| `assets/css/style.scss`                                                      | [`docs/DESIGN.md`](docs/DESIGN.md)                                                                                                                                                 | Single stylesheet; uses CSS variables.                          |
+| `_config.yml`                                                                | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Site metadata; Prettier ignores it.                             |
+| `Gemfile` / `Gemfile.lock`                                                   | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Pinned for GitHub Pages compatibility.                          |
+| `.githooks/pre-commit`                                                       | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Activated via `git config core.hooksPath .githooks`.            |
+| `.prettierrc.json`, `.prettierignore`                                        | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Prettier 3 config; see `.cursor/rules/prettier-formatting.mdc`. |
+| `.cursor/`, `.codex/`, `.claude/`, `AGENTS.md`, `CLAUDE.md`, `scripts/docs/` | [`docs/design-docs/core-beliefs.md`](docs/design-docs/core-beliefs.md)                                                                                                             | The agent harness itself.                                       |
+| `_site/`, `.jekyll-cache/`, `vendor/`                                        | —                                                                                                                                                                                  | Generated. Never commit, never edit.                            |
 
 ## What's deliberately not here
 
-- No JavaScript framework. The only inline JS is the sidebar toggle in
-  `_layouts/default.html`.
+- No JavaScript framework. The only inline JS is the sidebar toggle and
+  language selector in `_layouts/default.html`.
 - No Sass partials. One file (`style.scss`) is enough at this scale.
 - No CI workflow files yet. GitHub Pages does its own build; if we add CI it
   will live in `.github/workflows/` and own its own row in the file map above.
-- No data files in `_data/`. Posts are the only data.
+- `_data/i18n.yml` is the only data file. It owns functional UI text only;
+  content text stays in Markdown/frontmatter/config until a future content
+  source replaces it.
 
 ## Who owns the harness
 

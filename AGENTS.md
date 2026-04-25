@@ -66,6 +66,7 @@ docs/
 │   └── tech-debt-tracker.md
 ├── product-specs/       What each user-visible feature is supposed to do
 │   ├── index.md
+│   ├── internationalization.md
 │   ├── sidebar-navigation.md
 │   └── post-layout.md
 ├── references/          External docs cached as llms.txt for agent context

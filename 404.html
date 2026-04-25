@@ -3,11 +3,12 @@ permalink: /404.html
 layout: default
 ---
 
+{%- assign us = site.data.i18n.us -%}
 <section class="welcome">
   <div class="welcome-hero">
     <p class="welcome-eyebrow">404</p>
-    <h1 class="welcome-title">Page not found</h1>
-    <p class="welcome-subtitle">The page you’re looking for doesn’t exist or has been moved.</p>
-    <p class="welcome-hint">Try picking an article from the menu on the left, or head back to the <a href="{{ '/' | relative_url }}">home page</a>.</p>
+    <h1 class="welcome-title" data-i18n="error404.title">{{ us.error404.title }}</h1>
+    <p class="welcome-subtitle" data-i18n="error404.subtitle">{{ us.error404.subtitle }}</p>
+    <p class="welcome-hint" data-i18n-html="error404.hint">{{ us.error404.hint }}</p>
   </div>
 </section>

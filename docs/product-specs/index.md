@@ -9,10 +9,11 @@ Last reviewed: 2026-04-25.
 
 ## Specs
 
-| Spec                                             | Owns these files                                       |
-| ------------------------------------------------ | ------------------------------------------------------ |
-| [`sidebar-navigation.md`](sidebar-navigation.md) | `_layouts/default.html`, `_layouts/home.html`          |
-| [`post-layout.md`](post-layout.md)               | `_layouts/post.html`, `_layouts/page.html`, `404.html` |
+| Spec                                                 | Owns these files                                       |
+| ---------------------------------------------------- | ------------------------------------------------------ |
+| [`internationalization.md`](internationalization.md) | `_data/i18n.yml`, language toggle, functional UI text  |
+| [`sidebar-navigation.md`](sidebar-navigation.md)     | `_layouts/default.html`, `_layouts/home.html`          |
+| [`post-layout.md`](post-layout.md)                   | `_layouts/post.html`, `_layouts/page.html`, `404.html` |
 
 ## Format
 

@@ -11,10 +11,10 @@ Last reviewed: 2026-04-25.
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | [`design-docs/`](design-docs/)         | Why the repo is shaped the way it is. The `core-beliefs.md` file holds the agent-first operating principles. |
 | [`exec-plans/`](exec-plans/)           | Active and completed plans for non-trivial work, plus the tech-debt tracker.                                 |
-| [`product-specs/`](product-specs/)     | One file per user-visible feature. Each spec describes the intent, not the implementation.                   |
+| [`product-specs/`](product-specs/)     | One file per user-visible feature, including sidebar, post layout, and internationalization behavior.        |
 | [`references/`](references/)           | External docs cached locally as `*-llms.txt` so agents have stable context (Jekyll, Prettier).               |
 | [`generated/`](generated/)             | Reserved for auto-generated docs (e.g. site map, post index). Currently empty.                               |
-| [`CONTENT.md`](CONTENT.md)             | Voice, tone, frontmatter, post conventions.                                                                  |
+| [`CONTENT.md`](CONTENT.md)             | Voice, tone, frontmatter, post conventions, and the boundary between content and functional text.            |
 | [`DESIGN.md`](DESIGN.md)               | Design tokens, layout rules, accessibility, dark mode.                                                       |
 | [`PLANS.md`](PLANS.md)                 | Short-term roadmap and currently-active goals.                                                               |
 | [`QUALITY_SCORE.md`](QUALITY_SCORE.md) | Per-domain quality grades and known gaps.                                                                    |

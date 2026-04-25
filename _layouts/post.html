@@ -2,6 +2,7 @@
 layout: default
 ---
 <article class="post">
+  {%- assign us = site.data.i18n.us -%}
   <header class="post-header">
     {%- if page.categories and page.categories.size > 0 -%}
       <p class="post-categories">
@@ -10,7 +11,7 @@ layout: default
         {%- endfor -%}
       </p>
     {%- endif -%}
-    <h1 class="post-title">{{ page.title | escape }}</h1>
+    <h1 class="post-title" data-document-title>{{ page.title | escape }}</h1>
     <p class="post-meta">
       <time datetime="{{ page.date | date_to_xmlschema }}">
         {{ page.date | date: "%B %-d, %Y" }}
@@ -23,16 +24,16 @@ layout: default
     {{ content }}
   </div>
 
-  <nav class="post-nav" aria-label="Article navigation">
+  <nav class="post-nav" aria-label="{{ us.post.navigation }}" data-i18n-aria-label="post.navigation">
     {%- if page.previous -%}
       <a class="post-nav-link prev" href="{{ page.previous.url | relative_url }}">
-        <span class="post-nav-direction">← Previous</span>
+        <span class="post-nav-direction">← <span data-i18n="post.previous">{{ us.post.previous }}</span></span>
         <span class="post-nav-title">{{ page.previous.title | escape }}</span>
       </a>
     {%- else -%}<span></span>{%- endif -%}
     {%- if page.next -%}
       <a class="post-nav-link next" href="{{ page.next.url | relative_url }}">
-        <span class="post-nav-direction">Next →</span>
+        <span class="post-nav-direction"><span data-i18n="post.next">{{ us.post.next }}</span> →</span>
         <span class="post-nav-title">{{ page.next.title | escape }}</span>
       </a>
     {%- else -%}<span></span>{%- endif -%}

@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+{%- assign i18n = site.data.i18n -%}
+{%- assign us = i18n.us -%}
+{%- assign page_title = page.title -%}
+{%- if page.url contains '404' -%}
+  {%- assign page_title = us.error404.title -%}
+{%- endif -%}
+<html lang="en-US" data-lang="us">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <title>{% if page_title %}{{ page_title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
 </head>
-<body>
-  <button class="sidebar-toggle" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false">
+<body{% if page.url contains '404' %} data-document-title-key="error404.title"{% elsif page.title %} data-document-title-selector="[data-document-title]"{% endif %}>
+  <button class="sidebar-toggle" type="button" aria-label="{{ us.nav.toggle }}" aria-controls="sidebar" aria-expanded="false" data-i18n-aria-label="nav.toggle">
     <span></span><span></span><span></span>
+  </button>
+  <button class="language-toggle" type="button" aria-label="{{ us.language.switch }}" data-language-toggle data-i18n-aria-label="language.switch">
+    {{ us.language.current }}
   </button>
 
   <aside class="sidebar" id="sidebar">
@@ -23,10 +32,10 @@
         {% endif %}
       </header>
 
-      <nav class="site-nav" aria-label="Pages">
+      <nav class="site-nav" aria-label="{{ us.nav.pages }}" data-i18n-aria-label="nav.pages">
         <ul class="nav-pages">
           <li>
-            <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}is-active{% endif %}">Home</a>
+            <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}is-active{% endif %}" data-i18n="nav.home">{{ us.nav.home }}</a>
           </li>
           {%- assign pages = site.pages | where_exp: "p", "p.title" | sort: "title" -%}
           {%- for p in pages -%}
@@ -38,8 +47,8 @@
         </ul>
       </nav>
 
-      <nav class="site-nav" aria-label="Articles">
-        <h2 class="nav-heading">Articles</h2>
+      <nav class="site-nav" aria-label="{{ us.nav.articles }}" data-i18n-aria-label="nav.articles">
+        <h2 class="nav-heading" data-i18n="nav.articles">{{ us.nav.articles }}</h2>
         {%- assign posts_by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" -%}
         {%- for year_group in posts_by_year -%}
           <div class="nav-year">
@@ -57,19 +66,19 @@
           </div>
         {%- endfor -%}
         {%- if site.posts.size == 0 -%}
-          <p class="nav-empty">No articles yet.</p>
+          <p class="nav-empty" data-i18n="nav.empty">{{ us.nav.empty }}</p>
         {%- endif -%}
       </nav>
 
       <footer class="sidebar-footer">
         {%- if site.github_username and site.github_username != 'jekyll' -%}
-          <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener" data-i18n="footer.github">{{ us.footer.github }}</a>
         {%- endif -%}
         {%- if site.twitter_username and site.twitter_username != 'jekyllrb' -%}
-          <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank" rel="noopener" data-i18n="footer.twitter">{{ us.footer.twitter }}</a>
         {%- endif -%}
         {%- if site.email and site.email != 'your-email@example.com' -%}
-          <a href="mailto:{{ site.email }}">Email</a>
+          <a href="mailto:{{ site.email }}" data-i18n="footer.email">{{ us.footer.email }}</a>
         {%- endif -%}
       </footer>
     </div>
@@ -83,6 +92,96 @@
 
   <script>
     (function () {
+      var translations = {{ i18n | jsonify }};
+      var siteTitle = {{ site.title | jsonify }};
+      var storageKey = 'showwwwww.github.io.language';
+      var supported = { us: true, cn: true };
+
+      function textFor(lang, key) {
+        var parts = key.split('.');
+        var value = translations[lang];
+        var fallback = translations.us;
+        for (var i = 0; i < parts.length; i += 1) {
+          value = value && value[parts[i]];
+          fallback = fallback && fallback[parts[i]];
+        }
+        return value || fallback || '';
+      }
+
+      function browserLanguage() {
+        var languages = navigator.languages && navigator.languages.length
+          ? navigator.languages
+          : [navigator.language || navigator.userLanguage || ''];
+        for (var i = 0; i < languages.length; i += 1) {
+          var language = String(languages[i]).toLowerCase();
+          if (language.indexOf('zh') === 0 || language.indexOf('cn') >= 0) {
+            return 'cn';
+          }
+        }
+        return 'us';
+      }
+
+      function initialLanguage() {
+        try {
+          var saved = window.localStorage && window.localStorage.getItem(storageKey);
+          if (supported[saved]) return saved;
+        } catch (error) {
+          // Ignore storage failures; browser language still gives a sane default.
+        }
+        return browserLanguage();
+      }
+
+      function applyLanguage(lang) {
+        var html = document.documentElement;
+        html.lang = lang === 'cn' ? 'zh-CN' : 'en-US';
+        html.setAttribute('data-lang', lang);
+
+        document.querySelectorAll('[data-i18n]').forEach(function (node) {
+          node.textContent = textFor(lang, node.getAttribute('data-i18n'));
+        });
+        document.querySelectorAll('[data-i18n-html]').forEach(function (node) {
+          node.innerHTML = textFor(lang, node.getAttribute('data-i18n-html'));
+        });
+        document.querySelectorAll('[data-i18n-aria-label]').forEach(function (node) {
+          node.setAttribute('aria-label', textFor(lang, node.getAttribute('data-i18n-aria-label')));
+        });
+        var toggle = document.querySelector('[data-language-toggle]');
+        if (toggle) {
+          toggle.textContent = textFor(lang, 'language.current');
+          toggle.setAttribute('aria-pressed', lang === 'cn' ? 'true' : 'false');
+        }
+
+        var pageTitle = '';
+        var titleKey = document.body.getAttribute('data-document-title-key');
+        var titleSelector = document.body.getAttribute('data-document-title-selector');
+        if (titleKey) {
+          pageTitle = textFor(lang, titleKey);
+        } else if (titleSelector) {
+          var titleNode = document.querySelector(titleSelector);
+          pageTitle = titleNode ? titleNode.textContent : '';
+        }
+        document.title = pageTitle
+          ? pageTitle + ' · ' + siteTitle
+          : siteTitle;
+
+        try {
+          window.localStorage && window.localStorage.setItem(storageKey, lang);
+        } catch (error) {
+          // Persisting the choice is best-effort only.
+        }
+      }
+
+      var language = initialLanguage();
+      applyLanguage(language);
+
+      var languageToggle = document.querySelector('[data-language-toggle]');
+      if (languageToggle) {
+        languageToggle.addEventListener('click', function () {
+          language = language === 'cn' ? 'us' : 'cn';
+          applyLanguage(language);
+        });
+      }
+
       var btn = document.querySelector('.sidebar-toggle');
       var sidebar = document.getElementById('sidebar');
       if (!btn || !sidebar) return;

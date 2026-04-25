@@ -22,9 +22,16 @@ surface.
   applied via Liquid; styling lives in `assets/css/style.scss`).
 - A footer at the bottom of the sidebar shows GitHub / Twitter / email links
   if (and only if) the corresponding values in `_config.yml` differ from the
-  Jekyll boilerplate defaults.
+  Jekyll boilerplate defaults. The link labels are functional text from
+  `_data/i18n.yml`.
 - On viewports ≤ 768 px, the sidebar collapses behind a hamburger toggle.
   Tapping a link auto-closes the sidebar.
+- Sidebar labels participate in the site language toggle. US English is the
+  default, and CN labels replace the chrome when the language layer selects
+  CN.
+- Functional nav labels are read from `_data/i18n.yml`. Site title, tagline,
+  page titles, and post titles are content text and come from their content
+  sources.
 
 The home layout (`home.html`) reuses the sidebar (it inherits from
 `default.html`) and renders a welcome hero plus the five most recent posts
@@ -32,8 +39,9 @@ inside the content area.
 
 ## Constraints
 
-- No JavaScript framework. The sidebar toggle is the only inline JS allowed
-  on this layout, and it lives at the bottom of `_layouts/default.html`.
+- No JavaScript framework. The only inline JS allowed on this layout is the
+  sidebar toggle and the language selector; both live at the bottom of
+  `_layouts/default.html`.
 - Keyboard-accessible: the toggle is a `<button>` with `aria-controls` and
   `aria-expanded`.
 - The sidebar must render correctly with zero posts — falling back to a
@@ -55,3 +63,6 @@ inside the content area.
 - 2026-04-25: Spec promoted from inline knowledge during the docs-harness
   setup. Behavior reflects the current `_layouts/default.html` and
   `home.html`; no behavioral change in this commit.
+- 2026-04-25: Sidebar chrome now participates in the US/CN language toggle.
+- 2026-04-25: Functional sidebar labels now read from `_data/i18n.yml`, while
+  content titles remain outside the functional dictionary.

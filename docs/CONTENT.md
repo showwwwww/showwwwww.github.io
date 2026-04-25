@@ -36,6 +36,9 @@ Notes:
 - `date` includes the local time and `+0800` offset. The time portion is
   required; Jekyll uses it for `post.next` / `post.previous` ordering.
 - `categories` is optional. When present, keep it to 1–3 short tokens.
+- Do not put content text into `_data/i18n.yml`. Titles, excerpts, and bodies
+  are content and stay in Markdown/frontmatter until a future DB-backed
+  content source replaces them.
 
 ## Filenames
 
@@ -90,3 +93,6 @@ are noise in the post list.
 - Newsletter signup forms.
 - Series / cross-post chaining. If we add a "series" feature later, it gets
   its own spec under `docs/product-specs/`.
+- Automatic translation of post bodies.
+- Managing content text in `_data/i18n.yml`; that file is for functional UI
+  text only.

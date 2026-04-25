@@ -22,6 +22,10 @@ Last reviewed: 2026-04-25.
 
 - `_config.yml` changes require a server restart (Jekyll does not watch
   the config file). All other changes hot-reload.
+- `_config.yml` keeps build/feed metadata such as `title` and `description`.
+  Functional UI copy is managed centrally in `_data/i18n.yml`; content copy
+  remains in content/frontmatter/config until a future content source replaces
+  it.
 
 ## Deploy
 

@@ -18,23 +18,29 @@ chrome above and below.
 - Renders categories (one per `<span>`) above the title, only when the post
   has at least one category.
 - Renders the post title as `<h1>` and the date below it (formatted "Month
-  D, YYYY"), plus an optional author when the frontmatter sets one.
+  D, YYYY"), plus an optional author when the frontmatter sets one. The title
+  is content text and comes from post frontmatter.
 - Renders the post body via `{{ content }}`.
 - At the foot, renders prev/next navigation by Jekyll's built-in
   `page.previous` / `page.next`. If either is missing, the slot is filled
   with an empty `<span>` so the flex layout stays balanced.
+- Prev/next labels and accessible navigation labels participate in the US/CN
+  language toggle.
 
 ### `page.html`
 
 - Same outer chrome as posts (sidebar via `default`), but inside the content
   area shows only the page title and content. No date, no prev/next.
 - This is what `about.markdown` and any future standalone page should use.
+- Page titles and bodies are content text and do not live in `_data/i18n.yml`.
 
 ### `404.html`
 
 - Uses the `default` layout for the sidebar.
 - Shows the same "welcome hero" component as `home.html` but with the
   eyebrow replaced by `404` and a one-line link back home.
+- Its title, subtitle, and home-link hint participate in the US/CN language
+  toggle.
 - Permalink is `/404.html` so GitHub Pages serves it for missing routes.
 
 ## Constraints
@@ -60,3 +66,7 @@ chrome above and below.
 - 2026-04-25: Spec promoted from inline knowledge during the docs-harness
   setup. Behavior reflects the current files; no behavioral change in this
   commit.
+- 2026-04-25: Post/page/404 chrome now participates in the US/CN language
+  toggle.
+- 2026-04-25: Clarified that post/page titles are content text; only
+  functional layout labels use `_data/i18n.yml`.

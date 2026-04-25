@@ -1,0 +1,51 @@
+us:
+  nav:
+    toggle: "Toggle navigation"
+    pages: "Pages"
+    home: "Home"
+    articles: "Articles"
+    empty: "No articles yet."
+  language:
+    switch: "Switch language"
+    current: "US"
+  home:
+    hint: "Pick an article from the menu on the left to start reading."
+    latest: "Latest articles"
+  post:
+    navigation: "Article navigation"
+    previous: "Previous"
+    next: "Next"
+  footer:
+    github: "GitHub"
+    twitter: "Twitter"
+    email: "Email"
+  error404:
+    title: "Page not found"
+    subtitle: "The page you're looking for doesn't exist or has been moved."
+    hint: 'Try picking an article from the menu on the left, or head back to the <a href="/">home page</a>.'
+
+cn:
+  nav:
+    toggle: "打开导航"
+    pages: "页面"
+    home: "首页"
+    articles: "文章"
+    empty: "还没有文章。"
+  language:
+    switch: "切换语言"
+    current: "CN"
+  home:
+    hint: "从左侧菜单选择一篇文章开始阅读。"
+    latest: "最新文章"
+  post:
+    navigation: "文章导航"
+    previous: "上一篇"
+    next: "下一篇"
+  footer:
+    github: "GitHub"
+    twitter: "Twitter"
+    email: "邮箱"
+  error404:
+    title: "页面未找到"
+    subtitle: "你要访问的页面不存在，或已经被移动。"
+    hint: '试试从左侧菜单选择一篇文章，或返回<a href="/">首页</a>。'

@@ -28,6 +28,8 @@ selectors.
 
 - Single-column reading surface, max width `--content-max` (760 px).
 - Sidebar on the left at `--sidebar-width` (280 px).
+- Language toggle fixed at the top-right of the viewport. It is intentionally
+  small chrome, separate from the sidebar.
 - Below 768 px, the sidebar collapses behind a hamburger; the content fills
   the viewport.
 - Vertical rhythm comes from `line-height: 1.65` on body text and matching
@@ -48,10 +50,11 @@ Non-negotiable:
 
 - Body text contrast is AA at minimum on both themes. Spot-check with a
   contrast tool before merging a token change.
-- Keyboard navigation works without JS. The sidebar toggle is the only
-  interactive element on most pages and it's a real `<button>`.
-- `aria-label`, `aria-controls`, and `aria-expanded` on the toggle stay
-  in sync with the visual state.
+- Keyboard navigation works without JS for links. The sidebar and language
+  controls are real `<button>` elements.
+- `aria-label`, `aria-controls`, and `aria-expanded` on the sidebar toggle
+  stay in sync with the visual state. The language toggle keeps its
+  accessible label and pressed state in sync with the selected language.
 - Skip-to-content is provided implicitly by the `<main id="content">`
   landmark. If we add visible "Skip to content" UI it goes under a separate
   spec.
@@ -78,3 +81,5 @@ Non-negotiable:
 
 - 2026-04-25: Document promoted from inline knowledge in `style.scss`. No
   visual change in this commit.
+- 2026-04-25: Added the top-right language toggle to the layout and
+  accessibility rules.
