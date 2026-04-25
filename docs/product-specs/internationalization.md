@@ -1,51 +1,92 @@
 # Internationalization
 
-Owns: `_data/i18n.yml` and language behavior in `_layouts/default.html` for
-functional UI text.
+Owns: `_data/i18n.yml`, language behavior in `_layouts/default.html`, the
+post/page conventions in [`../CONTENT.md`](../CONTENT.md), and the
+per-language post defaults in `_config.yml`.
 
 Last reviewed: 2026-04-25.
 
 ## Intent
 
-Readers should see the site chrome in the language that best matches their
-environment, while still having a visible manual override. The feature keeps
-the blog static-host friendly and does not introduce locale-specific routes.
+Readers should see both the site chrome and long-form post content in the
+language that best matches their environment, while still having a visible
+manual override. Functional UI text is centralized in a translation
+dictionary; long-form content is authored once per language as plain
+Markdown.
 
 ## Behavior
 
-- The site renders US English by default.
-- On first load, a Chinese browser environment switches the chrome to CN.
-  Other environments stay on US English.
-- A language toggle appears at the top-right of every page. Selecting it
-  switches between `US` and `CN` and stores the choice in `localStorage`.
-- The selected language updates `html[lang]`, visible layout labels,
-  accessible labels, and functional system text such as the 404 page.
+### Functional UI text
+
 - Functional UI text lives in `_data/i18n.yml`, split into `us` and `cn`
   branches. Examples: navigation labels, button labels, section labels,
   footer labels, empty states, post-navigation labels, and 404 system copy.
-- Content text does not live in `_data/i18n.yml`. Examples: site title,
-  tagline, page titles, home hero copy, post titles, excerpts, and article
-  bodies.
+- The site renders US English by default. On first load, a Chinese browser
+  environment switches the chrome to CN; other environments stay on US.
+- A language toggle appears at the top-right of every page. Selecting it
+  switches between `US` and `CN` and stores the choice in `localStorage`.
+- The selected language updates `html[lang]`, `html[data-lang]`, visible
+  layout labels, accessible labels, and functional system text such as the
+  404 page.
+- Layouts should not introduce new hardcoded functional strings when a key
+  in `_data/i18n.yml` would work.
+
+### Content text
+
+- Each post is authored as one Markdown file per language. US posts live at
+  `_posts/YYYY-MM-DD-slug.markdown`. CN translations live at
+  `_posts/cn/YYYY-MM-DD-slug.markdown`.
+- Both files in a pair carry a shared `ref:` slug in frontmatter (e.g.
+  `ref: welcome-to-jekyll`). `lang:` is set automatically by the
+  `defaults` block in `_config.yml`; do not hand-write it. See
+  [`../CONTENT.md`](../CONTENT.md) for full frontmatter conventions.
+- Each post has its own canonical URL: US at `/:title/`, CN at
+  `/cn/:title/`. Both are real, indexable pages.
+- Listings in the sidebar (`_layouts/default.html`) and the home page
+  (`_layouts/home.html`) render two parallel sections, wrapped in
+  `data-lang-section="us"` and `data-lang-section="cn"`. CSS in
+  `assets/css/style.scss` hides the section whose attribute does not match
+  `html[data-lang]`. The same mechanism is available to other layouts that
+  need per-language rendering.
+- Post prev/next navigation in `_layouts/post.html` is filtered by
+  `page.lang`, so a CN post links only to other CN posts.
+- When a post has a paired translation in the other language,
+  `_layouts/default.html` emits a `data-translation-href` attribute on
+  `<body>`. The toggle JS uses it to navigate to the paired URL after
+  persisting the language choice. Without a pairing, only the chrome flips
+  and the URL stays.
+- Other content text (site title, tagline, page bodies under `*.markdown`,
+  `welcome_title`, `welcome_subtitle`) remains in its content source and
+  is currently English-only. Each is a separate, optional follow-up.
+
+### Fallback when a translation is missing
+
+- If a US post has no CN counterpart and the user is in CN mode, the
+  chrome flips to CN, but the URL and the post body stay on the US
+  version. There is no "missing translation" banner.
 
 ## Constraints
 
-- No build plugin, JavaScript framework, or locale-specific generated pages.
+- No build plugin, JavaScript framework, or per-language Jekyll plugin.
 - US English is the source/default for functional copy; CN copy is a
-  client-side enhancement.
-- Content text remains in content/frontmatter/config today and can move to a
-  DB-backed source later without changing the functional i18n contract.
-- Layouts should not introduce new hardcoded functional strings when a key in
-  `_data/i18n.yml` would work. They may render content strings from content
-  sources.
+  client-side enhancement for chrome and a separate Markdown file for
+  content.
+- Content URLs are locale-prefixed (`/cn/:title/`), but routing is driven
+  by `_config.yml` `defaults` rather than a build-time locale loop.
+- Layouts must not introduce new hardcoded functional strings when a key
+  in `_data/i18n.yml` would work. They may render content strings from
+  content sources.
 - The toggle must remain keyboard-accessible and visible in both light and
   dark mode.
 
 ## Out of scope
 
 - Machine translation.
-- `/cn/` or `/us/` routes.
+- Translating pages (`about.markdown`, `index.markdown`) or `_config.yml`
+  content text.
 - RSS/feed localization.
-- Content localization or DB-backed content loading.
+- Per-language sitemaps or `hreflang` tags.
+- A "missing translation" stub UI when only the US version exists.
 
 ## Changelog
 
@@ -53,3 +94,9 @@ the blog static-host friendly and does not introduce locale-specific routes.
   toggle for translated site chrome.
 - 2026-04-25: Clarified that `_data/i18n.yml` owns functional UI text only;
   content text stays with content sources.
+- 2026-04-25: Extended i18n to long-form post content. Added `_posts/cn/`
+  convention with shared `ref:` pairing, locale-prefixed URLs
+  (`/:title/` and `/cn/:title/`), per-language listings via
+  `data-lang-section`, lang-filtered post prev/next, and toggle navigation
+  to the paired URL when present. Removed the prior "no locale-specific
+  generated pages" constraint.

@@ -12,8 +12,10 @@ Last reviewed: 2026-04-25.
   `scripts/docs-check.sh`, and per-runtime hooks for Cursor / Codex /
   Claude Code. Tracking via the conversation that produced this commit;
   no exec-plan file because the work is the harness itself.
-- Add US/CN internationalization for the static site chrome. Tracking in
-  [`exec-plans/active/i18n-us-cn.md`](exec-plans/active/i18n-us-cn.md).
+- Extend US/CN i18n from chrome to long-form post content. Tracking in
+  [`exec-plans/active/2026-04-25-content-i18n-us-cn.md`](exec-plans/active/2026-04-25-content-i18n-us-cn.md).
+  The earlier chrome-only plan shipped and is archived at
+  [`exec-plans/completed/i18n-us-cn.md`](exec-plans/completed/i18n-us-cn.md).
 
 ## Next (queued, no exec-plan yet)
 

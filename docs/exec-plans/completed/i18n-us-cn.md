@@ -1,7 +1,14 @@
 # I18N: US/CN site chrome
 
+Outcome: Shipped. Functional UI text now switches between US and CN via the
+top-right toggle, with browser-language detection and `localStorage`
+persistence. Content text was deliberately left out of scope — see the
+follow-up plan in [`active/2026-04-25-content-i18n-us-cn.md`](../active/2026-04-25-content-i18n-us-cn.md).
+
+Status: shipped
 Owner: site shell + content docs
 Started: 2026-04-25
+Shipped: 2026-04-25
 
 ## Goal
 

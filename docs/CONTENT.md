@@ -23,6 +23,7 @@ layout: post
 title:  "Sentence case title — no trailing period"
 date:   YYYY-MM-DD HH:MM:SS +0800
 categories: lowercase space separated
+ref:    kebab-case-translation-key
 ---
 ```
 
@@ -34,8 +35,16 @@ Notes:
   nouns stay capitalized). No trailing period. Two spaces after the colon
   are conventional in the Jekyll templates and Prettier preserves them.
 - `date` includes the local time and `+0800` offset. The time portion is
-  required; Jekyll uses it for `post.next` / `post.previous` ordering.
+  required; Jekyll uses it for prev/next ordering.
 - `categories` is optional. When present, keep it to 1–3 short tokens.
+- `ref` is the shared key that pairs a post with its translation in the
+  other language. Use the same kebab-case slug in both files; the
+  language toggle and translation lookup rely on it. Required on every
+  post, even when no translation exists yet (so a future translation can
+  be paired without editing the original).
+- Do not set `lang` by hand. The `defaults` block in `_config.yml`
+  assigns `lang: us` to anything in `_posts/` and `lang: cn` to anything
+  in `_posts/cn/`.
 - Do not put content text into `_data/i18n.yml`. Titles, excerpts, and bodies
   are content and stay in Markdown/frontmatter until a future DB-backed
   content source replaces them.
@@ -45,6 +54,25 @@ Notes:
 `YYYY-MM-DD-kebab-case-slug.markdown`. `.md` and `.markdown` are both
 accepted; the existing post is `.markdown` so prefer that for visual
 consistency.
+
+## Per-language post layout
+
+Every post is authored as one Markdown file per language:
+
+- US (default): `_posts/YYYY-MM-DD-slug.markdown` → `/:title/`.
+- CN translation: `_posts/cn/YYYY-MM-DD-slug.markdown` → `/cn/:title/`.
+
+The two files are paired by a shared `ref:` slug in frontmatter, not by
+filename, so a translation may adopt a different slug if the original is
+ever renamed. The date and `ref` should match across the pair; titles,
+bodies, categories, and excerpts may diverge to whatever reads best in
+each language.
+
+A post does not need to have a translation. If only a US version exists,
+the language toggle still flips the chrome to CN but stays on the US URL
+and body. See
+[`product-specs/internationalization.md`](product-specs/internationalization.md)
+for the full content-i18n contract.
 
 ## Body conventions
 
@@ -93,6 +121,8 @@ are noise in the post list.
 - Newsletter signup forms.
 - Series / cross-post chaining. If we add a "series" feature later, it gets
   its own spec under `docs/product-specs/`.
-- Automatic translation of post bodies.
+- Machine translation. Paired US/CN posts are authored by hand.
+- Translating standalone pages (`about.markdown`, `index.markdown`) — those
+  are out of scope for the current i18n contract.
 - Managing content text in `_data/i18n.yml`; that file is for functional UI
   text only.

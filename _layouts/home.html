@@ -21,20 +21,28 @@ layout: default
   {%- if site.posts.size > 0 -%}
     <div class="welcome-recent">
       <h2 data-i18n="home.latest">{{ us.home.latest }}</h2>
-      <ul class="recent-list">
-        {%- for post in site.posts limit: 5 -%}
-          {%- assign post_excerpt = post.excerpt | strip_html | normalize_whitespace | truncate: 140 -%}
-          <li>
-            <a href="{{ post.url | relative_url }}">
-              <span class="recent-date">{{ post.date | date: "%Y · %b %d" }}</span>
-              <span class="recent-title">{{ post.title | escape }}</span>
-              {%- if post.excerpt -%}
-                <span class="recent-excerpt">{{ post_excerpt }}</span>
-              {%- endif -%}
-            </a>
-          </li>
-        {%- endfor -%}
-      </ul>
+      {%- assign langs = "us,cn" | split: "," -%}
+      {%- for lang_code in langs -%}
+        {%- assign lang_posts = site.posts | where: "lang", lang_code -%}
+        {%- if lang_posts.size > 0 -%}
+          <div class="recent-lang-section" data-lang-section="{{ lang_code }}">
+            <ul class="recent-list">
+              {%- for post in lang_posts limit: 5 -%}
+                {%- assign post_excerpt = post.excerpt | strip_html | normalize_whitespace | truncate: 140 -%}
+                <li>
+                  <a href="{{ post.url | relative_url }}">
+                    <span class="recent-date">{{ post.date | date: "%Y · %b %d" }}</span>
+                    <span class="recent-title">{{ post.title | escape }}</span>
+                    {%- if post.excerpt -%}
+                      <span class="recent-excerpt">{{ post_excerpt }}</span>
+                    {%- endif -%}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
     </div>
   {%- endif -%}
 </section>

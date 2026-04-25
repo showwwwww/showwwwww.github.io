@@ -24,17 +24,38 @@ layout: default
     {{ content }}
   </div>
 
+  {%- assign lang_posts = site.posts | where: "lang", page.lang -%}
+  {%- assign current_index = -1 -%}
+  {%- for p in lang_posts -%}
+    {%- if p.url == page.url -%}
+      {%- assign current_index = forloop.index0 -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign lang_previous = nil -%}
+  {%- assign lang_next = nil -%}
+  {%- if current_index >= 0 -%}
+    {%- assign prev_index = current_index | minus: 1 -%}
+    {%- assign next_index = current_index | plus: 1 -%}
+    {%- if prev_index >= 0 -%}
+      {%- assign lang_previous = lang_posts[prev_index] -%}
+    {%- endif -%}
+    {%- if next_index < lang_posts.size -%}
+      {%- assign lang_next = lang_posts[next_index] -%}
+    {%- endif -%}
+  {%- endif -%}
+
   <nav class="post-nav" aria-label="{{ us.post.navigation }}" data-i18n-aria-label="post.navigation">
-    {%- if page.previous -%}
-      <a class="post-nav-link prev" href="{{ page.previous.url | relative_url }}">
+    {%- if lang_previous -%}
+      <a class="post-nav-link prev" href="{{ lang_previous.url | relative_url }}">
         <span class="post-nav-direction">← <span data-i18n="post.previous">{{ us.post.previous }}</span></span>
-        <span class="post-nav-title">{{ page.previous.title | escape }}</span>
+        <span class="post-nav-title">{{ lang_previous.title | escape }}</span>
       </a>
     {%- else -%}<span></span>{%- endif -%}
-    {%- if page.next -%}
-      <a class="post-nav-link next" href="{{ page.next.url | relative_url }}">
+    {%- if lang_next -%}
+      <a class="post-nav-link next" href="{{ lang_next.url | relative_url }}">
         <span class="post-nav-direction"><span data-i18n="post.next">{{ us.post.next }}</span> →</span>
-        <span class="post-nav-title">{{ page.next.title | escape }}</span>
+        <span class="post-nav-title">{{ lang_next.title | escape }}</span>
       </a>
     {%- else -%}<span></span>{%- endif -%}
   </nav>

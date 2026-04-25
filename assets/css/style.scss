@@ -227,6 +227,14 @@ a:hover {
   text-decoration: none;
 }
 
+/* ---------- Language sections ---------- */
+/* Hide the section whose data-lang-section does not match html[data-lang].
+   See docs/product-specs/internationalization.md for the contract. */
+html[data-lang="us"] [data-lang-section]:not([data-lang-section="us"]),
+html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
+  display: none;
+}
+
 /* ---------- Language toggle ---------- */
 .language-toggle {
   position: fixed;

@@ -37,6 +37,22 @@ plugins:
 
 # Use our custom layouts in this repo (override Minima)
 
+# Per-language defaults for posts. See
+# docs/product-specs/internationalization.md for the contract.
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      lang: us
+      permalink: /:title/
+  - scope:
+      path: "_posts/cn"
+      type: posts
+    values:
+      lang: cn
+      permalink: /cn/:title/
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to

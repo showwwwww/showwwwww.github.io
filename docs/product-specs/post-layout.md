@@ -21,11 +21,18 @@ chrome above and below.
   D, YYYY"), plus an optional author when the frontmatter sets one. The title
   is content text and comes from post frontmatter.
 - Renders the post body via `{{ content }}`.
-- At the foot, renders prev/next navigation by Jekyll's built-in
-  `page.previous` / `page.next`. If either is missing, the slot is filled
-  with an empty `<span>` so the flex layout stays balanced.
+- At the foot, renders prev/next navigation. Neighbors are computed from
+  `site.posts` filtered by `page.lang`, so a CN post links only to other
+  CN posts and never crosses languages. If either neighbor is missing,
+  the slot is filled with an empty `<span>` so the flex layout stays
+  balanced.
 - Prev/next labels and accessible navigation labels participate in the US/CN
   language toggle.
+- When a paired translation in the other language exists (matched via the
+  shared `ref:` frontmatter key), `_layouts/default.html` emits
+  `data-translation-href` on `<body>`. The toggle JS uses it to navigate
+  to the paired URL after persisting the language choice. See
+  [`internationalization.md`](internationalization.md).
 
 ### `page.html`
 
@@ -70,3 +77,6 @@ chrome above and below.
   toggle.
 - 2026-04-25: Clarified that post/page titles are content text; only
   functional layout labels use `_data/i18n.yml`.
+- 2026-04-25: Post prev/next navigation is now lang-filtered (no
+  cross-language jumps), and the language toggle navigates to the paired
+  translation when one exists.

@@ -16,8 +16,15 @@ surface.
 - The sidebar always shows the site title and tagline at the top.
 - It lists "Pages" (any `*.markdown` with a `title:` frontmatter, excluding
   `index` and the `404`), sorted alphabetically by title.
-- It lists "Articles" (anything in `_posts/`), grouped by year (descending),
-  then by date within each year (also descending).
+- It lists "Articles" once per language. The sidebar renders two parallel
+  blocks under the "Articles" heading — one wrapped in
+  `data-lang-section="us"`, one wrapped in `data-lang-section="cn"` — each
+  filtered to posts whose `lang` matches. Within a block, posts are
+  grouped by year (descending), then by date within each year (also
+  descending). CSS hides the block whose attribute does not match the
+  active `html[data-lang]`, so the user only ever sees one list.
+- A language with zero posts shows the localized "No articles yet."
+  message inside its own section.
 - The currently-viewed page or post is marked active (`is-active` class
   applied via Liquid; styling lives in `assets/css/style.scss`).
 - A footer at the bottom of the sidebar shows GitHub / Twitter / email links
@@ -35,7 +42,9 @@ surface.
 
 The home layout (`home.html`) reuses the sidebar (it inherits from
 `default.html`) and renders a welcome hero plus the five most recent posts
-inside the content area.
+inside the content area. The recent-posts list uses the same per-language
+`data-lang-section` mechanism as the sidebar, so it always reflects the
+active language.
 
 ## Constraints
 
@@ -66,3 +75,6 @@ inside the content area.
 - 2026-04-25: Sidebar chrome now participates in the US/CN language toggle.
 - 2026-04-25: Functional sidebar labels now read from `_data/i18n.yml`, while
   content titles remain outside the functional dictionary.
+- 2026-04-25: Articles list and home recent-posts list are rendered per
+  language using `data-lang-section` blocks, hidden in CSS based on
+  `html[data-lang]`.

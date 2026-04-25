@@ -15,7 +15,16 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
 </head>
-<body{% if page.url contains '404' %} data-document-title-key="error404.title"{% elsif page.title %} data-document-title-selector="[data-document-title]"{% endif %}>
+{%- assign translation_href = "" -%}
+{%- if page.layout == 'post' and page.ref -%}
+  {%- assign other_lang = 'cn' -%}
+  {%- if page.lang == 'cn' -%}{%- assign other_lang = 'us' -%}{%- endif -%}
+  {%- assign paired_posts = site.posts | where: "ref", page.ref | where: "lang", other_lang -%}
+  {%- if paired_posts.size > 0 -%}
+    {%- assign translation_href = paired_posts.first.url | relative_url -%}
+  {%- endif -%}
+{%- endif -%}
+<body{% if page.url contains '404' %} data-document-title-key="error404.title"{% elsif page.title %} data-document-title-selector="[data-document-title]"{% endif %}{% if translation_href != '' %} data-translation-href="{{ translation_href }}"{% endif %}>
   <button class="sidebar-toggle" type="button" aria-label="{{ us.nav.toggle }}" aria-controls="sidebar" aria-expanded="false" data-i18n-aria-label="nav.toggle">
     <span></span><span></span><span></span>
   </button>
@@ -49,25 +58,31 @@
 
       <nav class="site-nav" aria-label="{{ us.nav.articles }}" data-i18n-aria-label="nav.articles">
         <h2 class="nav-heading" data-i18n="nav.articles">{{ us.nav.articles }}</h2>
-        {%- assign posts_by_year = site.posts | group_by_exp: "p", "p.date | date: '%Y'" -%}
-        {%- for year_group in posts_by_year -%}
-          <div class="nav-year">
-            <h3 class="nav-year-label">{{ year_group.name }}</h3>
-            <ul class="nav-posts">
-              {%- for post in year_group.items -%}
-                <li>
-                  <a href="{{ post.url | relative_url }}" class="{% if page.url == post.url %}is-active{% endif %}">
-                    <span class="post-date">{{ post.date | date: "%b %d" }}</span>
-                    <span class="post-title">{{ post.title | escape }}</span>
-                  </a>
-                </li>
-              {%- endfor -%}
-            </ul>
+        {%- assign langs = "us,cn" | split: "," -%}
+        {%- for lang_code in langs -%}
+          {%- assign lang_posts = site.posts | where: "lang", lang_code -%}
+          <div class="nav-lang-section" data-lang-section="{{ lang_code }}">
+            {%- assign posts_by_year = lang_posts | group_by_exp: "p", "p.date | date: '%Y'" -%}
+            {%- for year_group in posts_by_year -%}
+              <div class="nav-year">
+                <h3 class="nav-year-label">{{ year_group.name }}</h3>
+                <ul class="nav-posts">
+                  {%- for post in year_group.items -%}
+                    <li>
+                      <a href="{{ post.url | relative_url }}" class="{% if page.url == post.url %}is-active{% endif %}">
+                        <span class="post-date">{{ post.date | date: "%b %d" }}</span>
+                        <span class="post-title">{{ post.title | escape }}</span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endfor -%}
+            {%- if lang_posts.size == 0 -%}
+              <p class="nav-empty" data-i18n="nav.empty">{{ us.nav.empty }}</p>
+            {%- endif -%}
           </div>
         {%- endfor -%}
-        {%- if site.posts.size == 0 -%}
-          <p class="nav-empty" data-i18n="nav.empty">{{ us.nav.empty }}</p>
-        {%- endif -%}
       </nav>
 
       <footer class="sidebar-footer">
@@ -179,6 +194,10 @@
         languageToggle.addEventListener('click', function () {
           language = language === 'cn' ? 'us' : 'cn';
           applyLanguage(language);
+          var pairedHref = document.body.getAttribute('data-translation-href');
+          if (pairedHref) {
+            window.location.href = pairedHref;
+          }
         });
       }
 
