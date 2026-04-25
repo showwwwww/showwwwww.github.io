@@ -13,7 +13,8 @@ surface.
 
 ## Behavior
 
-- The sidebar always shows the site title and tagline at the top.
+- The sidebar always shows the circular site icon, site title, and tagline at
+  the top.
 - It lists "Pages" (any `*.markdown` with a `title:` frontmatter, excluding
   `index` and the `404`), sorted alphabetically by title.
 - It lists "Articles" once per language. The sidebar renders two parallel
@@ -78,3 +79,5 @@ active language.
 - 2026-04-25: Articles list and home recent-posts list are rendered per
   language using `data-lang-section` blocks, hidden in CSS based on
   `html[data-lang]`.
+- 2026-04-26: Sidebar header now includes the transparent circular site icon
+  above the site title.

@@ -28,6 +28,8 @@ selectors.
 
 - Single-column reading surface, max width `--content-max` (760 px).
 - Sidebar on the left at `--sidebar-width` (280 px).
+- Sidebar identity uses a circular transparent PNG above the site title; the
+  source artwork is clipped to avoid square black corners.
 - Language toggle fixed at the top-right of the viewport. It is intentionally
   small chrome, separate from the sidebar.
 - Below 768 px, the sidebar collapses behind a hamburger; the content fills
@@ -83,3 +85,4 @@ Non-negotiable:
   visual change in this commit.
 - 2026-04-25: Added the top-right language toggle to the layout and
   accessibility rules.
+- 2026-04-26: Added circular site icon styling for the sidebar identity.
