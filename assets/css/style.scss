@@ -302,6 +302,7 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
 }
 /* ---------- Toolbar toggles ---------- */
 .language-toggle {
+  position: relative;
   min-width: 44px;
   height: 36px;
   padding: 0 0.75rem;
@@ -318,6 +319,54 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+.language-toggle-stage {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6em;
+  height: 1em;
+  line-height: 1;
+  pointer-events: none;
+}
+.language-toggle-label {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    color 0.2s ease;
+}
+.language-toggle-label[data-lang-label="cn"] {
+  font-size: 1.05em;
+  letter-spacing: 0;
+}
+html[data-lang="us"] .language-toggle-label[data-lang-label="us"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+html[data-lang="us"] .language-toggle-label[data-lang-label="cn"] {
+  opacity: 0;
+  transform: translateY(-45%);
+}
+html[data-lang="cn"] .language-toggle-label[data-lang-label="us"] {
+  opacity: 0;
+  transform: translateY(45%);
+}
+html[data-lang="cn"] .language-toggle-label[data-lang-label="cn"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .language-toggle-label {
+    transition: none;
+  }
 }
 .theme-toggle {
   position: relative;
@@ -339,15 +388,17 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
   display: block;
   width: 18px;
   height: 18px;
+  pointer-events: none;
 }
 .theme-toggle-symbol {
   position: absolute;
   inset: 0;
   color: currentColor;
   transform-origin: center;
+  pointer-events: none;
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease,
     color 0.2s ease;
 }
 html[data-theme="light"] .theme-toggle-sun {

@@ -58,7 +58,10 @@ surface.
 
 The home layout (`home.html`) reuses the sidebar (it inherits from
 `default.html`) and renders a welcome hero plus the five most recent posts
-inside the content area. The recent-posts list uses the same per-language
+inside the content area. The welcome hero title and subtitle are localized
+from `us.home.welcome_title` / `us.home.welcome_subtitle` (and the `cn`
+branch) in `_data/i18n.yml`, swapped via `data-i18n` like the sidebar
+header. The recent-posts list uses the same per-language
 `data-lang-section` mechanism as the sidebar, so it always reflects the
 active language.
 
@@ -111,3 +114,8 @@ active language.
   `header-toolbar`, to the right of the language toggle.
 - 2026-04-26: Theme toggle is now a circular icon button that animates
   between sun (light) and moon (dark) states.
+- 2026-04-26: Language toggle now renders both labels (`EN` and `中`)
+  overlaid and cross-fades between them on language change.
+- 2026-04-26: Home welcome hero (title + subtitle) is now localized via
+  `us.home.welcome_title` / `us.home.welcome_subtitle` in `_data/i18n.yml`
+  and follows the language toggle.

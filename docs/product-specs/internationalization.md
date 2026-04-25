@@ -21,7 +21,9 @@ Markdown.
 - Functional UI text lives in `_data/i18n.yml`, split into `us` and `cn`
   branches. Examples: navigation labels, theme and language button labels,
   section labels, footer labels, empty states, post-navigation labels, 404
-  system copy, and the sidebar site name and tagline (`us.site` / `cn.site`).
+  system copy, the sidebar site name and tagline (`us.site` / `cn.site`),
+  and the home welcome hero (`us.home.welcome_title` /
+  `us.home.welcome_subtitle`, plus the `cn` branch).
 - The GitHub header link (circular mark, left of the language and theme
   controls) uses `data-i18n-aria-label="footer.github"` so the accessible
   name stays on the `footer.github` key even though the control left the
@@ -29,7 +31,9 @@ Markdown.
 - The site renders US English by default. On first load, a Chinese browser
   environment switches the chrome to CN; other environments stay on US.
 - A language toggle appears at the top-right of every page. Selecting it
-  switches between `EN` and `CN` and stores the choice in `localStorage`.
+  switches between `EN` and `中` and stores the choice in `localStorage`.
+  The button renders both labels stacked and cross-fades between them based
+  on `html[data-lang]`; `prefers-reduced-motion` disables the transition.
 - The theme toggle accessible label is also localized. Its visible state is
   icon-only, while its title uses the active theme label (`theme.dark` or
   `theme.light`) for the selected language.
@@ -66,9 +70,9 @@ Markdown.
 - The sidebar site name and tagline are localized: `us.site` / `cn.site` in
   `_data/i18n.yml` drive the header block; `_config.yml` `title` and
   `description` remain for Jekyll and feeds.
-- Other content text (page bodies under `*.markdown`, `welcome_title`,
-  `welcome_subtitle`) remains in its content source; those parts are
-  currently English aside from the paired CN post files under `_posts/cn/`.
+- Other content text (page bodies under `*.markdown`) remains in its
+  content source; those parts are currently English aside from the paired
+  CN post files under `_posts/cn/`.
 
 ### Fallback when a translation is missing
 
@@ -93,20 +97,27 @@ Markdown.
 ## Out of scope
 
 - Machine translation.
-- Translating `index.markdown` or other page bodies, or hand-translating
-  `_config.yml` `welcome_title` / `welcome_subtitle`, beyond the sidebar
-  name and tagline keys.
+- Translating `index.markdown` or other page bodies beyond the sidebar
+  name and tagline keys and the home welcome hero.
 - RSS/feed localization.
 - Per-language sitemaps or `hreflang` tags.
 - A "missing translation" stub UI when only the US version exists.
 
 ## Changelog
 
+- 2026-04-26: Localized the home welcome hero (title + subtitle) via
+  `us.home.welcome_title` / `us.home.welcome_subtitle` (and the `cn`
+  branch). The `welcome_title` / `welcome_subtitle` keys were removed
+  from `_config.yml`; `_layouts/home.html` now reads from the i18n
+  dictionary and swaps via `data-i18n` like the sidebar header.
 - 2026-04-26: Localized sidebar site name and tagline via `us.site` /
   `cn.site`; Jekyll `site.title` / `site.description` in `_config.yml`
   remain for build metadata and the feed.
 - 2026-04-26: Added localized theme control labels under `theme.switch`,
   `theme.dark`, and `theme.light`.
+- 2026-04-26: Language toggle CN label switched from `CN` to `中`; the
+  button renders both labels stacked and cross-fades between them on
+  language change.
 - 2026-04-25: Added US/CN language detection and a persistent top-right
   toggle for translated site chrome.
 - 2026-04-25: Clarified that `_data/i18n.yml` owns functional UI text only;

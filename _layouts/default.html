@@ -57,7 +57,10 @@
       </a>
     {%- endif -%}
     <button class="language-toggle" type="button" aria-label="{{ us.language.switch }}" data-language-toggle data-i18n-aria-label="language.switch">
-      {{ us.language.current }}
+      <span class="language-toggle-stage" aria-hidden="true">
+        <span class="language-toggle-label" data-lang-label="us">{{ i18n.us.language.current }}</span>
+        <span class="language-toggle-label" data-lang-label="cn">{{ i18n.cn.language.current }}</span>
+      </span>
     </button>
     <button class="theme-toggle" type="button" aria-label="{{ us.theme.switch }}" data-theme-toggle data-i18n-aria-label="theme.switch">
       <span class="theme-toggle-icon" aria-hidden="true">
@@ -252,7 +255,6 @@
         });
         var toggle = document.querySelector('[data-language-toggle]');
         if (toggle) {
-          toggle.textContent = textFor(lang, 'language.current');
           toggle.setAttribute('aria-pressed', lang === 'cn' ? 'true' : 'false');
         }
         updateThemeToggle(theme, lang);

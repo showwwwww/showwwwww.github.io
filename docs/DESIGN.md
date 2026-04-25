@@ -110,3 +110,6 @@ Non-negotiable:
   choices.
 - 2026-04-26: Theme toggle moved to the right of the language button and now
   renders animated sun/moon SVG icons with reduced-motion support.
+- 2026-04-26: Theme toggle inner icons use `pointer-events: none` so the
+  click target is always the surrounding `<button>` regardless of where in
+  the circle the pointer lands.
