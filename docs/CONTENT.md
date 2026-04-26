@@ -121,7 +121,9 @@ are noise in the post list.
   you to review CONTENT.md when you touch any file under `_posts/`. Add a
   small note here if the change updates pairing behavior, `ref` usage, or
   other conventions; otherwise a routine content-only edit can skip a doc
-  update when nothing below is contradicted.
+  update when nothing below is contradicted. Date corrections, filename/date
+  alignment, and wording fixes for a specific article are routine content
+  edits unless they change the conventions on this page.
 
 ## Out of scope
 
