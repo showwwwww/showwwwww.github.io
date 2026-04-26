@@ -497,6 +497,38 @@ emit_cursor_stop() {
   jq -n --arg m "$msg" '{followup_message: $m}'
 }
 
+cursor_stop_stamp_path() {
+  local git_dir
+  git_dir=$(git rev-parse --git-dir 2>/dev/null) || return 1
+  printf '%s/docs-check-cursor-stop.cksum' "$git_dir"
+}
+
+cursor_stop_reminder_key() {
+  local msg=$1 head
+  head=$(git rev-parse HEAD 2>/dev/null || printf 'no-head')
+  printf '%s\n%s' "$head" "$msg" | cksum | awk '{ print $1 ":" $2 }'
+}
+
+cursor_stop_reminder_already_emitted() {
+  local msg=$1 stamp key previous
+  stamp=$(cursor_stop_stamp_path) || return 1
+  key=$(cursor_stop_reminder_key "$msg")
+  if [ -f "$stamp" ]; then
+    previous=$(sed -n '1p' "$stamp" 2>/dev/null || true)
+    if [ "$previous" = "$key" ]; then
+      return 0
+    fi
+  fi
+  printf '%s\n' "$key" > "$stamp" 2>/dev/null || true
+  return 1
+}
+
+clear_cursor_stop_stamp() {
+  local stamp
+  stamp=$(cursor_stop_stamp_path) || return 0
+  rm -f "$stamp" 2>/dev/null || true
+}
+
 emit_codex_post_edit() {
   local msg=$1
   jq -n --arg m "$msg" '{
@@ -583,7 +615,15 @@ $docs_reminder"
   fi
 
   if [ -z "$reminder" ]; then
+    if [ "$runtime:$event" = "cursor:stop" ]; then
+      clear_cursor_stop_stamp
+    fi
     # Nothing to say; stay silent.
+    exit 0
+  fi
+
+  if [ "$runtime:$event" = "cursor:stop" ] &&
+     cursor_stop_reminder_already_emitted "$reminder"; then
     exit 0
   fi
 

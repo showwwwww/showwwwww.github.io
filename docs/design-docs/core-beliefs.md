@@ -28,7 +28,9 @@ right move is to push detail into `docs/` and link to it. A monolithic
 Every per-runtime hook (`scripts/docs-check.sh --mode hook ...`) reminds the
 agent of this. The reminder is non-blocking by default; if you ignore it once,
 the `Stop` hook will repeat it once with a `block`-style continuation. After
-that, it gets out of your way (loop cap = 1).
+that, it gets out of your way. Runtimes use their native loop guard when they
+provide one; Cursor additionally records a checksum under `.git/` so the same
+dirty working tree cannot emit the same stop reminder forever.
 
 This is enforceable mechanically:
 

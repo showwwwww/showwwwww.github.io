@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Cursor stop hook: forwards to the shared docs-check entry point.
-# `loop_limit: 1` in .cursor/hooks.json prevents the followup_message from
-# triggering more than one extra turn.
+# docs-check.sh de-dupes followup_message output for the same dirty state so
+# an ignored reminder cannot become a repeated conversation loop.
 
 set -uo pipefail
 

@@ -94,7 +94,9 @@ Last reviewed: 2026-04-25.
     the relevant docs.
   - For `Stop` events on Codex and Claude Code, the script honors
     `stop_hook_active` so it never fires twice in the same turn. Cursor
-    `stop` is bounded by `loop_limit: 1` in `.cursor/hooks.json`.
+    `stop` stores a checksum under `.git/` and suppresses the same reminder
+    for the same `HEAD`, so an ignored reminder cannot loop forever while
+    the working tree is unchanged.
 
 ## Agent runtime hooks
 
