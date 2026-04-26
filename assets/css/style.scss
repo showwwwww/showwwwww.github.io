@@ -269,7 +269,7 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
   display: none;
 }
 
-/* ---------- Header toolbar (GitHub + language + theme) ---------- */
+/* ---------- Header toolbar (social links + language + theme) ---------- */
 .header-toolbar {
   position: fixed;
   top: 0.85rem;
@@ -280,7 +280,7 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
   align-items: center;
   gap: 0.5rem;
 }
-.github-header-link {
+.header-social-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -297,16 +297,16 @@ html[data-lang="cn"] [data-lang-section]:not([data-lang-section="cn"]) {
     border-color 0.15s ease,
     color 0.15s ease;
 }
-.github-header-link:hover {
+.header-social-link:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
   text-decoration: none;
 }
-.github-header-link:focus-visible {
+.header-social-link:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
-.github-header-icon {
+.header-social-icon {
   display: block;
   flex-shrink: 0;
 }

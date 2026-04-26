@@ -24,10 +24,10 @@ Markdown.
   system copy, the sidebar site name and tagline (`us.site` / `cn.site`),
   and the home welcome hero (`us.home.welcome_title` /
   `us.home.welcome_subtitle`, plus the `cn` branch).
-- The GitHub header link (circular mark, left of the language and theme
-  controls) uses `data-i18n-aria-label="footer.github"` so the accessible
-  name stays on the `footer.github` key even though the control left the
-  sidebar footer.
+- The GitHub and LinkedIn header links (circular marks, left of the language
+  and theme controls) use `data-i18n-aria-label` with `footer.github` /
+  `footer.linkedin` so their accessible names stay in the functional text
+  dictionary even though the controls sit outside the sidebar footer.
 - The site renders US English by default. On first load, a Chinese browser
   environment switches the chrome to CN; other environments stay on US.
 - A language toggle appears at the top-right of every page. Selecting it
@@ -120,6 +120,8 @@ Markdown.
   language change.
 - 2026-04-26: 404 system copy now uses only `error404.title` plus an
   HTML-enabled `error404.hint` return-home link.
+- 2026-04-27: Added `footer.linkedin` for the LinkedIn toolbar link's
+  accessible label.
 - 2026-04-25: Added US/CN language detection and a persistent top-right
   toggle for translated site chrome.
 - 2026-04-25: Clarified that `_data/i18n.yml` owns functional UI text only;

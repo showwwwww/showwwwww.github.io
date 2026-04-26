@@ -35,9 +35,14 @@ surface.
   applied via Liquid; styling lives in `assets/css/style.scss`).
 - The **GitHub** profile link (when `github_username` in `_config.yml` is
   set and not the Jekyll default) is a circular mark button in the fixed
-  top-right `header-toolbar`, immediately **left of** the language control.
+  top-right `header-toolbar`, immediately **left of** the LinkedIn control.
   It uses the same localized accessible name as the old footer label
   (`data-i18n-aria-label="footer.github"`, Octicons-style path SVG).
+- The **LinkedIn** profile link is a circular mark button in the fixed
+  top-right `header-toolbar`, immediately **right of** the GitHub control and
+  before the language/theme controls. It links to
+  `https://www.linkedin.com/in/showwwwww11/` and uses the official LinkedIn
+  glyph with a localized accessible name (`footer.linkedin`).
 - The fixed `header-toolbar` includes a circular theme button to the
   **right of** the language toggle. It shows a sun SVG in light mode and a
   moon SVG in dark mode, toggles `html[data-theme]`, and persists explicit
@@ -119,3 +124,5 @@ active language.
 - 2026-04-26: Home welcome hero (title + subtitle) is now localized via
   `us.home.welcome_title` / `us.home.welcome_subtitle` in `_data/i18n.yml`
   and follows the language toggle.
+- 2026-04-27: Added a LinkedIn profile mark to `header-toolbar`, placed
+  between the GitHub mark and the language/theme controls.

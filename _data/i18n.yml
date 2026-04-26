@@ -26,6 +26,7 @@ us:
     next: "Next"
   footer:
     github: "GitHub"
+    linkedin: "LinkedIn"
     twitter: "Twitter"
     email: "Email"
   error404:
@@ -60,6 +61,7 @@ cn:
     next: "下一篇"
   footer:
     github: "GitHub"
+    linkedin: "LinkedIn"
     twitter: "Twitter"
     email: "邮箱"
   error404:

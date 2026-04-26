@@ -30,11 +30,11 @@ selectors.
 - Sidebar on the left at `--sidebar-width` (280 px).
 - Sidebar identity uses a circular transparent PNG above the site title; the
   source artwork is clipped to avoid square black corners.
-- Top-right of the viewport: a fixed `header-toolbar` with the i18n language
-  button and a circular theme button to its right; when
-  `site.github_username` is set (non-boilerplate), a circular GitHub mark
-  link sits immediately to the **left** of the language control. This chrome
-  is intentionally small, separate from the sidebar.
+- Top-right of the viewport: a fixed `header-toolbar` with compact circular
+  social links, the i18n language button, and a circular theme button to its
+  right; when `site.github_username` is set (non-boilerplate), the circular
+  GitHub mark appears first, followed by the LinkedIn mark. This chrome is
+  intentionally small, separate from the sidebar.
 - Below 768 px, the sidebar collapses behind a hamburger; the content fills
   the viewport.
 - Vertical rhythm comes from `line-height: 1.65` on body text and matching
@@ -119,3 +119,5 @@ Non-negotiable:
   the nav hover state isn't a hardcoded translucent white.
 - 2026-04-26: 404 return-home link now has a small accent highlight and keeps
   link underlines disabled on hover.
+- 2026-04-27: Added a LinkedIn mark link to the top-right toolbar between the
+  GitHub mark and the language/theme controls.
