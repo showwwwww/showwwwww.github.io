@@ -84,6 +84,9 @@ for the full content-i18n contract.
 - Keep post-owned images under `assets/img/posts/<post-ref>/` and link to
   them with root-relative paths, for example
   `/assets/img/posts/<post-ref>/diagram.png`.
+- In Chinese posts (`_posts/cn/`), use natural Chinese for explanatory
+  phrasing (including architecture and role names) when it reads clearly;
+  keep English for code, identifiers, and official product or API names.
 - Prefer reference-style links at the bottom for URLs that appear more than
   once or that are long enough to break wrapping:
 

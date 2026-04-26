@@ -49,7 +49,7 @@ Markdown.
   `_posts/YYYY-MM-DD-slug.markdown`. CN translations live at
   `_posts/cn/YYYY-MM-DD-slug.markdown`.
 - Both files in a pair carry a shared `ref:` slug in frontmatter (e.g.
-  `ref: welcome-to-jekyll`). `lang:` is set automatically by the
+  `ref: react-devtools-custom-embed`). `lang:` is set automatically by the
   `defaults` block in `_config.yml`; do not hand-write it. See
   [`../CONTENT.md`](../CONTENT.md) for full frontmatter conventions.
 - Each post has its own canonical URL: US at `/:title/`, CN at
