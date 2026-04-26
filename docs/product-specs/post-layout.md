@@ -54,9 +54,8 @@ chrome above and below.
 
 - Uses the `default` layout for the sidebar.
 - Shows the same "welcome hero" component as `home.html` but with the
-  eyebrow replaced by `404` and a one-line link back home.
-- Its title, subtitle, and home-link hint participate in the US/CN language
-  toggle.
+  eyebrow replaced by `404` and a highlighted one-line link back home.
+- Its title and home-link hint participate in the US/CN language toggle.
 - Permalink is `/404.html` so GitHub Pages serves it for missing routes.
 
 ## Constraints
@@ -92,3 +91,5 @@ chrome above and below.
 - 2026-04-25: Post prev/next navigation is now lang-filtered (no
   cross-language jumps), and the language toggle navigates to the paired
   translation when one exists.
+- 2026-04-26: 404 copy now renders as a two-line "uninhabited planet" message
+  with the return-home link highlighted and not underlined.

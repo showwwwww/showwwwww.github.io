@@ -11,14 +11,14 @@ All tokens are CSS custom properties declared at the top of
 `assets/css/style.scss`. Read that file for the source of truth; this doc
 captures the _intent_.
 
-| Token group       | Examples                                                                                                                  | Intent                                                                                                                                                              |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Layout            | `--sidebar-width: 280px`, `--content-max: 760px`, `--content-pad: 3rem`                                                   | The sidebar is fixed-width; the content column has a hard max-width and generous padding. Don't let either drift far from these values without revisiting the spec. |
-| Color (light)     | `--color-bg`, `--color-surface`, `--color-text`, `--color-text-soft`, `--color-muted`, `--color-border`, `--color-accent` | Soft off-white background, near-black text, a single accent (`#4f7cff`).                                                                                            |
-| Color (sidebar)   | `--color-sidebar-bg` (`#0f1115`), `--color-sidebar-fg`, `--color-sidebar-active-*`                                        | The sidebar is intentionally dark in both themes. It frames the content; it does not need to match the page background.                                             |
-| Color (dark mode) | Same tokens declared in `:root`; light mode overrides them under `html[data-theme="light"]`                               | Dark is the HTML/default theme. The theme script may switch to light based on saved choice or system preference.                                                    |
-| Typography        | `--font-sans`, `--font-mono`                                                                                              | System font stacks, including PingFang / Hiragino / YaHei for CJK. No webfonts, no FOUT.                                                                            |
-| Surface           | `--radius: 8px`, `--shadow-sm`, `--shadow-md`                                                                             | One radius value, two shadow levels.                                                                                                                                |
+| Token group       | Examples                                                                                                                                                                         | Intent                                                                                                                                                              |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Layout            | `--sidebar-width: 280px`, `--content-max: 760px`, `--content-pad: 3rem`                                                                                                          | The sidebar is fixed-width; the content column has a hard max-width and generous padding. Don't let either drift far from these values without revisiting the spec. |
+| Color (light)     | `--color-bg`, `--color-surface`, `--color-text`, `--color-text-soft`, `--color-muted`, `--color-border`, `--color-accent`                                                        | Soft off-white background, near-black text, a single accent (`#4f7cff`).                                                                                            |
+| Color (sidebar)   | `--color-sidebar-bg`, `--color-sidebar-fg`, `--color-sidebar-heading`, `--color-sidebar-muted`, `--color-sidebar-active-*`, `--color-sidebar-border`, `--color-sidebar-hover-bg` | The sidebar uses its own palette so it can frame the content with a slightly different surface than the page background. Both light and dark variants are defined.  |
+| Color (dark mode) | Same tokens declared in `:root`; light mode overrides them under `html[data-theme="light"]`                                                                                      | Dark is the HTML/default theme. The theme script may switch to light based on saved choice or system preference.                                                    |
+| Typography        | `--font-sans`, `--font-mono`                                                                                                                                                     | System font stacks, including PingFang / Hiragino / YaHei for CJK. No webfonts, no FOUT.                                                                            |
+| Surface           | `--radius: 8px`, `--shadow-sm`, `--shadow-md`                                                                                                                                    | One radius value, two shadow levels.                                                                                                                                |
 
 If you need a new token, add it in the same `:root` block and document its
 intent here. Don't introduce one-off magic values inside individual
@@ -51,8 +51,9 @@ selectors.
   the explicit choice in `localStorage`. While no explicit choice exists, a
   system theme change updates the page. The control is circular and shows a
   sun icon for light mode and a moon icon for dark mode.
-- The sidebar palette does not change between modes (it's already dark in
-  light mode). Only the content area tokens flip.
+- Both the content area and the sidebar palette flip with the theme. The
+  sidebar still uses its own `--color-sidebar-*` tokens so it can be a
+  distinct surface from the page background in either mode.
 - New components must work in both modes. If a value needs to differ, route
   it through a token, not a component-local `@media` block.
 
@@ -113,3 +114,8 @@ Non-negotiable:
 - 2026-04-26: Theme toggle inner icons use `pointer-events: none` so the
   click target is always the surrounding `<button>` regardless of where in
   the circle the pointer lands.
+- 2026-04-26: Sidebar palette now flips with the theme. Added a light
+  variant of `--color-sidebar-*` and a `--color-sidebar-hover-bg` token so
+  the nav hover state isn't a hardcoded translucent white.
+- 2026-04-26: 404 return-home link now has a small accent highlight and keeps
+  link underlines disabled on hover.

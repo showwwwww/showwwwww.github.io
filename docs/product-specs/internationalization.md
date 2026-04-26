@@ -118,6 +118,8 @@ Markdown.
 - 2026-04-26: Language toggle CN label switched from `CN` to `中`; the
   button renders both labels stacked and cross-fades between them on
   language change.
+- 2026-04-26: 404 system copy now uses only `error404.title` plus an
+  HTML-enabled `error404.hint` return-home link.
 - 2026-04-25: Added US/CN language detection and a persistent top-right
   toggle for translated site chrome.
 - 2026-04-25: Clarified that `_data/i18n.yml` owns functional UI text only;

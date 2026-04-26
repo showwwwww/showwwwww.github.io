@@ -29,9 +29,8 @@ us:
     twitter: "Twitter"
     email: "Email"
   error404:
-    title: "Page not found"
-    subtitle: "The page you're looking for doesn't exist or has been moved."
-    hint: 'Try picking an article from the menu on the left, or head back to the <a href="/">home page</a>.'
+    title: "Wow, you find an Uninhabited Planet."
+    hint: '<a class="welcome-return-link" href="/">Click here</a> to return the earth.'
 
 cn:
   site:
@@ -64,6 +63,5 @@ cn:
     twitter: "Twitter"
     email: "邮箱"
   error404:
-    title: "页面未找到"
-    subtitle: "你要访问的页面不存在，或已经被移动。"
-    hint: '试试从左侧菜单选择一篇文章，或返回<a href="/">首页</a>。'
+    title: "哇，你发现了一颗无人星球。"
+    hint: '<a class="welcome-return-link" href="/">点击这里</a>返回地球。'
