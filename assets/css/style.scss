@@ -141,7 +141,7 @@ a:hover {
   color: var(--color-sidebar-heading);
   font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   text-decoration: none;
 }
 .site-title:hover {
@@ -487,9 +487,9 @@ html[data-theme="dark"] .theme-toggle-moon {
 }
 .welcome-title {
   margin: 0 0 0.75rem;
-  font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+  font-size: 2.35rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1.15;
 }
 .welcome-subtitle {
@@ -520,7 +520,7 @@ html[data-theme="dark"] .theme-toggle-moon {
   margin: 2.5rem 0 1rem;
   font-size: 1.15rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 .recent-list {
   list-style: none;
@@ -540,7 +540,6 @@ html[data-theme="dark"] .theme-toggle-moon {
   text-decoration: none;
   transition:
     border-color 0.15s ease,
-    transform 0.15s ease,
     box-shadow 0.15s ease;
 }
 .recent-list a:hover {
@@ -595,9 +594,9 @@ html[data-theme="dark"] .theme-toggle-moon {
 .post .post-title,
 .page .page-title {
   margin: 0;
-  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  font-size: 2.05rem;
   line-height: 1.2;
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
   font-weight: 700;
 }
 .content-brand-icon {
@@ -645,7 +644,7 @@ html[data-theme="dark"] .theme-toggle-moon {
   margin-top: 2.25rem;
   font-size: 1.35rem;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 .post-content h3,
 .page-content h3 {
@@ -791,5 +790,28 @@ html[data-theme="dark"] .theme-toggle-moon {
   }
   .post-nav-link.next {
     text-align: left;
+  }
+  .welcome-title {
+    font-size: 1.85rem;
+  }
+  .post .post-title,
+  .page .page-title {
+    font-size: 1.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-toolbar {
+    gap: 0.35rem;
+  }
+  .header-social-link,
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+  }
+  .language-toggle {
+    min-width: 40px;
+    height: 32px;
+    padding: 0 0.6rem;
   }
 }
