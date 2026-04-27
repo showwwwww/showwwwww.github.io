@@ -51,8 +51,10 @@ surface.
 - The **Instagram** profile link is a circular mark button in the fixed
   top-right `header-toolbar`, immediately **right of** the X control
   and before the language/theme controls. It links to
-  `https://www.instagram.com/showwwwww_11/` and uses the original-color
-  Instagram mark with a localized accessible name (`footer.instagram`).
+  `https://www.instagram.com/showwwwww_11/` and uses a monochrome Instagram
+  mark with a localized accessible name (`footer.instagram`). The mark
+  inherits the toolbar link color so its outline and inner paths highlight
+  together on hover.
 - The fixed `header-toolbar` includes a circular theme button to the
   **right of** the language toggle. It shows a sun SVG in light mode and a
   moon SVG in dark mode, toggles `html[data-theme]`, and persists explicit
@@ -140,5 +142,7 @@ active language.
   immediately right of LinkedIn and linked to the public Instagram profile.
 - 2026-04-28: Added an X profile mark to `header-toolbar`, placed immediately
   right of LinkedIn and linked to the public X profile.
+- 2026-04-28: Changed the Instagram mark from original-color artwork to a
+  monochrome icon that inherits the toolbar hover color.
 - 2026-04-27: Home welcome hero eyebrow now reads from
   `home.welcome_eyebrow` instead of a hardcoded English string.

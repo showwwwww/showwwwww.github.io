@@ -121,8 +121,9 @@ Non-negotiable:
   link underlines disabled on hover.
 - 2026-04-27: Added a LinkedIn mark link to the top-right toolbar between the
   GitHub mark and the language/theme controls.
-- 2026-04-28: Added an original-color Instagram mark link to the top-right
-  toolbar, immediately right of LinkedIn.
+- 2026-04-28: Added an Instagram mark link to the top-right toolbar,
+  immediately right of LinkedIn; it is now monochrome and inherits the
+  toolbar hover color.
 - 2026-04-28: Added an X mark link to the top-right toolbar, immediately right
   of LinkedIn.
 - 2026-04-27: Restored the post-header circular brand image to match the
