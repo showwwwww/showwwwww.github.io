@@ -28,6 +28,7 @@ us:
   footer:
     github: "GitHub"
     linkedin: "LinkedIn"
+    instagram: "Instagram"
     twitter: "Twitter"
     email: "Email"
   error404:
@@ -64,6 +65,7 @@ cn:
   footer:
     github: "GitHub"
     linkedin: "LinkedIn"
+    instagram: "Instagram"
     twitter: "Twitter"
     email: "邮箱"
   error404:

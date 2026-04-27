@@ -17,10 +17,6 @@ chrome above and below.
 
 - Renders categories (one per `<span>`) above the title, only when the post
   has at least one category.
-- Renders a centered link to the home page with the circular site icon
-  (same image as the sidebar) above the post title, so the article column has
-  a brand mark on every post (including under `/cn/…`) and not only in the
-  sidebar. The link uses `data-i18n-aria-label="nav.home"`.
 - Renders the post title as `<h1 class="post-title">` in `article.post` and the
   date below it (formatted "Month D, YYYY"), plus an optional author when the
   frontmatter sets one. The title is content text and comes from post
@@ -88,6 +84,8 @@ chrome above and below.
 - 2026-04-26: Post and page layouts include a centered site icon link above the
   `<h1>`. Main-column `h1.post-title` / `h1.page-title` use scoped CSS so the
   sidebar’s list labels are not affected.
+- 2026-04-28: Removed the centered site icon from post/article headers; page
+  headers keep the home icon link.
 - 2026-04-25: Post prev/next navigation is now lang-filtered (no
   cross-language jumps), and the language toggle navigates to the paired
   translation when one exists.

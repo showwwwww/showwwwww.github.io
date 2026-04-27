@@ -40,9 +40,14 @@ surface.
   (`data-i18n-aria-label="footer.github"`, Octicons-style path SVG).
 - The **LinkedIn** profile link is a circular mark button in the fixed
   top-right `header-toolbar`, immediately **right of** the GitHub control and
-  before the language/theme controls. It links to
+  immediately **left of** the Instagram control. It links to
   `https://www.linkedin.com/in/showwwwww11/` and uses the official LinkedIn
   glyph with a localized accessible name (`footer.linkedin`).
+- The **Instagram** profile link is a circular mark button in the fixed
+  top-right `header-toolbar`, immediately **right of** the LinkedIn control
+  and before the language/theme controls. It links to
+  `https://www.instagram.com/showwwwww_11/` and uses the original-color
+  Instagram mark with a localized accessible name (`footer.instagram`).
 - The fixed `header-toolbar` includes a circular theme button to the
   **right of** the language toggle. It shows a sun SVG in light mode and a
   moon SVG in dark mode, toggles `html[data-theme]`, and persists explicit
@@ -126,5 +131,7 @@ active language.
   and follows the language toggle.
 - 2026-04-27: Added a LinkedIn profile mark to `header-toolbar`, placed
   between the GitHub mark and the language/theme controls.
+- 2026-04-28: Added an Instagram profile mark to `header-toolbar`, placed
+  immediately right of LinkedIn and linked to the public Instagram profile.
 - 2026-04-27: Home welcome hero eyebrow now reads from
   `home.welcome_eyebrow` instead of a hardcoded English string.

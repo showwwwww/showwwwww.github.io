@@ -25,10 +25,11 @@ Markdown.
   and the home welcome hero (`us.home.welcome_eyebrow`,
   `us.home.welcome_title`, `us.home.welcome_subtitle`, plus the `cn`
   branch).
-- The GitHub and LinkedIn header links (circular marks, left of the language
-  and theme controls) use `data-i18n-aria-label` with `footer.github` /
-  `footer.linkedin` so their accessible names stay in the functional text
-  dictionary even though the controls sit outside the sidebar footer.
+- The GitHub, LinkedIn, and Instagram header links (circular marks, left of
+  the language and theme controls) use `data-i18n-aria-label` with
+  `footer.github` / `footer.linkedin` / `footer.instagram` so their
+  accessible names stay in the functional text dictionary even though the
+  controls sit outside the sidebar footer.
 - The site renders US English by default. On first load, a Chinese browser
   environment switches the chrome to CN; other environments stay on US.
 - A language toggle appears at the top-right of every page. Selecting it
@@ -130,6 +131,8 @@ Markdown.
 - 2026-04-26: 404 system copy now uses only `error404.title` plus an
   HTML-enabled `error404.hint` return-home link.
 - 2026-04-27: Added `footer.linkedin` for the LinkedIn toolbar link's
+  accessible label.
+- 2026-04-28: Added `footer.instagram` for the Instagram toolbar link's
   accessible label.
 - 2026-04-27: Added `home.welcome_eyebrow` so the last home-hero chrome
   string follows the US/CN language toggle.

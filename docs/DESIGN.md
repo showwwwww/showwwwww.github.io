@@ -33,8 +33,8 @@ selectors.
 - Top-right of the viewport: a fixed `header-toolbar` with compact circular
   social links, the i18n language button, and a circular theme button to its
   right; when `site.github_username` is set (non-boilerplate), the circular
-  GitHub mark appears first, followed by the LinkedIn mark. This chrome is
-  intentionally small, separate from the sidebar.
+  GitHub mark appears first, followed by the LinkedIn and Instagram marks.
+  This chrome is intentionally small, separate from the sidebar.
 - Below 768 px, the sidebar collapses behind a hamburger; the content fills
   the viewport.
 - Vertical rhythm comes from `line-height: 1.65` on body text and matching
@@ -98,8 +98,8 @@ Non-negotiable:
 - 2026-04-25: Added the top-right language toggle to the layout and
   accessibility rules.
 - 2026-04-26: Added circular site icon styling for the sidebar identity.
-- 2026-04-26: Sidebar site identity is column-centered; post/page content
-  headers include a smaller circular brand image; top bar controls use flex
+- 2026-04-26: Sidebar site identity is column-centered; page content headers
+  include a smaller circular brand image; top bar controls use flex
   centering for their inner labels/icons; article `h1` title rules are scoped
   under `.post` / `.page` to avoid clashing with sidebar list labels.
 - 2026-04-26: GitHub profile link moved from the sidebar footer to a circular
@@ -121,6 +121,10 @@ Non-negotiable:
   link underlines disabled on hover.
 - 2026-04-27: Added a LinkedIn mark link to the top-right toolbar between the
   GitHub mark and the language/theme controls.
+- 2026-04-28: Added an original-color Instagram mark link to the top-right
+  toolbar, immediately right of LinkedIn.
 - 2026-04-27: Restored the post-header circular brand image to match the
   page-header pattern, localized the home hero eyebrow, and removed unused
   per-network toolbar class hooks.
+- 2026-04-28: Removed the circular brand image from post/article headers; page
+  headers still use the centered home icon link.
