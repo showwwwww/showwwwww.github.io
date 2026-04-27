@@ -40,11 +40,16 @@ surface.
   (`data-i18n-aria-label="footer.github"`, Octicons-style path SVG).
 - The **LinkedIn** profile link is a circular mark button in the fixed
   top-right `header-toolbar`, immediately **right of** the GitHub control and
-  immediately **left of** the Instagram control. It links to
+  immediately **left of** the X control. It links to
   `https://www.linkedin.com/in/showwwwww11/` and uses the official LinkedIn
   glyph with a localized accessible name (`footer.linkedin`).
+- The **X** profile link is a circular mark button in the fixed top-right
+  `header-toolbar`, immediately **right of** the LinkedIn control and
+  immediately **left of** the Instagram control. It links to
+  `https://x.com/showwwwww_` and uses the official X mark with a localized
+  accessible name (`footer.x`).
 - The **Instagram** profile link is a circular mark button in the fixed
-  top-right `header-toolbar`, immediately **right of** the LinkedIn control
+  top-right `header-toolbar`, immediately **right of** the X control
   and before the language/theme controls. It links to
   `https://www.instagram.com/showwwwww_11/` and uses the original-color
   Instagram mark with a localized accessible name (`footer.instagram`).
@@ -133,5 +138,7 @@ active language.
   between the GitHub mark and the language/theme controls.
 - 2026-04-28: Added an Instagram profile mark to `header-toolbar`, placed
   immediately right of LinkedIn and linked to the public Instagram profile.
+- 2026-04-28: Added an X profile mark to `header-toolbar`, placed immediately
+  right of LinkedIn and linked to the public X profile.
 - 2026-04-27: Home welcome hero eyebrow now reads from
   `home.welcome_eyebrow` instead of a hardcoded English string.
