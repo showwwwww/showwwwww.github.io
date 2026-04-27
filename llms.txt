@@ -18,7 +18,8 @@ Atom feed.
 
 Author: show — software engineer focusing on frontend and developer
 tools. Profiles: <https://github.com/showwwwww>,
-<https://www.linkedin.com/in/showwwwww11/>.
+<https://www.linkedin.com/in/showwwwww11/>, <https://x.com/showwwwww_>,
+<https://www.instagram.com/showwwwww_11/>.
 
 ## Site
 
@@ -41,3 +42,5 @@ tools. Profiles: <https://github.com/showwwwww>,
 
 - [GitHub profile](https://github.com/showwwwww): source of this site and other projects.
 - [LinkedIn profile](https://www.linkedin.com/in/showwwwww11/): professional background.
+- [X profile](https://x.com/showwwwww_): short-form engineering notes.
+- [Instagram profile](https://www.instagram.com/showwwwww_11/): public social profile.
