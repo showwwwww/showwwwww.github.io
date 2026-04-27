@@ -63,10 +63,10 @@ surface.
 
 The home layout (`home.html`) reuses the sidebar (it inherits from
 `default.html`) and renders a welcome hero plus the five most recent posts
-inside the content area. The welcome hero title and subtitle are localized
-from `us.home.welcome_title` / `us.home.welcome_subtitle` (and the `cn`
-branch) in `_data/i18n.yml`, swapped via `data-i18n` like the sidebar
-header. The recent-posts list uses the same per-language
+inside the content area. The welcome hero eyebrow, title, subtitle, hint, and
+latest-posts heading are localized from the `home.*` branch in
+`_data/i18n.yml`, swapped via `data-i18n` like the sidebar header. The
+recent-posts list uses the same per-language
 `data-lang-section` mechanism as the sidebar, so it always reflects the
 active language.
 
@@ -126,3 +126,5 @@ active language.
   and follows the language toggle.
 - 2026-04-27: Added a LinkedIn profile mark to `header-toolbar`, placed
   between the GitHub mark and the language/theme controls.
+- 2026-04-27: Home welcome hero eyebrow now reads from
+  `home.welcome_eyebrow` instead of a hardcoded English string.

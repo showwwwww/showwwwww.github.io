@@ -1,0 +1,43 @@
+---
+permalink: /llms.txt
+---
+# show's tech blog
+
+> A personal tech blog by show — notes, experiments, and write-ups on
+> software, systems, and the web. Posts cover frontend engineering,
+> React internals (Fiber, DevTools), testing strategy, and developer
+> tools. Most posts are bilingual: an English version under `/<slug>/`
+> and a Chinese (zh-CN) translation under `/cn/<slug>/`, paired by a
+> shared `ref` key in their frontmatter.
+
+The site is a static Jekyll site hosted on GitHub Pages. There is no
+analytics, no JavaScript framework, and no advertising. Long-form content
+lives in Markdown; functional UI strings live in `_data/i18n.yml`. See
+`/sitemap.xml` for a machine-readable URL list and `/feed.xml` for the
+Atom feed.
+
+Author: show — software engineer focusing on frontend and developer
+tools. Profiles: <https://github.com/showwwwww>,
+<https://www.linkedin.com/in/showwwwww11/>.
+
+## Site
+
+- [Home]({{ '/' | absolute_url }}): landing page with the most recent posts.
+- [Atom feed]({{ '/feed.xml' | absolute_url }}): full-text RSS/Atom feed of all posts.
+- [Sitemap]({{ '/sitemap.xml' | absolute_url }}): machine-readable URL list.
+
+## Posts (English)
+
+{% assign en_posts = site.posts | where: "lang", "us" %}{% if en_posts.size > 0 %}{% for post in en_posts %}{% assign summary = post.excerpt | strip_html | normalize_whitespace | truncate: 200 %}- [{{ post.title }}]({{ post.url | absolute_url }}) ({{ post.date | date: "%Y-%m-%d" }}): {{ summary }}
+{% endfor %}{% else %}- No English posts yet.
+{% endif %}
+## Posts (Chinese / 中文)
+
+{% assign cn_posts = site.posts | where: "lang", "cn" %}{% if cn_posts.size > 0 %}{% for post in cn_posts %}{% assign summary = post.excerpt | strip_html | normalize_whitespace | truncate: 200 %}- [{{ post.title }}]({{ post.url | absolute_url }}) ({{ post.date | date: "%Y-%m-%d" }}): {{ summary }}
+{% endfor %}{% else %}- 暂无中文文章。
+{% endif %}
+
+## Optional
+
+- [GitHub profile](https://github.com/showwwwww): source of this site and other projects.
+- [LinkedIn profile](https://www.linkedin.com/in/showwwwww11/): professional background.

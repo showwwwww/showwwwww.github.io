@@ -1,9 +1,15 @@
 # Content i18n: US/CN post bodies
 
-Status: in-progress
+Outcome: Shipped. US and CN post bodies now live as paired Markdown files
+under `_posts/` and `_posts/cn/`, with language-scoped listings,
+language-scoped prev/next navigation, and paired translation redirects on
+the language toggle.
+
+Status: shipped
 Owner: site shell + content docs
 Opened: 2026-04-25
-Updated: 2026-04-25
+Updated: 2026-04-27
+Shipped: 2026-04-27
 Related:
 [`../../product-specs/internationalization.md`](../../product-specs/internationalization.md),
 [`../../CONTENT.md`](../../CONTENT.md),
@@ -47,13 +53,7 @@ where content already lives.
 
 ## Open questions
 
-- Permalink shape: the new `/:title/` and `/cn/:title/` shapes drop the
-  legacy `/:categories/:year/:month/:day/:title:output_ext` URLs. Recorded
-  as a deliberate simplification; revisit only if SEO data argues against.
-- Pages (`index.markdown` and any future `*.markdown` pages) and remaining
-  `_config.yml` content
-  text (`title`, `description`, `welcome_*`) remain English-only. Each of
-  those is a small, separate plan if/when needed.
+- None.
 
 ## Decision log
 
@@ -67,3 +67,5 @@ where content already lives.
 - 2026-04-25: Fallback behavior is "stay on US, flip chrome"; no stub
   page or banner. Keeps the change small; revisit if missing
   translations pile up.
+- 2026-04-27: Shipped the plan after confirming the code, content docs, and
+  product specs already implement the planned US/CN post-body split.

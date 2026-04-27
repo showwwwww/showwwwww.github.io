@@ -22,8 +22,9 @@ Markdown.
   branches. Examples: navigation labels, theme and language button labels,
   section labels, footer labels, empty states, post-navigation labels, 404
   system copy, the sidebar site name and tagline (`us.site` / `cn.site`),
-  and the home welcome hero (`us.home.welcome_title` /
-  `us.home.welcome_subtitle`, plus the `cn` branch).
+  and the home welcome hero (`us.home.welcome_eyebrow`,
+  `us.home.welcome_title`, `us.home.welcome_subtitle`, plus the `cn`
+  branch).
 - The GitHub and LinkedIn header links (circular marks, left of the language
   and theme controls) use `data-i18n-aria-label` with `footer.github` /
   `footer.linkedin` so their accessible names stay in the functional text
@@ -37,9 +38,15 @@ Markdown.
 - The theme toggle accessible label is also localized. Its visible state is
   icon-only, while its title uses the active theme label (`theme.dark` or
   `theme.light`) for the selected language.
-- The selected language updates `html[lang]`, `html[data-lang]`, visible
-  layout labels, accessible labels, and functional system text such as the
-  404 page.
+- The selected language updates `html[data-lang]`, visible layout labels,
+  accessible labels, and functional system text such as the 404 page.
+- `html[lang]` reflects the **content** language of the current document
+  (`page.lang`), not the chrome-language toggle. It is set SSR-side from
+  `page.lang` (defaulting to `en-US`) and is **not rewritten** by the
+  toggle JS. A CN reader on an English-only post sees `lang="en-US"` and
+  `data-lang="cn"`; the values are allowed to disagree because they
+  describe two different things (content vs. UI preference). See
+  [`seo.md`](seo.md) for the full SEO consequence.
 - Layouts should not introduce new hardcoded functional strings when a key
   in `_data/i18n.yml` would work.
 
@@ -100,7 +107,9 @@ Markdown.
 - Translating `index.markdown` or other page bodies beyond the sidebar
   name and tagline keys and the home welcome hero.
 - RSS/feed localization.
-- Per-language sitemaps or `hreflang` tags.
+- Per-language sitemaps. Both language versions already appear as
+  separate URLs in `/sitemap.xml`; per-URL `<xhtml:link rel="alternate">`
+  is not currently emitted.
 - A "missing translation" stub UI when only the US version exists.
 
 ## Changelog
@@ -122,6 +131,13 @@ Markdown.
   HTML-enabled `error404.hint` return-home link.
 - 2026-04-27: Added `footer.linkedin` for the LinkedIn toolbar link's
   accessible label.
+- 2026-04-27: Added `home.welcome_eyebrow` so the last home-hero chrome
+  string follows the US/CN language toggle.
+- 2026-04-27: `html[lang]` is now SSR-driven from `page.lang` and is no
+  longer rewritten by the language toggle. The toggle JS only updates
+  `html[data-lang]`. Cross-references the new SEO spec for the rationale
+  and added `hreflang` link tags on paired posts (owned by
+  [`seo.md`](seo.md)). Removed `hreflang` from "out of scope".
 - 2026-04-25: Added US/CN language detection and a persistent top-right
   toggle for translated site chrome.
 - 2026-04-25: Clarified that `_data/i18n.yml` owns functional UI text only;

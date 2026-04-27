@@ -4,18 +4,15 @@
 > is the human-readable counterpart to [`exec-plans/`](exec-plans/) — keep
 > it short.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-27.
 
 ## Now (in flight)
 
-- Stand up the agent harness: `AGENTS.md`, `ARCHITECTURE.md`, `docs/`,
-  `scripts/docs-check.sh`, and per-runtime hooks for Cursor / Codex /
-  Claude Code. Tracking via the conversation that produced this commit;
-  no exec-plan file because the work is the harness itself.
-- Extend US/CN i18n from chrome to long-form post content. Tracking in
-  [`exec-plans/active/2026-04-25-content-i18n-us-cn.md`](exec-plans/active/2026-04-25-content-i18n-us-cn.md).
-  The earlier chrome-only plan shipped and is archived at
-  [`exec-plans/completed/i18n-us-cn.md`](exec-plans/completed/i18n-us-cn.md).
+- SEO + GEO optimization: `jekyll-seo-tag` + `jekyll-sitemap`, locale-aware
+  `<title>` and `<html lang>`, `hreflang` on paired posts, and crawler
+  files (`/robots.txt`, `/llms.txt`) at the site root. Tracking in
+  [`exec-plans/active/2026-04-27-seo-geo-optimization.md`](exec-plans/active/2026-04-27-seo-geo-optimization.md).
+  Spec: [`product-specs/seo.md`](product-specs/seo.md).
 
 ## Next (queued, no exec-plan yet)
 
@@ -37,6 +34,15 @@ Last reviewed: 2026-04-25.
 
 ## Done (recent — older items move to exec-plans/completed/)
 
+- Doc/design/dead-code audit: fixed a home-hero i18n drift, restored the
+  post-header brand icon promised by the layout spec, removed unused toolbar
+  class hooks, and cleaned stale plan state. Archived at
+  [`exec-plans/completed/2026-04-27-doc-design-dead-code-audit.md`](exec-plans/completed/2026-04-27-doc-design-dead-code-audit.md).
+- US/CN long-form post content i18n. Archived at
+  [`exec-plans/completed/2026-04-25-content-i18n-us-cn.md`](exec-plans/completed/2026-04-25-content-i18n-us-cn.md).
+- Agent harness: `AGENTS.md`, `ARCHITECTURE.md`, `docs/`,
+  `scripts/docs-check.sh`, and per-runtime hooks for Cursor / Codex /
+  Claude Code.
 - Per-clone Prettier pre-commit hook.
 - Custom layouts overriding Minima.
 - Sidebar navigation with year-grouped post list and mobile hamburger.

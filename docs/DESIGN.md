@@ -121,3 +121,6 @@ Non-negotiable:
   link underlines disabled on hover.
 - 2026-04-27: Added a LinkedIn mark link to the top-right toolbar between the
   GitHub mark and the language/theme controls.
+- 2026-04-27: Restored the post-header circular brand image to match the
+  page-header pattern, localized the home hero eyebrow, and removed unused
+  per-network toolbar class hooks.

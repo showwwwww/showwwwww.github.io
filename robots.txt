@@ -1,0 +1,13 @@
+---
+permalink: /robots.txt
+---
+# Robots policy for show's tech blog.
+# All user agents are welcome to crawl every public route.
+# Generative engines (GPTBot, ClaudeBot, PerplexityBot, etc.) are explicitly
+# allowed too — see /llms.txt for an LLM-friendly site summary.
+# See docs/product-specs/seo.md for the full SEO/GEO contract.
+
+User-agent: *
+Allow: /
+
+Sitemap: {{ '/sitemap.xml' | absolute_url }}

@@ -4,7 +4,7 @@
 > table of contents, not an encyclopedia. The full system of record lives in
 > [`docs/`](docs/) — this file just tells you how to get there.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-27.
 
 ## What this repo is
 
@@ -28,6 +28,7 @@ the link. Don't read everything in `docs/` up front.
 | A post under `_posts/`                                                                                  | [`docs/CONTENT.md`](docs/CONTENT.md)                                                                                |
 | `_config.yml`, `Gemfile`, build setup                                                                   | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                        |
 | `.githooks/`, `.prettier*`                                                                              | [`docs/RELIABILITY.md`](docs/RELIABILITY.md) and the rules in `.cursor/rules/`                                      |
+| `<head>` SEO, `robots.txt`, `llms.txt`, sitemap, `hreflang`                                             | [`docs/product-specs/seo.md`](docs/product-specs/seo.md)                                                            |
 | The agent harness itself (`AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.codex/`, `.claude/`, `scripts/docs/`) | [`docs/design-docs/core-beliefs.md`](docs/design-docs/core-beliefs.md)                                              |
 | Anything ambiguous or new                                                                               | [`docs/PLANS.md`](docs/PLANS.md) and create an exec-plan under [`docs/exec-plans/active/`](docs/exec-plans/active/) |
 
@@ -68,7 +69,8 @@ docs/
 │   ├── index.md
 │   ├── internationalization.md
 │   ├── sidebar-navigation.md
-│   └── post-layout.md
+│   ├── post-layout.md
+│   └── seo.md
 ├── references/          External docs cached as llms.txt for agent context
 │   ├── jekyll-llms.txt
 │   └── prettier-llms.txt

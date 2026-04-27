@@ -5,16 +5,78 @@
 {%- if page.url contains '404' -%}
   {%- assign page_title = us.error404.title -%}
 {%- endif -%}
-<html lang="en-US" data-lang="us" data-theme="dark">
+{%- comment -%}
+  SEO + i18n head wiring. The HTML lang attribute reflects the *content*
+  language (page.lang), not the chrome-language toggle. The trailing
+  site-name segment in <title> follows page.lang too, so a CN post renders
+  "Title · 修的技术博客" in the SSR HTML even before the toggle JS runs.
+  See docs/product-specs/seo.md and docs/product-specs/internationalization.md.
+{%- endcomment -%}
+{%- assign page_lang = page.lang | default: site.lang | default: 'us' -%}
+{%- if page_lang == 'cn' -%}
+  {%- assign locale_strings = i18n.cn -%}
+  {%- assign html_lang = 'zh-CN' -%}
+  {%- assign data_lang = 'cn' -%}
+{%- else -%}
+  {%- assign locale_strings = us -%}
+  {%- assign html_lang = 'en-US' -%}
+  {%- assign data_lang = 'us' -%}
+{%- endif -%}
+{%- comment -%}
+  Resolve a paired translation in the other language for hreflang and the
+  language-toggle navigation hint on <body>.
+{%- endcomment -%}
+{%- assign translation_href = "" -%}
+{%- assign translation_url = "" -%}
+{%- if page.layout == 'post' and page.ref -%}
+  {%- assign other_lang = 'cn' -%}
+  {%- if page.lang == 'cn' -%}{%- assign other_lang = 'us' -%}{%- endif -%}
+  {%- assign paired_posts = site.posts | where: "ref", page.ref | where: "lang", other_lang -%}
+  {%- if paired_posts.size > 0 -%}
+    {%- assign translation_href = paired_posts.first.url | relative_url -%}
+    {%- assign translation_url = paired_posts.first.url | absolute_url -%}
+  {%- endif -%}
+{%- endif -%}
+<html lang="{{ html_lang }}" data-lang="{{ data_lang }}" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
-  <title>{% if page_title %}{{ page_title }} · {{ us.site.title }}{% else %}{{ us.site.title }}{% endif %}</title>
-  <meta name="description" content="{{ page.excerpt | default: us.site.tagline | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+  <title>{% if page_title %}{{ page_title | escape }} · {{ locale_strings.site.title | escape }}{% else %}{{ locale_strings.site.title | escape }}{% endif %}</title>
   <link rel="icon" type="image/png" href="{{ '/assets/img/site-icon.png' | relative_url }}">
   <link rel="apple-touch-icon" href="{{ '/assets/img/site-icon.png' | relative_url }}">
+  {%- comment -%}
+    jekyll-seo-tag emits canonical, OG, Twitter card, JSON-LD (WebSite or
+    BlogPosting), `og:locale`, and `<meta name="description">`. We suppress
+    its <title> because we render a locale-aware one above. The plugin
+    reads `locale` from `_config.yml` `defaults` (en_US for `_posts/`,
+    zh_CN for `_posts/cn/`).
+  {%- endcomment -%}
+  {% seo title=false %}
+  {%- if translation_url != '' -%}
+    {%- if page_lang == 'cn' -%}
+      <meta property="og:locale:alternate" content="en_US">
+    {%- else -%}
+      <meta property="og:locale:alternate" content="zh_CN">
+    {%- endif -%}
+  {%- endif -%}
+  {%- comment -%}
+    Hreflang only on post pages with a paired translation. Pages and the
+    homepage are not duplicated per language under this i18n model.
+  {%- endcomment -%}
+  {%- if translation_url != '' -%}
+    {%- assign self_url = page.url | absolute_url -%}
+    {%- if page_lang == 'cn' -%}
+      <link rel="alternate" hreflang="zh-CN" href="{{ self_url }}">
+      <link rel="alternate" hreflang="en" href="{{ translation_url }}">
+      <link rel="alternate" hreflang="x-default" href="{{ translation_url }}">
+    {%- else -%}
+      <link rel="alternate" hreflang="en" href="{{ self_url }}">
+      <link rel="alternate" hreflang="zh-CN" href="{{ translation_url }}">
+      <link rel="alternate" hreflang="x-default" href="{{ self_url }}">
+    {%- endif -%}
+  {%- endif -%}
   <script>
     (function () {
       var key = 'showwwwww.github.io.theme';
@@ -35,29 +97,20 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
 </head>
-{%- assign translation_href = "" -%}
-{%- if page.layout == 'post' and page.ref -%}
-  {%- assign other_lang = 'cn' -%}
-  {%- if page.lang == 'cn' -%}{%- assign other_lang = 'us' -%}{%- endif -%}
-  {%- assign paired_posts = site.posts | where: "ref", page.ref | where: "lang", other_lang -%}
-  {%- if paired_posts.size > 0 -%}
-    {%- assign translation_href = paired_posts.first.url | relative_url -%}
-  {%- endif -%}
-{%- endif -%}
 <body{% if page.url contains '404' %} data-document-title-key="error404.title"{% elsif page.title %} data-document-title-selector="[data-document-title]"{% endif %}{% if translation_href != '' %} data-translation-href="{{ translation_href }}"{% endif %}>
   <button class="sidebar-toggle" type="button" aria-label="{{ us.nav.toggle }}" aria-controls="sidebar" aria-expanded="false" data-i18n-aria-label="nav.toggle">
     <span></span><span></span><span></span>
   </button>
   <div class="header-toolbar">
     {%- if site.github_username and site.github_username != 'jekyll' -%}
-      <a class="header-social-link github-header-link" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener" data-i18n-aria-label="footer.github" aria-label="{{ us.footer.github }}">
-        <svg class="header-social-icon github-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+      <a class="header-social-link" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener" data-i18n-aria-label="footer.github" aria-label="{{ us.footer.github }}">
+        <svg class="header-social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
           <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
         </svg>
       </a>
     {%- endif -%}
-    <a class="header-social-link linkedin-header-link" href="https://www.linkedin.com/in/showwwwww11/" target="_blank" rel="noopener" data-i18n-aria-label="footer.linkedin" aria-label="{{ us.footer.linkedin }}">
-      <svg class="header-social-icon linkedin-header-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true" focusable="false">
+    <a class="header-social-link" href="https://www.linkedin.com/in/showwwwww11/" target="_blank" rel="noopener" data-i18n-aria-label="footer.linkedin" aria-label="{{ us.footer.linkedin }}">
+      <svg class="header-social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true" focusable="false">
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.047c.476-.9 1.637-1.85 3.369-1.85 3.602 0 4.267 2.371 4.267 5.455v6.286zM5.337 7.433a2.063 2.063 0 1 1 0-4.126 2.063 2.063 0 0 1 0 4.126zM7.119 20.452H3.554V9h3.565v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
       </svg>
     </a>
@@ -246,7 +299,9 @@
 
       function applyLanguage(lang) {
         var html = document.documentElement;
-        html.lang = lang === 'cn' ? 'zh-CN' : 'en-US';
+        // Note: html[lang] reflects the document content language and is set
+        // SSR-side from page.lang. The chrome-language toggle only updates
+        // html[data-lang]; see docs/product-specs/internationalization.md.
         html.setAttribute('data-lang', lang);
 
         document.querySelectorAll('[data-i18n]').forEach(function (node) {

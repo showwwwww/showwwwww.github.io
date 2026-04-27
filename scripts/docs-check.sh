@@ -38,7 +38,7 @@ code_to_docs() {
   local path="$1"
   case "$path" in
     _layouts/default.html|_layouts/home.html)
-      echo "docs/product-specs/sidebar-navigation.md docs/DESIGN.md" ;;
+      echo "docs/product-specs/sidebar-navigation.md docs/DESIGN.md docs/product-specs/seo.md" ;;
     _layouts/post.html|_layouts/page.html|404.html)
       echo "docs/product-specs/post-layout.md docs/DESIGN.md" ;;
     _layouts/*|_includes/*)
@@ -49,6 +49,8 @@ code_to_docs() {
       echo "docs/CONTENT.md" ;;
     _data/i18n.yml)
       echo "docs/product-specs/internationalization.md" ;;
+    robots.txt|llms.txt)
+      echo "docs/product-specs/seo.md docs/RELIABILITY.md" ;;
     index.markdown|*.markdown)
       echo "docs/CONTENT.md" ;;
     _config.yml|Gemfile|Gemfile.lock)
@@ -234,6 +236,7 @@ REQUIRED_FILES=(
   "docs/product-specs/index.md"
   "docs/product-specs/sidebar-navigation.md"
   "docs/product-specs/post-layout.md"
+  "docs/product-specs/seo.md"
   "docs/references/jekyll-llms.txt"
   "docs/references/prettier-llms.txt"
   "docs/generated/README.md"
@@ -296,7 +299,9 @@ EOF_ROUTE_ISSUES
               docs/exec-plans/README.md docs/exec-plans/tech-debt-tracker.md \
               docs/product-specs/index.md \
               docs/product-specs/sidebar-navigation.md \
-              docs/product-specs/post-layout.md)
+              docs/product-specs/post-layout.md \
+              docs/product-specs/internationalization.md \
+              docs/product-specs/seo.md)
 
   for f in "${doc_files[@]}"; do
     [ -f "$f" ] || continue
@@ -346,6 +351,8 @@ EOF_ROUTE_ISSUES
     ".prettierrc.json"
     ".cursor/hooks.json"
     "AGENTS.md"
+    "robots.txt"
+    "llms.txt"
   )
   for src in "${probe_inputs[@]}"; do
     local owners

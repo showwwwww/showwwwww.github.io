@@ -5,7 +5,7 @@
 > what. Modeled after [matklad's ARCHITECTURE.md
 > convention](https://matklad.github.io/2021/02/06/ARCHITECTURE.md.html).
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-27.
 
 ## Domains
 
@@ -74,6 +74,8 @@ Disallowed:
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `index.markdown`                                                             | [`docs/CONTENT.md`](docs/CONTENT.md)                                                                                                                                               | Renders via `home` layout.                                                                                                                       |
 | `404.html`                                                                   | [`docs/DESIGN.md`](docs/DESIGN.md)                                                                                                                                                 | Hand-authored, Liquid-aware, ignored by Prettier.                                                                                                |
+| `robots.txt`                                                                 | [`docs/RELIABILITY.md`](docs/RELIABILITY.md), [`docs/product-specs/seo.md`](docs/product-specs/seo.md)                                                                             | Public crawler policy at the repo root. References the sitemap.                                                                                  |
+| `llms.txt`                                                                   | [`docs/product-specs/seo.md`](docs/product-specs/seo.md)                                                                                                                           | LLM-friendly site summary at the repo root. Liquid-templated against `site.posts` so the index stays current.                                    |
 | `_posts/*.markdown`                                                          | [`docs/CONTENT.md`](docs/CONTENT.md)                                                                                                                                               | US posts. Filename must match `YYYY-MM-DD-title.md(arkdown)`. `lang: us` is set automatically by `_config.yml` defaults.                         |
 | `_posts/cn/*.markdown`                                                       | [`docs/CONTENT.md`](docs/CONTENT.md), [`docs/product-specs/internationalization.md`](docs/product-specs/internationalization.md)                                                   | CN translations. Paired to a US post by a shared `ref:` frontmatter slug. `lang: cn` and `permalink: /cn/:title/` set by `_config.yml` defaults. |
 | `_data/i18n.yml`                                                             | [`docs/product-specs/internationalization.md`](docs/product-specs/internationalization.md)                                                                                         | Central US/CN source for functional UI text and the sidebar site name / tagline.                                                                 |

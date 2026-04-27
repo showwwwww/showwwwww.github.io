@@ -18,6 +18,7 @@ us:
   home:
     hint: "Pick an article from the menu on the left to start reading."
     latest: "Latest articles"
+    welcome_eyebrow: "Welcome"
     welcome_title: "Hi, I'm show."
     welcome_subtitle: "This is my personal tech blog — a place where I collect notes, experiments, and longer write-ups about the things I'm building and learning."
   post:
@@ -53,6 +54,7 @@ cn:
   home:
     hint: "从左侧菜单选择一篇文章开始阅读。"
     latest: "最新文章"
+    welcome_eyebrow: "欢迎"
     welcome_title: "你好，我是修。"
     welcome_subtitle: "这是我的个人技术博客 — 在这里收集关于我正在构建与学习的事物的笔记、实验与长文。"
   post:

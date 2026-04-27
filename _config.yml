@@ -20,36 +20,58 @@
 
 title: show's tech blog
 description: >- # this means to ignore newlines until "baseurl:"
-  Notes, experiments, and write-ups on software, systems, and the web.
+  Notes, experiments, and write-ups on software, systems, and the web by
+  show — covering frontend, React internals, testing, and developer tools.
 # The home hero copy (welcome title + subtitle) lives in `_data/i18n.yml`
 # under `us.home.welcome_title` / `us.home.welcome_subtitle` (and the `cn`
 # branch) so it follows the language toggle. See
 # `docs/product-specs/internationalization.md`.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://showwwwww.github.io" # the base hostname & protocol for your site, used by jekyll-seo-tag and jekyll-sitemap.
+lang: en-US # default site lang for jekyll-seo-tag; per-page lang is set by `_config.yml` defaults below.
 twitter_username: jekyllrb
 github_username:  showwwwww
+
+# SEO / GEO author identity. Consumed by `jekyll-seo-tag` to produce
+# JSON-LD `Person` and `BlogPosting` schema, and by the OG `article:author`
+# meta tag. See `docs/product-specs/seo.md` for the full contract.
+author:
+  name: show
+  url: https://github.com/showwwwww
+
+social:
+  name: show
+  links:
+    - https://github.com/showwwwww
+    - https://www.linkedin.com/in/showwwwww11/
 
 # Build settings
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Use our custom layouts in this repo (override Minima)
 
-# Per-language defaults for posts. See
-# docs/product-specs/internationalization.md for the contract.
+# Per-language defaults for posts. `lang` is our internal toggle key
+# (`us` / `cn`); `locale` is the BCP-47-shaped value consumed by
+# jekyll-seo-tag for `og:locale`. See
+# docs/product-specs/internationalization.md and
+# docs/product-specs/seo.md for the full contract.
 defaults:
   - scope:
       path: ""
       type: posts
     values:
       lang: us
+      locale: en_US
       permalink: /:title/
   - scope:
       path: "_posts/cn"
       type: posts
     values:
       lang: cn
+      locale: zh_CN
       permalink: /cn/:title/
 
 # Exclude from processing.
@@ -62,6 +84,7 @@ defaults:
 #
 exclude:
   - docs/
+  - scripts/
   - AGENTS.md
   - ARCHITECTURE.md
   - CLAUDE.md
