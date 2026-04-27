@@ -5,7 +5,7 @@ supposed to do_, not _how the code happens to do it today_. The code can
 change; the spec should change deliberately, with a short note in its
 **Changelog** section.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-28.
 
 ## Specs
 
@@ -22,8 +22,9 @@ Last reviewed: 2026-04-25.
 - Sections:
   1. **Intent.** Two sentences on what this feature is for, from the
      reader's point of view.
-  2. **Behavior.** Bullet list of the observable behavior. No HTML, no CSS
-     class names — describe what a user sees and can do.
+  2. **Behavior.** Bullet list of the observable behavior. Prefer what a
+     user sees and can do; mention HTML, CSS classes, or `data-*` hooks only
+     when they are part of the feature contract.
   3. **Constraints.** Things that must remain true (accessibility, mobile
      breakpoints, no JS dependencies, etc.).
   4. **Out of scope.** Explicit non-goals.

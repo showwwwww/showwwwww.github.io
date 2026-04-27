@@ -5,7 +5,7 @@
 > what. Modeled after [matklad's ARCHITECTURE.md
 > convention](https://matklad.github.io/2021/02/06/ARCHITECTURE.md.html).
 
-Last reviewed: 2026-04-27.
+Last reviewed: 2026-04-28.
 
 ## Domains
 
@@ -85,7 +85,7 @@ Disallowed:
 | `_layouts/page.html`                                                         | [`docs/product-specs/post-layout.md`](docs/product-specs/post-layout.md)                                                                                                           | Minimal page chrome.                                                                                                                             |
 | `assets/css/style.scss`                                                      | [`docs/DESIGN.md`](docs/DESIGN.md)                                                                                                                                                 | Single stylesheet; uses CSS variables.                                                                                                           |
 | `_config.yml`                                                                | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Site metadata plus Jekyll excludes for internal Markdown; Prettier ignores it.                                                                   |
-| `Gemfile` / `Gemfile.lock`                                                   | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Pinned for GitHub Pages compatibility.                                                                                                           |
+| `Gemfile` / `Gemfile.lock`                                                   | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Pinned/locked for reproducible local builds and GitHub Pages compatibility.                                                                      |
 | `.githooks/pre-commit`                                                       | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Activated via `git config core.hooksPath .githooks`.                                                                                             |
 | `.prettierrc.json`, `.prettierignore`                                        | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Prettier 3 config; see `.cursor/rules/prettier-formatting.mdc`.                                                                                  |
 | `.cursor/`, `.codex/`, `.claude/`, `AGENTS.md`, `CLAUDE.md`, `scripts/docs/` | [`docs/design-docs/core-beliefs.md`](docs/design-docs/core-beliefs.md)                                                                                                             | The agent harness itself.                                                                                                                        |

@@ -3,7 +3,7 @@
 Owns: `assets/css/style.scss`, the visual structure of `_layouts/*.html`,
 and `404.html`.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-28.
 
 ## Design tokens
 
@@ -11,14 +11,14 @@ All tokens are CSS custom properties declared at the top of
 `assets/css/style.scss`. Read that file for the source of truth; this doc
 captures the _intent_.
 
-| Token group       | Examples                                                                                                                                                                         | Intent                                                                                                                                                              |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Layout            | `--sidebar-width: 280px`, `--content-max: 760px`, `--content-pad: 3rem`                                                                                                          | The sidebar is fixed-width; the content column has a hard max-width and generous padding. Don't let either drift far from these values without revisiting the spec. |
-| Color (light)     | `--color-bg`, `--color-surface`, `--color-text`, `--color-text-soft`, `--color-muted`, `--color-border`, `--color-accent`                                                        | Soft off-white background, near-black text, a single accent (`#4f7cff`).                                                                                            |
-| Color (sidebar)   | `--color-sidebar-bg`, `--color-sidebar-fg`, `--color-sidebar-heading`, `--color-sidebar-muted`, `--color-sidebar-active-*`, `--color-sidebar-border`, `--color-sidebar-hover-bg` | The sidebar uses its own palette so it can frame the content with a slightly different surface than the page background. Both light and dark variants are defined.  |
-| Color (dark mode) | Same tokens declared in `:root`; light mode overrides them under `html[data-theme="light"]`                                                                                      | Dark is the HTML/default theme. The theme script may switch to light based on saved choice or system preference.                                                    |
-| Typography        | `--font-sans`, `--font-mono`                                                                                                                                                     | System font stacks, including PingFang / Hiragino / YaHei for CJK. No webfonts, no FOUT.                                                                            |
-| Surface           | `--radius: 8px`, `--shadow-sm`, `--shadow-md`                                                                                                                                    | One radius value, two shadow levels.                                                                                                                                |
+| Token group       | Examples                                                                                                                                                                         | Intent                                                                                                                                                                                                                   |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Layout            | `--sidebar-width: 280px`, `--content-max: 760px`, `--content-pad: 3rem`                                                                                                          | The sidebar is fixed-width; the content column has a hard max-width and generous padding. Don't let either drift far from these values without revisiting the spec.                                                      |
+| Color (light)     | `--color-bg`, `--color-surface`, `--color-text`, `--color-text-soft`, `--color-muted`, `--color-border`, `--color-accent`                                                        | Soft off-white background, near-black text, a single accent (`#4f7cff`).                                                                                                                                                 |
+| Color (sidebar)   | `--color-sidebar-bg`, `--color-sidebar-fg`, `--color-sidebar-heading`, `--color-sidebar-muted`, `--color-sidebar-active-*`, `--color-sidebar-border`, `--color-sidebar-hover-bg` | The sidebar uses its own palette so it can frame the content with a slightly different surface than the page background. Both light and dark variants are defined.                                                       |
+| Color (dark mode) | Same tokens declared in `:root`; light mode overrides them under `html[data-theme="light"]`                                                                                      | Dark is the HTML/default theme. The theme script may switch to light based on saved choice or system preference.                                                                                                         |
+| Typography        | `--font-sans`, `--font-mono`                                                                                                                                                     | System font stacks, including PingFang / Hiragino / YaHei for CJK. No webfonts, no FOUT. Display sizes use fixed rem values plus breakpoint adjustments, with no viewport-width font scaling or negative letter spacing. |
+| Surface           | `--radius: 8px`, `--shadow-sm`, `--shadow-md`                                                                                                                                    | One radius value, two shadow levels.                                                                                                                                                                                     |
 
 If you need a new token, add it in the same `:root` block and document its
 intent here. Don't introduce one-off magic values inside individual
@@ -35,6 +35,8 @@ selectors.
   right; when `site.github_username` is set (non-boilerplate), the circular
   GitHub mark appears first, followed by the LinkedIn, X, and Instagram
   marks. This chrome is intentionally small, separate from the sidebar.
+- Below 480 px, the fixed toolbar keeps the same controls but uses slightly
+  smaller circles and gaps so it does not collide with the mobile hamburger.
 - Below 768 px, the sidebar collapses behind a hamburger; the content fills
   the viewport.
 - Vertical rhythm comes from `line-height: 1.65` on body text and matching
@@ -121,13 +123,15 @@ Non-negotiable:
   link underlines disabled on hover.
 - 2026-04-27: Added a LinkedIn mark link to the top-right toolbar between the
   GitHub mark and the language/theme controls.
-- 2026-04-28: Added an Instagram mark link to the top-right toolbar,
-  immediately right of LinkedIn; it is now monochrome and inherits the
-  toolbar hover color.
 - 2026-04-28: Added an X mark link to the top-right toolbar, immediately right
   of LinkedIn.
+- 2026-04-28: Added an Instagram mark link to the top-right toolbar,
+  immediately right of X; it is monochrome and inherits the toolbar hover
+  color.
 - 2026-04-27: Restored the post-header circular brand image to match the
   page-header pattern, localized the home hero eyebrow, and removed unused
   per-network toolbar class hooks.
 - 2026-04-28: Removed the circular brand image from post/article headers; page
   headers still use the centered home icon link.
+- 2026-04-28: Removed negative letter spacing and viewport-width title
+  scaling from display text; added compact toolbar dimensions below 480 px.

@@ -4,15 +4,11 @@
 > is the human-readable counterpart to [`exec-plans/`](exec-plans/) — keep
 > it short.
 
-Last reviewed: 2026-04-27.
+Last reviewed: 2026-04-28.
 
 ## Now (in flight)
 
-- SEO + GEO optimization: `jekyll-seo-tag` + `jekyll-sitemap`, locale-aware
-  `<title>` and `<html lang>`, `hreflang` on paired posts, and crawler
-  files (`/robots.txt`, `/llms.txt`) at the site root. Tracking in
-  [`exec-plans/active/2026-04-27-seo-geo-optimization.md`](exec-plans/active/2026-04-27-seo-geo-optimization.md).
-  Spec: [`product-specs/seo.md`](product-specs/seo.md).
+- No active long-running plan.
 
 ## Next (queued, no exec-plan yet)
 
@@ -34,9 +30,18 @@ Last reviewed: 2026-04-27.
 
 ## Done (recent — older items move to exec-plans/completed/)
 
+- Codebase audit cleanup: removed starter config drift, aligned public social
+  identity, stabilized title typography, corrected docs/spec drift, and
+  archived stale active plan state. Archived at
+  [`exec-plans/completed/2026-04-28-codebase-audit-cleanup.md`](exec-plans/completed/2026-04-28-codebase-audit-cleanup.md).
+- SEO + GEO optimization: `jekyll-seo-tag` + `jekyll-sitemap`, locale-aware
+  `<title>` and `<html lang>`, `hreflang` on paired posts, and crawler files
+  (`/robots.txt`, `/llms.txt`) at the site root. Archived at
+  [`exec-plans/completed/2026-04-27-seo-geo-optimization.md`](exec-plans/completed/2026-04-27-seo-geo-optimization.md).
+  Spec: [`product-specs/seo.md`](product-specs/seo.md).
 - Doc/design/dead-code audit: fixed a home-hero i18n drift, restored the
-  post-header brand icon promised by the layout spec, removed unused toolbar
-  class hooks, and cleaned stale plan state. Archived at
+  page-header brand icon contract, reconciled post-header icon drift, removed
+  unused toolbar class hooks, and cleaned stale plan state. Archived at
   [`exec-plans/completed/2026-04-27-doc-design-dead-code-audit.md`](exec-plans/completed/2026-04-27-doc-design-dead-code-audit.md).
 - US/CN long-form post content i18n. Archived at
   [`exec-plans/completed/2026-04-25-content-i18n-us-cn.md`](exec-plans/completed/2026-04-25-content-i18n-us-cn.md).

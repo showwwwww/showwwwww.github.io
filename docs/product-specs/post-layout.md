@@ -2,7 +2,7 @@
 
 Owns: `_layouts/post.html`, `_layouts/page.html`, `404.html`.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-28.
 
 ## Intent
 
@@ -27,7 +27,7 @@ chrome above and below.
 - At the foot, renders prev/next navigation. Neighbors are computed from
   `site.posts` filtered by `page.lang`, so a CN post links only to other
   CN posts and never crosses languages. If either neighbor is missing,
-  the slot is filled with an empty `<span>` so the flex layout stays
+  the slot is filled with an empty `<span>` so the grid layout stays
   balanced.
 - Prev/next labels and accessible navigation labels participate in the US/CN
   language toggle.
@@ -91,3 +91,5 @@ chrome above and below.
   translation when one exists.
 - 2026-04-26: 404 copy now renders as a two-line "uninhabited planet" message
   with the return-home link highlighted and not underlined.
+- 2026-04-28: Corrected the prev/next navigation wording to match the current
+  grid layout.

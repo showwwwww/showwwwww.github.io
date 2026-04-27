@@ -2,7 +2,7 @@
 
 Owns: `_layouts/default.html`, `_layouts/home.html`.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-28.
 
 ## Intent
 
@@ -66,6 +66,9 @@ surface.
   row is center-aligned in the sidebar.
 - On viewports ≤ 768 px, the sidebar collapses behind a hamburger toggle.
   Tapping a link auto-closes the sidebar.
+- On viewports ≤ 480 px, the top-right toolbar keeps all profile, language,
+  and theme controls visible with smaller circular controls and tighter gaps
+  so it does not overlap the hamburger toggle.
 - Sidebar labels participate in the site language toggle. US English is the
   default, and CN labels replace the chrome when the language layer selects
   CN.
@@ -138,11 +141,13 @@ active language.
   and follows the language toggle.
 - 2026-04-27: Added a LinkedIn profile mark to `header-toolbar`, placed
   between the GitHub mark and the language/theme controls.
-- 2026-04-28: Added an Instagram profile mark to `header-toolbar`, placed
-  immediately right of LinkedIn and linked to the public Instagram profile.
 - 2026-04-28: Added an X profile mark to `header-toolbar`, placed immediately
   right of LinkedIn and linked to the public X profile.
+- 2026-04-28: Added an Instagram profile mark to `header-toolbar`, placed
+  immediately right of X and linked to the public Instagram profile.
 - 2026-04-28: Changed the Instagram mark from original-color artwork to a
   monochrome icon that inherits the toolbar hover color.
 - 2026-04-27: Home welcome hero eyebrow now reads from
   `home.welcome_eyebrow` instead of a hardcoded English string.
+- 2026-04-28: Added compact toolbar sizing below 480 px to avoid collision
+  with the mobile hamburger toggle.

@@ -3,7 +3,7 @@
 > The system of record for this repo. `AGENTS.md` is the table of contents;
 > this directory holds the chapters.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-28.
 
 ## Map
 
@@ -27,8 +27,9 @@ Last reviewed: 2026-04-25.
   Prettier-clean (see `.cursor/rules/prettier-formatting.mdc`).
 - Top-level facet docs (`CONTENT.md`, `DESIGN.md`, etc.) and `AGENTS.md` /
   `ARCHITECTURE.md` carry a `Last reviewed: YYYY-MM-DD` line near the top.
-  `scripts/docs-check.sh --mode lint` warns when this date drifts more than
-  90 days behind the most recent edit to its owned code paths.
+  That date is a human review marker; the current lint checks required docs,
+  route boundaries, `AGENTS.md` length, Markdown links, and owner-doc
+  mappings.
 - Cross-links use relative Markdown links (`[label](relative/path.md)`). The
   doc-check script verifies these resolve.
 - No images in this directory unless they're embedded directly. We don't

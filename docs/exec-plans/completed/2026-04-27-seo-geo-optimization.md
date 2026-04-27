@@ -1,9 +1,11 @@
 # SEO + GEO optimization
 
-Status: in-progress
+Outcome: shipped on 2026-04-28; SEO/GEO head tags, sitemap, robots, and
+`/llms.txt` are implemented and documented.
+Status: shipped
 Owner: site shell + harness
 Opened: 2026-04-27
-Updated: 2026-04-27
+Updated: 2026-04-28
 Related:
 [`../../product-specs/seo.md`](../../product-specs/seo.md),
 [`../../product-specs/internationalization.md`](../../product-specs/internationalization.md),
@@ -46,11 +48,12 @@ summary for AI crawlers.
   i18n spec to match.
 - **Sitemap + robots.** `jekyll-sitemap` generates `/sitemap.xml`. Add
   `/robots.txt` at the repo root referencing the sitemap and allowing
-  all UAs. Keep both as plain files (no Liquid) so they remain stable.
+  all UAs. Keep robots as a minimal Jekyll-processed root file so the
+  sitemap URL comes from `absolute_url`.
 - **GEO (`/llms.txt`).** Add a short `llms.txt` at the repo root that
   summarizes the site for LLM-based discovery (one paragraph + a list of
-  canonical URLs grouped by language). Keep it manually curated so it
-  stays accurate without a generator.
+  canonical URLs grouped by language). Keep the prose manually curated and
+  let Liquid generate the post lists from `site.posts`.
 - **Docs.** New spec: `docs/product-specs/seo.md`. Update
   `internationalization.md` (remove "hreflang out of scope", document the
   new `html[lang]` rule), `RELIABILITY.md` (new plugins + new public
@@ -89,3 +92,7 @@ summary for AI crawlers.
 - 2026-04-27: `llms.txt` is hand-curated, not generated. The site is
   small enough that a generator would cost more maintenance than it
   saves; revisit if the post count climbs past ~50.
+- 2026-04-28: Archive this plan as shipped. The final implementation uses
+  Jekyll processing for root permalinks, the robots sitemap URL, and the
+  `/llms.txt` post lists; that keeps public files stable without a separate
+  generator.

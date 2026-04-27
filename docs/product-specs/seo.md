@@ -6,7 +6,7 @@ fields read by `jekyll-seo-tag` and `jekyll-sitemap`, the `robots.txt` and
 [`internationalization.md`](internationalization.md)) the `html[lang]` and
 `hreflang` rules.
 
-Last reviewed: 2026-04-27.
+Last reviewed: 2026-04-28.
 
 ## Intent
 
@@ -78,8 +78,10 @@ and no per-post tag-soup boilerplate.
 
 - `_config.yml` carries `url:` (absolute), `title:`, `description:`,
   `lang:` (`en-US` default), `author:` (name + url), and `social:`
-  (links list). These are consumed by `jekyll-seo-tag` for JSON-LD,
-  Open Graph, and Twitter card output.
+  (links list). `social.links` mirrors the public profile links in the
+  header toolbar (GitHub, LinkedIn, X, Instagram). These fields are
+  consumed by `jekyll-seo-tag` for JSON-LD, Open Graph, and Twitter card
+  output.
 
 ## Constraints
 
@@ -120,3 +122,6 @@ and no per-post tag-soup boilerplate.
   to the build, switched `<html lang>` to be SSR-driven from
   `page.lang`, added hreflang on paired posts, added `/robots.txt` and
   `/llms.txt` at the site root.
+- 2026-04-28: Removed the starter `twitter_username: jekyllrb` config value
+  and aligned `social.links` plus `/llms.txt` profile links with the public
+  header toolbar profiles.

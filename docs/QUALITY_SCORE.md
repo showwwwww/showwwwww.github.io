@@ -3,7 +3,7 @@
 > Rough grades per domain so we know where to invest harness work next.
 > Update during regular reviews; don't tweak on every commit.
 
-Last reviewed: 2026-04-25.
+Last reviewed: 2026-04-28.
 
 ## Grading scale
 
@@ -25,7 +25,7 @@ date above; a stale grade is itself a signal.
 | Site shell (`_layouts/default.html`, `_layouts/home.html`) | B     | Spec'd in [`product-specs/sidebar-navigation.md`](product-specs/sidebar-navigation.md). Behavior verified by hand; no automated render tests.                                 |
 | Post / page layouts (`post.html`, `page.html`, `404.html`) | B     | Spec'd in [`product-specs/post-layout.md`](product-specs/post-layout.md). Same caveats as above.                                                                              |
 | Theme (`assets/css/style.scss`)                            | B     | Tokens documented in [`DESIGN.md`](DESIGN.md). No visual regression check.                                                                                                    |
-| Content / posts (`_posts/`, `*.markdown`)                  | C     | Conventions in [`CONTENT.md`](CONTENT.md) but only one real post exists yet, so the conventions are mostly aspirational.                                                      |
+| Content / posts (`_posts/`, `*.markdown`)                  | C     | Conventions in [`CONTENT.md`](CONTENT.md) and two bilingual post pairs exist, but there is no automated frontmatter/ref lint yet, so drift still relies on review.            |
 | Reliability of build + deploy                              | C     | GitHub Pages handles the deploy and we trust it; we have no monitoring or rollback story.                                                                                     |
 | Security                                                   | A     | Surface area is "static HTML on GitHub Pages." See [`SECURITY.md`](SECURITY.md).                                                                                              |
 | Agent harness itself                                       | B     | Documented in [`design-docs/core-beliefs.md`](design-docs/core-beliefs.md), with a working `scripts/docs-check.sh` and per-runtime hooks. Lint mode is not yet wired into CI. |

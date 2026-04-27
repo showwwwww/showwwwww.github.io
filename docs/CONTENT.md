@@ -2,7 +2,7 @@
 
 Owns: `_posts/**`, `index.markdown`, plus future standalone pages.
 
-Last reviewed: 2026-04-26.
+Last reviewed: 2026-04-28.
 
 ## Voice
 
@@ -19,10 +19,10 @@ Every post starts with this block:
 ```
 ---
 layout: post
-title:  "Sentence case title — no trailing period"
-date:   YYYY-MM-DD HH:MM:SS +0800
+title: "Sentence case title — no trailing period"
+date: YYYY-MM-DD HH:MM:SS +0800
 categories: lowercase space separated
-ref:    kebab-case-translation-key
+ref: kebab-case-translation-key
 ---
 ```
 
@@ -31,8 +31,8 @@ Notes:
 - `layout` is always `post` for items under `_posts/`. Standalone pages use
   `page`.
 - `title` uses sentence case (only the first letter capitalized; proper
-  nouns stay capitalized). No trailing period. Two spaces after the colon
-  are conventional in the Jekyll templates and Prettier preserves them.
+  nouns stay capitalized). No trailing period. Use normal YAML spacing
+  (`key: value`) so examples match the committed posts.
 - `date` includes the local time and `+0800` offset. The time portion is
   required; Jekyll uses it for prev/next ordering.
 - `categories` is optional. When present, keep it to 1–3 short tokens.
@@ -51,7 +51,7 @@ Notes:
 ## Filenames
 
 `YYYY-MM-DD-kebab-case-slug.markdown`. `.md` and `.markdown` are both
-accepted; the existing post is `.markdown` so prefer that for visual
+accepted; the existing posts are `.markdown` so prefer that for visual
 consistency.
 
 ## Per-language post layout
