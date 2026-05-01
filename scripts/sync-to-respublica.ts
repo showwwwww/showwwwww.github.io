@@ -78,8 +78,22 @@ function requireEnv(name: string): string {
   return val;
 }
 
-const BLOG_BASE_URL = requireEnv("BLOG_BASE_URL").replace(/\/$/, "");
-const RESPUBLICA_INGEST_URL = requireEnv("RESPUBLICA_INGEST_URL").replace(/\/$/, "");
+function requireUrl(name: string): string {
+  const val = requireEnv(name).trim().replace(/\/$/, "");
+  try {
+    new URL(val);
+  } catch {
+    console.error(
+      `[sync] ERROR: ${name} is not a valid URL. ` +
+        `Make sure it starts with https:// and contains no stray spaces.`
+    );
+    process.exit(1);
+  }
+  return val;
+}
+
+const BLOG_BASE_URL = requireUrl("BLOG_BASE_URL");
+const RESPUBLICA_INGEST_URL = requireUrl("RESPUBLICA_INGEST_URL");
 const RESPUBLICA_INGEST_TOKEN = requireEnv("RESPUBLICA_INGEST_TOKEN");
 
 // ---------------------------------------------------------------------------
