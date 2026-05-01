@@ -1,0 +1,43 @@
+name: Sync to Respublica
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "_posts/**"
+      - "_pages/**"
+      - "pages/**"
+      - "content/**"
+      - "scripts/sync-to-respublica.ts"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/sync-to-respublica.yml"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync blog content to Respublica
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync to Respublica
+        run: npm run sync:respublica
+        env:
+          BLOG_BASE_URL: ${{ secrets.BLOG_BASE_URL }}
+          RESPUBLICA_INGEST_URL: ${{ secrets.RESPUBLICA_INGEST_URL }}
+          RESPUBLICA_INGEST_TOKEN: ${{ secrets.RESPUBLICA_INGEST_TOKEN }}

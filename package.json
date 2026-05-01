@@ -1,0 +1,20 @@
+{
+  "name": "showwwwww-github-io",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync:respublica": "tsx scripts/sync-to-respublica.ts"
+  },
+  "dependencies": {
+    "fast-glob": "^3.3.2",
+    "gray-matter": "^4.0.3",
+    "remove-markdown": "^0.5.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/remove-markdown": "^0.3.4",
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.5"
+  }
+}

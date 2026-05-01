@@ -89,6 +89,9 @@ Disallowed:
 | `.githooks/pre-commit`                                                       | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Activated via `git config core.hooksPath .githooks`.                                                                                             |
 | `.prettierrc.json`, `.prettierignore`                                        | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Prettier 3 config; see `.cursor/rules/prettier-formatting.mdc`.                                                                                  |
 | `.cursor/`, `.codex/`, `.claude/`, `AGENTS.md`, `CLAUDE.md`, `scripts/docs/` | [`docs/design-docs/core-beliefs.md`](docs/design-docs/core-beliefs.md)                                                                                                             | The agent harness itself.                                                                                                                        |
+| `package.json`, `package-lock.json`, `tsconfig.json`                         | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Node.js tooling for the sync script. Not processed by Jekyll.                                                                                    |
+| `scripts/sync-to-respublica.ts`                                              | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | Ingests blog content into the respublica Cloudflare Worker knowledge base.                                                                       |
+| `.github/workflows/sync-to-respublica.yml`                                   | [`docs/RELIABILITY.md`](docs/RELIABILITY.md)                                                                                                                                       | GitHub Actions workflow that runs the sync script on push/dispatch.                                                                              |
 | `_site/`, `.jekyll-cache/`, `vendor/`                                        | —                                                                                                                                                                                  | Generated. Never commit, never edit.                                                                                                             |
 
 ## What's deliberately not here
@@ -96,8 +99,9 @@ Disallowed:
 - No JavaScript framework. The only inline JS is the sidebar toggle and
   language selector in `_layouts/default.html`.
 - No Sass partials. One file (`style.scss`) is enough at this scale.
-- No CI workflow files yet. GitHub Pages does its own build; if we add CI it
-  will live in `.github/workflows/` and own its own row in the file map above.
+- GitHub Pages does its own build. The one CI workflow that does exist
+  (`.github/workflows/sync-to-respublica.yml`) is purely a post-push sync job
+  and has no effect on the Pages build or deployment.
 - `_data/i18n.yml` is the only data file. It owns functional UI text and
   the localized sidebar site name and tagline; other content text stays in
   Markdown/frontmatter/config until a future content source replaces it.

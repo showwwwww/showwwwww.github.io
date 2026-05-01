@@ -74,9 +74,34 @@ files at the repo root).
   the previous successful version stays live; we find out about failures
   via the GitHub email notification.
 
+## Sync to Respublica
+
+A Node.js script (`scripts/sync-to-respublica.ts`) bulk-ingests blog content
+into the [respublica](https://github.com/showwwwww/respublica) Cloudflare
+Worker knowledge base after every push that touches posts or pages.
+
+- Entry point: `npm run sync:respublica`
+- Workflow: `.github/workflows/sync-to-respublica.yml`
+- Triggers: push to `main` that touches `_posts/**`, `_pages/**`, `pages/**`,
+  or `content/**`; also `workflow_dispatch`.
+- Required GitHub Secrets:
+  - `BLOG_BASE_URL` — public blog URL, e.g. `https://example.github.io`
+  - `RESPUBLICA_INGEST_URL` — Worker base URL
+  - `RESPUBLICA_INGEST_TOKEN` — Bearer token for `/admin/*`
+- Local dry-run:
+  ```
+  BLOG_BASE_URL=https://... RESPUBLICA_INGEST_URL=https://... \
+    RESPUBLICA_INGEST_TOKEN=... npm run sync:respublica
+  ```
+- Does **not** sync `_drafts/`. If zero documents are generated the script
+  exits without calling `/admin/finalize` to avoid accidental remote deletion.
+- The `package.json` / `package-lock.json` at the repo root are for this
+  script only. They are excluded from Jekyll via `_config.yml`'s `exclude`
+  list (add them there if not already present).
+
 ## Formatter
 
-- Prettier 3 via `npx --yes prettier@^3` (no committed `package.json`).
+- Prettier 3 via `npx --yes prettier@^3`.
 - Config: `.prettierrc.json`. Ignores: `.prettierignore`. Both are Prettier
   3 native; do not introduce Prettier 2 idioms.
 - Pre-commit hook lives at `.githooks/pre-commit`. Activate per clone with:

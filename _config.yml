@@ -80,6 +80,9 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules/
+  - package.json
+  - package-lock.json
+  - tsconfig.json
   - vendor/bundle/
   - vendor/cache/
   - vendor/gems/
